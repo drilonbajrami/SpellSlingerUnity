@@ -9,13 +9,24 @@ namespace SpellSlinger
         // Start is called before the first frame update
         void Start()
         {
-        
+            GestureCaster.LeftHandGesture += PrintLeftHandPose;
+            //GestureCaster.RightHandGesture += PrintRightHandPose;
         }
 
         // Update is called once per frame
         void Update()
         {
         
+        }
+
+        private void PrintLeftHandPose(object source, string value)
+        {
+            Debug.Log($"L HAND POSE:    { value }");
+        }
+
+        private void PrintRightHandPose(object source, string value)
+        {
+            Debug.Log($"R HAND POSE:    { value }");
         }
 
         // Old Code 
