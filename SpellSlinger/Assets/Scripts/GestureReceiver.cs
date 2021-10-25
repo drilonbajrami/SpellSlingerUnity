@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SpellSlinger
 {
-    public class SpellCaster : MonoBehaviour
+    public class GestureReceiver : MonoBehaviour
     {
         // Start is called before the first frame update
         void Start()
