@@ -246,6 +246,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89de242adea326147ba4672eafee7a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spells: []
+  hmd: {fileID: 0}
+  leftHand: {fileID: 0}
+  rightHand: {fileID: 0}
+  spellSignWaitTimeInSeconds: 0
+  spells: []
 --- !u!4 &290855046
 Transform:
   m_ObjectHideFlags: 0
@@ -302,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 1
+  index: 2
   origin: {fileID: 389215887}
 --- !u!1 &1062490750 stripped
 GameObject:
@@ -698,7 +704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 2
+  index: 1
   origin: {fileID: 389215887}
 --- !u!1 &1781997115
 GameObject:

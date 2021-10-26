@@ -67,8 +67,6 @@ namespace SpellSlinger
     }
 }
 
-public enum Element { FIRE, WATER, GRASS }
-
 [CreateAssetMenu(fileName = "Enemy Type", menuName = "EnemyType", order = 1)]
 public class EnemyType : ScriptableObject
 {
