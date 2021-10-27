@@ -11,6 +11,7 @@ namespace SpellSlinger
         private float elapsedTime;
 
         private bool running = true;
+        public bool Running { get { return running; } } 
 
         public event EventHandler TimerEnd;
         public event EventHandler TimerReset;
@@ -23,11 +24,10 @@ namespace SpellSlinger
         {
             timerInterval = seconds;
             elapsedTime = 0.0f;
-            running = true;
         }   
 
         /// <summary>
-        /// Decrements the timer by give amount
+        /// Increment the timer by give amount in seconds
         /// </summary>
         /// <param name="amount"></param>
         public void UpdateTimer(float seconds)
@@ -52,6 +52,7 @@ namespace SpellSlinger
 
         public void ResetTimer()
         {
+            running = false;
             elapsedTime = 0.0f;
             TimerReset?.Invoke(this, EventArgs.Empty);
         }

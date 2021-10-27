@@ -1,191 +1,158 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpellSlinger
 {
-    public class GestureReceiver : MonoBehaviour
-    {
-        
+	public class GestureReceiver : MonoBehaviour
+	{
+		[Header("Available Spells")]
+		[SerializeField] private List<SpellType> _spells;
 
-        [Header("Available Spells")]
-        [SerializeField] private List<SpellType> _spells;
+		private Timer _spellingDurationTimer;
+		[Range(1.0f, 10.0f)] [SerializeField] private float _spellingDurationInSeconds = 8.0f;
 
-        void Start()
-        {
-            GestureCaster.LHandPose += PrintLeftHandPose;
-            GestureCaster.RHandPose += PrintRightHandPose;
-            GestureCaster.StartCastHandPose += OnStartCastPose;
-            GestureCaster.CastSpellHandPose += OnCastSpellPose;
-        }
+		private SpellType _currentSpelling = null;
+		private int _currentSpellingLetterIndex = 1;
+		private bool _spellAvailable = false;
 
-        void Update()
-        {
-        
-        }
+		private bool _readyToCast = false;
 
-        private void PrintLeftHandPose(object source, string value)
-        {
-            Debug.Log($"L HAND POSE: { value }");
-        }
+		#region UNITY Methods
 
-        private void PrintRightHandPose(object source, string value)
-        {
-            //Debug.Log($"R HAND POSE: { value }");
-        }
+		private void Start()
+		{
+			_spellingDurationTimer = new Timer(_spellingDurationInSeconds);
+			_spellingDurationTimer.Deactivate();
+			_spellingDurationTimer.TimerEnd += OnSpellingTimerEnd;
 
-        private void OnStartCastPose(object source, EventArgs e)
-        {
-            Debug.Log("Starting Cast...");
-        }
+			GestureCaster.LHandPose += OnLeftHandPoseReceived;
+			GestureCaster.RHandPose += OnRightHandPoseReceived;
+			GestureCaster.StartSpellingPose += OnStartCastPose;
+			GestureCaster.CastSpellPose += OnCastSpellPose;
+		}
 
-        private void OnCastSpellPose(object source, EventArgs e)
-        {
-            Debug.Log("Casting spell...");
-        }
+		private void Update()
+		{
+			_spellingDurationTimer.UpdateTimer(Time.deltaTime);
+		}
 
-        // UI Feedback
-        //public TMP_Text spellNameText;
-        //public Slider waitGauge;
+		private void OnValidate()
+		{
+			if (_spellingDurationTimer != null)
+				_spellingDurationTimer.ChangeInterval(_spellingDurationInSeconds);
+		}
 
-        // Hands and HandEngine Clients
-        public GameObject hmd;
-        public GameObject leftHand;
-        public GameObject rightHand;
-        private HandEngine_Client leftHandClient;
-        private HandEngine_Client rightHandClient;
+		#endregion
 
-        // Duration for posing a sign (letter)
-        public float spellSignWaitTimeInSeconds;
-        public List<Spell> spells;
+		#region OnEvent Methods
 
-        private Spell currentSpell = null; // Cache the spell in order to use it against enemies
-        //StringBuilder currentSpellName;
-        Coroutine currentCoroutine;
-        bool castingSpell = false;
+		private void OnLeftHandPoseReceived(object source, string value)
+		{
+			if (!_spellAvailable)
+			{
+				_spellAvailable = IsSpellAvailable(char.Parse(value));
+				if (_spellAvailable)
+					Debug.Log($"Spell is available and its the {_currentSpelling.GetElementTypeName()} spell...");
+			}
+			else
+				CheckNextLetter(char.Parse(value));
+		}
 
-        //public static event Action<string> OnLetterSpelled = (letter) => { };
-        //public static event Action SpellSuccessful;
-        //public static event Action SpellFailed;
-        //public static event Action SpellStarted;
+		private void OnRightHandPoseReceived(object source, string value)
+		{
 
-        //void Start()
-        //{
-        //    currentSpellName = new StringBuilder();
-        //    waitGauge.maxValue = spellSignWaitTimeInSeconds;
-        //    leftHandClient = leftHand.GetComponent<HandEngine_Client>();
-        //    rightHandClient = rightHand.GetComponent<HandEngine_Client>();
-        //}
-    
-        //void Update()
-        //{
-        //    // If you are not casting a spell and show the OK sign, you start spell recognition
-        //    if (!castingSpell && leftHandClient.poseName == _castPoseLeftHand && rightHandClient.poseName == _castPoseRightHand) // Both hands
-        //        StartSpellListener();
+		}
 
-        //    // Show the ASL letters that have been spelled out
-        //    spellNameText.text = currentSpellName.ToString();
+		private void OnStartCastPose(object source, EventArgs e)
+		{
+			ResetSpelling();
+			_spellingDurationTimer.Activate();
+			Debug.Log("Starting to spell...!");
+		}
 
-        //    // UI Feedback update
-        //    if (castingSpell) 
-        //        waitGauge.value += Time.deltaTime;
+		private void OnCastSpellPose(object source, EventArgs e)
+		{
+			if (_readyToCast)
+				OnCastingSpellFinished();
+			else
+				OnCastingSpellFailed();
+		}
 
-        //    //if (currentSpell != null && rightHandClient.poseName == castPose) 
-        //    //CastSpellOnEnemy(GetEnemyTarget());
+		private void OnSpellingTimerEnd(object source, EventArgs e)
+		{
+			OnSpellingFailed();
+		}
 
-        //    if (currentSpell != null & Vector3.Distance(rightHand.transform.position, hmd.transform.position) > 0.5 && rightHandClient.poseName == castPose)
-        //        CastSpellOnEnemy(GetEnemyTarget());
-        //}
+		#endregion
 
-        //IEnumerator SpellListener()
-        //{
-        //    SpellStarted();
-        //    bool keepListening = true;
-        //    waitGauge.gameObject.SetActive(true);
+		private void OnSpellingFinished()
+		{
+			_spellingDurationTimer.Deactivate();
+			_readyToCast = true;
+			Debug.Log("Spelling Successfully! Now try to cast your spell...");
+		}
 
-        //    while (keepListening)
-        //    {
-        //        waitGauge.value = 0;
-        //        yield return new WaitForSeconds(spellSignWaitTimeInSeconds);
-        //        if (leftHandClient.poseName == _castPoseLeftHand && rightHandClient.poseName == _castPoseRightHand) // Both hands
-        //        {
-        //            keepListening = false;
-        //        }
-        //        else if (IsSignLetterValid(leftHandClient.poseName[0]))
-        //        {
-        //            currentSpellName.Append(leftHandClient.poseName[0]);
-        //            OnLetterSpelled(leftHandClient.poseName);
-        //        }
-        //    }
+		private void OnSpellingFailed()
+		{
+			ResetSpelling();
+			Debug.Log("Spelling failed! Try again...");
+		}
 
-        //    Spell spell = CheckIfSpellAvailable(currentSpellName.ToString());
+		private void OnCastingSpellFinished()
+		{
+			Debug.Log("Spell Casted Successfully!");
+			ResetSpelling();
+		}
 
-        //    if (spell != null)
-        //        StartCoroutine(CastSpell(spell));
-        //    else
-        //    {
-        //        SpellFailed();
-        //        currentSpellName.Clear();
-        //        waitGauge.gameObject.SetActive(false);
-        //        yield return new WaitForSeconds(1.0f);
-        //        castingSpell = false;
-        //    }
-        //}
+		private void OnCastingSpellFailed()
+		{
+			Debug.Log("Casting spell failed, there is no spell!");
+		}
 
-        //IEnumerator CastSpell(Spell spell)
-        //{
-        //    currentSpell = spell;
-        //    yield return new WaitForSeconds(spellSignWaitTimeInSeconds);
-        //    castingSpell = false;
-        //    waitGauge.gameObject.SetActive(false);
-        //}
+		private void ResetSpelling()
+		{
+			_currentSpelling = null;
+			_currentSpellingLetterIndex = 1;
+			_spellAvailable = false;
+			_readyToCast = false;
+			_spellingDurationTimer.ResetTimer();
+		}
 
-        //public void CastSpellOnEnemy(Enemy enemy)
-        //{
-        //    if(enemy != null)
-        //    {
-        //        enemy.TakeDamage(currentSpell);
-        //        currentSpell = null;
-        //    }
-        //}
+		/// <summary>
+		/// Check if there is any spells that start with the given letter
+		/// </summary>
+		/// <param name="spellFirstLetter"></param>
+		/// <returns></returns>
+		private bool IsSpellAvailable(char spellFirstLetter)
+		{
+			_currentSpelling = _spells.Find(a => a.GetElementLetterByIndex(0) == spellFirstLetter);
 
-        // Get the enemy target if pointing at one
-        //public Enemy GetEnemyTarget()
-        //{
-        //    //rightHand.GetComponent<XRRayInteractor>().TryGetCurrent3DRaycastHit(out RaycastHit hit);
+			if (_currentSpelling != null)
+			{
+				_spellingDurationTimer.Activate();
+				return true;
+			}
+			else
+				return false;
+		}
 
-        //    if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 500.0f))
-        //        return hit.collider.gameObject.CompareTag("Enemy") ? hit.collider.gameObject.GetComponent<Enemy>() : null;
-        //    else
-        //        return null;
-        //}
+		/// <summary>
+		/// Check if next letter is present on the Spell's name
+		/// </summary>
+		/// <param name="nextLetter"></param>
+		private void CheckNextLetter(char nextLetter)
+		{
+			if (nextLetter == _currentSpelling.GetElementLetterByIndex(_currentSpellingLetterIndex))
+			{
+				Debug.Log($"Spell next letter is { nextLetter }");
+				_currentSpellingLetterIndex++;
 
-        // Starts listening to spell signs
-        //private void StartSpellListener()
-        //{
-        //    currentSpellName.Clear();
-        //    castingSpell = true;
-        //    currentCoroutine = StartCoroutine(SpellListener());
-        //}
-
-        // Check if said spell is available
-        //private Spell CheckIfSpellAvailable(string spellName)
-        //{
-        //    for (int i = 0; i < spells.Count; i++)
-        //        if (spells[i].GetElementTypeName() == spellName)
-        //        {
-        //            SpellSuccessful();
-        //            return spells[i];
-        //        }
-
-        //    return null;
-        //}
-
-        // Checks if spelled letter/sign is valid in the ASL Alphabet
-        //private bool IsSignLetterValid(char letter)
-        //{
-        //    return ASLAlphabet.Contains(letter);
-        //}
-    }
+				if (_currentSpellingLetterIndex == _currentSpelling.GetElementTypeNameLength())
+					OnSpellingFinished();
+			}
+		}
+	}
 }

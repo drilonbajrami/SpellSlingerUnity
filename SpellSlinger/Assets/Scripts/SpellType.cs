@@ -12,6 +12,7 @@ namespace SpellSlinger
 
         public Element GetElementType() => type;
         public string GetElementTypeName() => type.ToString();
-        public char GetElementFirstLetter() => char.Parse(type.ToString().Substring(0, 1));
+        public char GetElementLetterByIndex(int index) => char.Parse(type.ToString().Substring(index, 1));
+        public int GetElementTypeNameLength() => type.ToString().Length;
     }
 }

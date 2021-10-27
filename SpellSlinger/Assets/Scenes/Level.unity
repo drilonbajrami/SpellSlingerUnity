@@ -246,12 +246,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89de242adea326147ba4672eafee7a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spells: []
-  hmd: {fileID: 0}
-  leftHand: {fileID: 0}
-  rightHand: {fileID: 0}
-  spellSignWaitTimeInSeconds: 0
-  spells: []
+  _spells:
+  - {fileID: 11400000, guid: f47d4b177f24169488103cd1743ac072, type: 2}
+  - {fileID: 11400000, guid: 33cda7afff558b14e96c18a9ae0fdc40, type: 2}
+  _spellingDurationInSeconds: 10
 --- !u!4 &290855046
 Transform:
   m_ObjectHideFlags: 0
@@ -308,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 2
+  index: 4
   origin: {fileID: 389215887}
 --- !u!1 &1062490750 stripped
 GameObject:
@@ -650,9 +648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6721baa61ab5d4f831fd0c15e6208e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftHand: {fileID: 910727842}
-  _rightHand: {fileID: 1737421582}
-  poseTimeSpan: 0.5
+  leftHand: {fileID: 910727842}
+  rightHand: {fileID: 1737421582}
+  poseTimeSpan: 0.6
+  handDistanceThreshold: 0.25
 --- !u!4 &1723715237
 Transform:
   m_ObjectHideFlags: 0
@@ -704,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 1
+  index: 3
   origin: {fileID: 389215887}
 --- !u!1 &1781997115
 GameObject:

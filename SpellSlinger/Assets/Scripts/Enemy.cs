@@ -100,16 +100,6 @@ public class Letter : MonoBehaviour
     }
 }
 
-[CreateAssetMenu(fileName = "Spell", menuName = "Spell", order = 0)]
-public class Spell : ScriptableObject
-{
-    public Element type;
-    public Color color;
-
-    public Element GetElementType() => type;
-    public string GetElementTypeName() => type.ToString();
-}
-
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
