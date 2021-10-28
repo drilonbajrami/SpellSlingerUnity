@@ -14,11 +14,14 @@ namespace SpellSlinger
 		// HandEngine clients for reading pose data
 		[SerializeField] private HandEngine_Client leftHand;
 		[SerializeField] private HandEngine_Client rightHand;
+		[SerializeField] private Transform hmdTransform;
 
 		// Caching hand poses
 		private string _lHandCurrentPose;
 		private string _rHandCurrentPose;
 		private string _handsCurrentPoses;
+
+		private bool rHandAboutToCastSpell = false;
 
 		// Timers
 		private Timer _lHandTimer;
@@ -32,6 +35,12 @@ namespace SpellSlinger
 		[Tooltip("Distance threshold between two hands, used for checking if hands are close enough during some specific spells/gestures.\n" +
 				 "Optimal distance threshold is around 0.25f units")]
 		[Range(0.2f, 0.5f)] [SerializeField] private float handDistanceThreshold = 0.25f;
+
+		[Tooltip("Distance threshold between the right hand and the head (HMD Device).\n" +
+				 "Used to check for the CAST pose.")]
+		[Range(0.2f, 0.5f)] [SerializeField] private float rightHandHMDMidPointThreshold = 0.4f;
+		// Average retracted arm distance = 0.15 - 0.25
+		// Average extended arm distance = 0.45 - 0.65
 
 		#endregion
 
@@ -115,6 +124,11 @@ namespace SpellSlinger
 		/// <returns></returns>
 		private string GetBothHandPoses() { return leftHand.poseName + rightHand.poseName; }
 
+		private float GetDistanceHMDToRightHand()
+		{
+			return Vector2.Distance(new Vector2(hmdTransform.position.x, hmdTransform.position.z), new Vector2(rightHand.transform.position.x, rightHand.transform.position.z));
+		}
+
 		#endregion
 
 		#region OnEvent Methods
@@ -135,17 +149,26 @@ namespace SpellSlinger
 		private void OnRightHandTimerEnd(object source, EventArgs e)
 		{
 			if (_rHandCurrentPose == rightHand.poseName && rightHand.poseActive)
-				if (_rHandCurrentPose == CAST_SPELL_POSE) OnCastSpellPose();
+				if (_rHandCurrentPose == CAST_SPELL_POSE && rHandAboutToCastSpell && GetDistanceHMDToRightHand() > rightHandHMDMidPointThreshold)
+					OnCastSpellPose();
 				else if (_rHandCurrentPose.Length <= 1) OnRightHandPose();
 		}
 
 		private void OnRightHandTimerReset(object source, EventArgs e)
 		{
-			if (rightHand.poseActive) _rHandCurrentPose = rightHand.poseName;
-			else _rHandCurrentPose = string.Empty;
+			if (rightHand.poseActive)
+			{
+				_rHandCurrentPose = rightHand.poseName;
+				if (_rHandCurrentPose == CAST_SPELL_POSE && GetDistanceHMDToRightHand() < rightHandHMDMidPointThreshold)
+					rHandAboutToCastSpell = true;
+				else
+					rHandAboutToCastSpell = false;
+			}
+			else
+				_rHandCurrentPose = string.Empty;
 		}
 
-		private void OnStartSpellingTimerEnd(object sender, EventArgs e)
+			private void OnStartSpellingTimerEnd(object sender, EventArgs e)
 		{
 			float distance = Vector3.Distance(leftHand.gameObject.transform.position, rightHand.gameObject.transform.position);
 			if (_handsCurrentPoses == START_POSE_HAND_L + START_POSE_HAND_R && distance < handDistanceThreshold)
