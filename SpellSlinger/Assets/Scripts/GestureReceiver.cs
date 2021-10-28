@@ -20,6 +20,16 @@ namespace SpellSlinger
 
 		private bool _readyToCast = false;
 
+		public static event EventHandler<string> SpellToBeSpelled;
+		public static event EventHandler NextLetterSpelled;
+		public virtual void OnSpellToBeSpelled() => SpellToBeSpelled?.Invoke(this, _currentSpelling.GetElementTypeName());
+		public virtual void OnNextLetterSpelled() => NextLetterSpelled?.Invoke(this, EventArgs.Empty);
+
+		public static event EventHandler<SpellType> CreateSpell;
+		public static event EventHandler CastSpell;
+		public virtual void OnCreateSpell() => CreateSpell?.Invoke(this, _currentSpelling);
+		public virtual void OnCastSpell() => CastSpell?.Invoke(this, EventArgs.Empty);
+
 		#region UNITY Methods
 
 		private void Start()
@@ -90,6 +100,7 @@ namespace SpellSlinger
 
 		private void OnSpellingFinished()
 		{
+			OnCreateSpell();
 			_spellingDurationTimer.Deactivate();
 			_readyToCast = true;
 			Debug.Log("Spelling Successfully! Now try to cast your spell...");
@@ -103,6 +114,7 @@ namespace SpellSlinger
 
 		private void OnCastingSpellFinished()
 		{
+			OnCastSpell();
 			Debug.Log("Spell Casted Successfully!");
 			ResetSpelling();
 		}
@@ -133,6 +145,7 @@ namespace SpellSlinger
 			if (_currentSpelling != null)
 			{
 				_spellingDurationTimer.Activate();
+				OnSpellToBeSpelled();
 				return true;
 			}
 			else
@@ -148,6 +161,7 @@ namespace SpellSlinger
 			if (nextLetter == _currentSpelling.GetElementLetterByIndex(_currentSpellingLetterIndex))
 			{
 				Debug.Log($"Spell next letter is { nextLetter }");
+				OnNextLetterSpelled();
 				_currentSpellingLetterIndex++;
 
 				if (_currentSpellingLetterIndex == _currentSpelling.GetElementTypeNameLength())
