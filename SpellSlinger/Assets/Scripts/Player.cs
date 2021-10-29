@@ -14,7 +14,7 @@ namespace SpellSlinger
 
 		private void Start()
 		{
-            GestureReceiver.CreateSpell += OnCreateSpell;
+            GestureReceiver.CraftSpell += OnCreateSpell;
             GestureReceiver.CastSpell += OnCastSpell;
 		}
 

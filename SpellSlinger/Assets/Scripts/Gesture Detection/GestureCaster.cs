@@ -7,8 +7,8 @@ namespace SpellSlinger
 	{
 		#region Private Fields
 		// Casting Signs
-		private const string START_POSE_HAND_L = "CASTL";
-		private const string START_POSE_HAND_R = "CASTR";
+		private const string CRAFT_POSE_HAND_L = "CASTL";
+		private const string CRAFT_POSE_HAND_R = "CASTR";
 		private const string CAST_SPELL_POSE = "CAST";
 
 		// HandEngine clients for reading pose data
@@ -26,7 +26,7 @@ namespace SpellSlinger
 		// Timers
 		private Timer _lHandTimer;
 		private Timer _rHandTimer;
-		private Timer _startCastTimer;
+		private Timer _spellingPoseTimer;
 
 		[Tooltip("The time span in seconds for a pose to remain stable in order to be captured.\n" +
 				 "It is recommended to keep this time span at 0.5 seconds.")]
@@ -44,19 +44,28 @@ namespace SpellSlinger
 
 		#endregion
 
-		#region Events
+		#region Event Handlers & Raisers
 
-		// Event handlers
-		public static event EventHandler<string> LHandPose;
-		public static event EventHandler<string> RHandPose;
-		public static event EventHandler StartSpellingPose;
-		public static event EventHandler CastSpellPose;
-
-		// Event raisers
-		protected virtual void OnLeftHandPose() => LHandPose?.Invoke(this, _lHandCurrentPose);
-		protected virtual void OnRightHandPose() => RHandPose?.Invoke(this, _rHandCurrentPose);
-		protected virtual void OnStartSpellingPose() => StartSpellingPose?.Invoke(this, EventArgs.Empty);
-		protected virtual void OnCastSpellPose() => CastSpellPose?.Invoke(this, EventArgs.Empty);
+		/// <summary>
+		/// Event Handler for left hand poses.
+		/// </summary>
+		public static event EventHandler<string> LeftHandPose;
+		protected virtual void OnLeftHandPose() => LeftHandPose?.Invoke(this, _lHandCurrentPose);
+		/// <summary>
+		/// Event Handler for right hand poses.
+		/// </summary>
+		public static event EventHandler<string> RightHandPose;
+		protected virtual void OnRightHandPose() => RightHandPose?.Invoke(this, _rHandCurrentPose);
+		/// <summary>
+		/// Event Handler for starting spelling pose.
+		/// </summary>
+		public static event EventHandler CraftPose;
+		protected virtual void OnCraftPose() => CraftPose?.Invoke(this, EventArgs.Empty);
+		/// <summary>
+		/// Event Handler for casting spell pose.
+		/// </summary>
+		public static event EventHandler CastPose;
+		protected virtual void OnCastPose() => CastPose?.Invoke(this, EventArgs.Empty);
 
 		#endregion
 
@@ -64,7 +73,7 @@ namespace SpellSlinger
 
 		private void Start()
 		{
-			SetupTimers();
+			SetupTimers(poseTimeSpan);
 		}
 
 		private void FixedUpdate()
@@ -79,23 +88,23 @@ namespace SpellSlinger
 				_rHandTimer.Activate();
 			}
 
-			if (leftHand.poseActive && rightHand.poseActive && !_startCastTimer.Running) {
-				_startCastTimer.ResetTimer();
-				_startCastTimer.Activate();
+			if (leftHand.poseActive && rightHand.poseActive && !_spellingPoseTimer.Running) {
+				_spellingPoseTimer.ResetTimer();
+				_spellingPoseTimer.Activate();
 			}
 
 			_lHandTimer.UpdateTimer(Time.fixedDeltaTime);
 			_rHandTimer.UpdateTimer(Time.fixedDeltaTime);
-			_startCastTimer.UpdateTimer(Time.fixedDeltaTime);
+			_spellingPoseTimer.UpdateTimer(Time.fixedDeltaTime);
 		}
 
 		private void OnValidate()
 		{
-			if (_lHandTimer != null && _rHandTimer != null && _startCastTimer != null)
+			if (_lHandTimer != null && _rHandTimer != null && _spellingPoseTimer != null)
 			{
 				_lHandTimer.ChangeInterval(poseTimeSpan);
 				_rHandTimer.ChangeInterval(poseTimeSpan);
-				_startCastTimer.ChangeInterval(poseTimeSpan);
+				_spellingPoseTimer.ChangeInterval(poseTimeSpan);
 			}
 		}
 
@@ -103,28 +112,35 @@ namespace SpellSlinger
 
 		#region Private Methods
 
-		private void SetupTimers()
+		/// <summary>
+		/// Set up separate and common timers for both hands.
+		/// </summary>
+		private void SetupTimers(float poseTimeSpan)
 		{
 			_lHandTimer = new Timer(poseTimeSpan);
-			_lHandTimer.TimerEnd += OnLeftHandTimerEnd;
+			_lHandTimer.TimerFinish += OnLeftHandTimerFinish;
 			_lHandTimer.TimerReset += OnLeftHandTimerReset;
 
 			_rHandTimer = new Timer(poseTimeSpan);
-			_rHandTimer.TimerEnd += OnRightHandTimerEnd;
+			_rHandTimer.TimerFinish += OnRightHandTimerFinish;
 			_rHandTimer.TimerReset += OnRightHandTimerReset;
 
-			_startCastTimer = new Timer(poseTimeSpan);
-			_startCastTimer.TimerEnd += OnStartSpellingTimerEnd;
-			_startCastTimer.TimerReset += OnStartSpellingTimerReset;
+			_spellingPoseTimer = new Timer(poseTimeSpan);
+			_spellingPoseTimer.TimerFinish += OnStartSpellingTimerFinish;
+			_spellingPoseTimer.TimerReset += OnStartSpellingTimerReset;
 		}
 
 		/// <summary>
-		/// Returns a string containing both hands poses
+		/// Returns a string containing both hands poses.
 		/// </summary>
 		/// <returns></returns>
-		private string GetBothHandPoses() { return leftHand.poseName + rightHand.poseName; }
+		private string GetBothHandPoses() => leftHand.poseName + rightHand.poseName; 
 
-		private float GetDistanceHMDToRightHand()
+		/// <summary>
+		/// Returns the distance between the HMD and Right Hand on the XZ Plane.
+		/// </summary>
+		/// <returns></returns>
+		private float GetDistanceFromHMDToRH()
 		{
 			return Vector2.Distance(new Vector2(hmdTransform.position.x, hmdTransform.position.z), new Vector2(rightHand.transform.position.x, rightHand.transform.position.z));
 		}
@@ -133,33 +149,45 @@ namespace SpellSlinger
 
 		#region OnEvent Methods
 
-		private void OnLeftHandTimerEnd(object source, EventArgs e)
+		/// <summary>
+		/// On Timer Finish subscriber method for left hand.
+		/// </summary>
+		private void OnLeftHandTimerFinish(object source, EventArgs e)
 		{
 			if (_lHandCurrentPose == leftHand.poseName && leftHand.poseActive)
-				if (_lHandCurrentPose == START_POSE_HAND_L) return;
+				if (_lHandCurrentPose == CRAFT_POSE_HAND_L) return;
 				else if (_lHandCurrentPose.Length <= 1) OnLeftHandPose();
 		}
 
+		/// <summary>
+		/// On Timer Reset subscriber method for left hand.
+		/// </summary>
 		private void OnLeftHandTimerReset(object source, EventArgs e)
 		{
 			if (leftHand.poseActive) _lHandCurrentPose = leftHand.poseName;
 			else _lHandCurrentPose = string.Empty;
 		}
 
-		private void OnRightHandTimerEnd(object source, EventArgs e)
+		/// <summary>
+		/// On Timer Finish subscriber method for right hand.
+		/// </summary>
+		private void OnRightHandTimerFinish(object source, EventArgs e)
 		{
 			if (_rHandCurrentPose == rightHand.poseName && rightHand.poseActive)
-				if (_rHandCurrentPose == CAST_SPELL_POSE && rHandAboutToCastSpell && GetDistanceHMDToRightHand() > rightHandHMDMidPointThreshold)
-					OnCastSpellPose();
+				if (_rHandCurrentPose == CAST_SPELL_POSE && rHandAboutToCastSpell && GetDistanceFromHMDToRH() > rightHandHMDMidPointThreshold)
+					OnCastPose();
 				else if (_rHandCurrentPose.Length <= 1) OnRightHandPose();
 		}
 
+		/// <summary>
+		/// On Timer Reset subscriber method for right hand.
+		/// </summary>
 		private void OnRightHandTimerReset(object source, EventArgs e)
 		{
 			if (rightHand.poseActive)
 			{
 				_rHandCurrentPose = rightHand.poseName;
-				if (_rHandCurrentPose == CAST_SPELL_POSE && GetDistanceHMDToRightHand() < rightHandHMDMidPointThreshold)
+				if (_rHandCurrentPose == CAST_SPELL_POSE && GetDistanceFromHMDToRH() < rightHandHMDMidPointThreshold)
 					rHandAboutToCastSpell = true;
 				else
 					rHandAboutToCastSpell = false;
@@ -168,13 +196,19 @@ namespace SpellSlinger
 				_rHandCurrentPose = string.Empty;
 		}
 
-			private void OnStartSpellingTimerEnd(object sender, EventArgs e)
+		/// <summary>
+		/// On Timer Finish subscriber method for both hands.
+		/// </summary>
+		private void OnStartSpellingTimerFinish(object sender, EventArgs e)
 		{
 			float distance = Vector3.Distance(leftHand.gameObject.transform.position, rightHand.gameObject.transform.position);
-			if (_handsCurrentPoses == START_POSE_HAND_L + START_POSE_HAND_R && distance < handDistanceThreshold)
-				OnStartSpellingPose();
+			if (_handsCurrentPoses == CRAFT_POSE_HAND_L + CRAFT_POSE_HAND_R && distance < handDistanceThreshold)
+				OnCraftPose();
 		}
 
+		/// <summary>
+		/// On Timer Reset subscriber method for both hands.
+		/// </summary>
 		private void OnStartSpellingTimerReset(object sender, EventArgs e)
 		{
 			if (leftHand.poseActive && rightHand.poseActive) _handsCurrentPoses = GetBothHandPoses();

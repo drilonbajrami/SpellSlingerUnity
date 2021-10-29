@@ -11,9 +11,15 @@ namespace SpellSlinger
         private float elapsedTime;
 
         private bool running = true;
-        public bool Running { get { return running; } } 
+        public bool Running { get { return running; } }
 
-        public event EventHandler TimerEnd;
+        /// <summary>
+        /// Event Handler for ending of the timer
+        /// </summary>
+        public event EventHandler TimerFinish;
+        /// <summary>
+        /// Event Handler for reseting of the timer
+        /// </summary>
         public event EventHandler TimerReset;
 
         /// <summary>
@@ -24,7 +30,7 @@ namespace SpellSlinger
         {
             timerInterval = seconds;
             elapsedTime = 0.0f;
-        }   
+        }
 
         /// <summary>
         /// Increment the timer by give amount in seconds
@@ -32,14 +38,13 @@ namespace SpellSlinger
         /// <param name="amount"></param>
         public void UpdateTimer(float seconds)
         {
-            if (!running)
-                return;
+            if (!running) return;
 
             elapsedTime += seconds;
 
             if (elapsedTime >= timerInterval)
             {
-                TimerEnd?.Invoke(this, EventArgs.Empty);
+                TimerFinish?.Invoke(this, EventArgs.Empty);
                 ResetTimer();
             }
         }
@@ -50,6 +55,10 @@ namespace SpellSlinger
         /// <param name="seconds"></param>
         public void ChangeInterval(float seconds) => timerInterval = seconds;
 
+        /// <summary>
+        /// Reset everything about the timer.
+        /// Invokes the TimerReset event handler
+        /// </summary>
         public void ResetTimer()
         {
             running = false;
@@ -66,5 +75,11 @@ namespace SpellSlinger
         /// Deactivates the timer
         /// </summary>
         public void Deactivate() => running = false;
+
+        /// <summary>
+        /// Returns the progress of the timer in terms of percentage
+        /// </summary>
+        /// <returns></returns>
+        public float GetProgressPercentage() => elapsedTime * 100.0f / timerInterval;
     }
 }
