@@ -7,197 +7,143 @@ namespace SpellSlinger
 	public class GestureReceiver : MonoBehaviour
 	{
 		#region Private Fields
-
 		[Header("Available Spells")]
 		[SerializeField] private List<SpellType> _spells;
 
 		/// <summary>
-		/// Timer for a spell to be completed.
+		/// Timer for a spell to be crafted completely.
 		/// </summary>
-		public static Timer _spellingDurationTimer;
-		[Range(1.0f, 10.0f)] [SerializeField] private float _spellingDurationInSeconds = 8.0f;
+		public static Timer _craftingDurationTimer;
+		[Range(1.0f, 15.0f)] [SerializeField] private float _craftingDurationInSeconds = 8.0f;
 
 		/// <summary>
 		/// Keep track the type of the current spell being spelled.
 		/// </summary>
-		private SpellType _currentSpelling = null;
+		private SpellType _currentSpell = null;
 
 		/// <summary>
 		/// Keep track of which letter is to be spelled next.
 		/// </summary>
 		private int _currentSpellingLetterIndex = 1;
 
+		/// <summary>
+		/// Keep track if there is a spell available to be crafted
+		/// </summary>
 		private bool _isSpellAvailable = false;
+
+		/// <summary>
+		/// Keep track if we are currently crafting any spells
+		/// </summary>
+		private bool _isCurrentlyCrafting = false;
 		
 		/// <summary>
 		/// Checks if we are ready to cast a spell, true only if we crafted a spell beforehand.
 		/// </summary>
 		private bool _isReadyToCast = false;
-
 		#endregion
 
-		#region Event Handlers & Raisers
+		#region Event Handlers
+		// For UI
+		public static EventHandler<SpellType> SpellToCraftEvent;
+		public static EventHandler<SpellType> CraftedSpellEvent;
+		public static EventHandler NextLetterSpelledEvent;
+		public static EventHandler CastSpellEvent;	
+		#endregion
 
-		/// <summary>
-		/// Event Handler for showing the spell type to be crafted.
-		/// </summary>
-		public static event EventHandler<SpellType> SpellToCraft;
-		public virtual void OnSpellToCraft() => SpellToCraft?.Invoke(this, _currentSpelling);
-
-		/// <summary>
-		/// Event Handler for next letter spelled correctly.
-		/// </summary>
-		public static event EventHandler NextLetterSpelled;
-		public virtual void OnNextLetterSpelled() => NextLetterSpelled?.Invoke(this, EventArgs.Empty);
-
-		/// <summary>
-		/// Event Handler for finished crafting of a spell.
-		/// </summary>
-		public static event EventHandler<SpellType> CraftSpell;
-		public virtual void OnCraftSpell() => CraftSpell?.Invoke(this, _currentSpelling);
-
-		/// <summary>
-		/// Event Handler for casting a spell.
-		/// </summary>
-		public static event EventHandler CastSpell;
-		public virtual void OnCastSpell() => CastSpell?.Invoke(this, EventArgs.Empty);
-
-		/// <summary>
-		/// Event Handler for when crafting a spell fails due to time out.
-		/// </summary>
-		public static event EventHandler CraftFailed;
-		public virtual void OnCraftFailed() => CraftFailed?.Invoke(this, EventArgs.Empty);
-
+		#region Event Raisers
+		private void OnSpellToCraft() => SpellToCraftEvent?.Invoke(this, _currentSpell);
+		private void OnCraftedSpell(SpellType spellType) => CraftedSpellEvent?.Invoke(this, spellType);
+		private void OnNextLetterSpelled() => NextLetterSpelledEvent?.Invoke(this, EventArgs.Empty);
+		private void OnCastSpell() => CastSpellEvent?.Invoke(this, EventArgs.Empty);
 		#endregion
 
 		#region UNITY Methods
-
 		private void Start()
 		{
-			_spellingDurationTimer = new Timer(_spellingDurationInSeconds);
-			_spellingDurationTimer.Deactivate();
-			_spellingDurationTimer.TimerFinish += OnSpellingTimerEnd;
+			_craftingDurationTimer = new Timer(_craftingDurationInSeconds);
+			_craftingDurationTimer.Deactivate();
+			_craftingDurationTimer.TimerFinish += CraftingDurationTimerFinish;
 
-			GestureCaster.LeftHandPose += LeftHandPose;
-			GestureCaster.RightHandPose += RightHandPose;
-			GestureCaster.CraftPose += CraftPose;
-			GestureCaster.CastPose += CastPose;
+			GestureCaster.LetterPoseEvent += LetterPose;
+			GestureCaster.CraftPoseEvent += CraftPose;
+			GestureCaster.CastPoseEvent += CastPose;
 		}
 
 		private void Update()
 		{
-			_spellingDurationTimer.UpdateTimer(Time.deltaTime);
+			_craftingDurationTimer.UpdateTimer(Time.deltaTime);
 		}
 
 		private void OnValidate()
 		{
-			if (_spellingDurationTimer != null)
-				_spellingDurationTimer.ChangeInterval(_spellingDurationInSeconds);
+			if (_craftingDurationTimer != null)
+				_craftingDurationTimer.ChangeInterval(_craftingDurationInSeconds);
 		}
-
 		#endregion
 
 		#region Event Subscriber Methods
-
 		/// <summary>
 		/// Called on receiving left hand poses.
 		/// </summary>
-		private void LeftHandPose(object source, string value)
+		private void LetterPose(object source, char letter)
 		{
-			// Check if there is an available spell type to be crafted
-			if (!_isSpellAvailable)
-				_isSpellAvailable = IsSpellAvailable(char.Parse(value));
-			else
-				CheckNextLetterSpelled(char.Parse(value));
-		}
-
-		/// <summary>
-		/// Called on receiving right hand poses.
-		/// </summary>
-		private void RightHandPose(object source, string value)
-		{
-
+			// Check if player is currently on crafting state
+			if (_isCurrentlyCrafting)
+			{
+				if (!_isSpellAvailable)
+				{
+					_isSpellAvailable = IsSpellAvailable(letter);
+					if (_isSpellAvailable) _craftingDurationTimer.Activate();
+				}
+				else
+					CheckNextLetterSpelled(letter);
+			}
 		}
 
 		/// <summary>
 		/// Called on receiving craft pose.
 		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="e"></param>
 		private void CraftPose(object source, EventArgs e)
 		{
 			ResetSpellCrafting();
-			_spellingDurationTimer.Activate();
+			_isCurrentlyCrafting = true;
+			OnSpellToCraft(); // Raises SpellToCraftEvent
 		}
 
 		/// <summary>
 		/// Called on receiving cast pose.
 		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="e"></param>
 		private void CastPose(object source, EventArgs e)
 		{
-			if (_isReadyToCast) CastingSpellSucceded();
-			else CastingSpellFailed();
+			if (_isReadyToCast)
+			{
+				OnCastSpell();
+				ResetSpellCrafting();
+			}
 		}
 
 		/// <summary>
 		/// Called on failing to finish crafting a spell on time.
 		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="e"></param>
-		private void OnSpellingTimerEnd(object source, EventArgs e) => CraftingSpellFailed();
-
+		private void CraftingDurationTimerFinish(object source, EventArgs e)
+		{
+			OnCraftedSpell(null); // Crafting the spell has failed due to overtime
+			ResetSpellCrafting();
+		}
 		#endregion
 
 		#region Private Methods
-
-		/// <summary>
-		/// Call this when crafting a spell is successful
-		/// </summary>
-		private void CraftingSpellSucceded()
-		{
-			OnCraftSpell();
-			_spellingDurationTimer.Deactivate();
-			_isReadyToCast = true;
-		}
-
-		/// <summary>
-		/// Call this when crafting a spell failed.
-		/// </summary>
-		private void CraftingSpellFailed()
-		{
-			OnCraftFailed();
-			ResetSpellCrafting(); 
-		}
-
-		/// <summary>
-		/// Call this when casting a spell is successful.
-		/// </summary>
-		private void CastingSpellSucceded()
-		{
-			OnCastSpell();
-			ResetSpellCrafting();
-		}
-
-		/// <summary>
-		/// Call this when casting a spell failed.
-		/// </summary>
-		private void CastingSpellFailed()
-		{
-
-		}
-
 		/// <summary>
 		/// Resets everything related to crafting a spell.
 		/// </summary>
 		private void ResetSpellCrafting()
 		{
-			_currentSpelling = null;
+			_isCurrentlyCrafting = false;
+			_currentSpell = null;
 			_currentSpellingLetterIndex = 1;
 			_isSpellAvailable = false;
 			_isReadyToCast = false;
-			_spellingDurationTimer.ResetTimer();
+			_craftingDurationTimer.ResetTimer();
 		}
 
 		/// <summary>
@@ -206,17 +152,16 @@ namespace SpellSlinger
 		/// </summary>
 		private bool IsSpellAvailable(char spellFirstLetter)
 		{
-			_currentSpelling = _spells.Find(a => a.GetElementLetterByIndex(0) == spellFirstLetter);
+			_currentSpell = _spells.Find(a => a.Properties.GetElementLetterByIndex(0) == spellFirstLetter);
 
 			// Cache the spell type if it is available
-			if (_currentSpelling != null)
+			if (_currentSpell != null)
 			{
-				_spellingDurationTimer.Activate();
-				OnSpellToCraft();
+				OnSpellToCraft(); // Raises SpellToCraftEvent
+				_craftingDurationTimer.Activate();
 				return true;
 			}
-			else
-				return false;
+			else return false;
 		}
 
 		/// <summary>
@@ -226,17 +171,20 @@ namespace SpellSlinger
 		/// </summary>
 		private void CheckNextLetterSpelled(char nextLetter)
 		{
-			if (nextLetter == _currentSpelling.GetElementLetterByIndex(_currentSpellingLetterIndex))
+			if (nextLetter == _currentSpell.Properties.GetElementLetterByIndex(_currentSpellingLetterIndex))
 			{
-				OnNextLetterSpelled();
+				OnNextLetterSpelled(); // Raises NextLetterSpelledEvent
 				_currentSpellingLetterIndex++;
 
 				// Check if all letters have been spelled already
-				if (_currentSpellingLetterIndex == _currentSpelling.GetElementTypeNameLength())
-					CraftingSpellSucceded();
+				if (_currentSpellingLetterIndex == _currentSpell.Properties.GetElementTypeNameLength())
+				{
+					OnCraftedSpell(_currentSpell); // Raises CraftSpellEvent
+					_craftingDurationTimer.Deactivate();
+					_isReadyToCast = true;
+				}
 			}
 		}
-
 		#endregion
 	}
 }

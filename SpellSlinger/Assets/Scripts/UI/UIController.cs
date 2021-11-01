@@ -9,35 +9,33 @@ namespace SpellSlinger
 
 		private void SpellToCraft(object source, SpellType spellType) => EnableSpellProgressPanel(spellType);
 		private void NextLetterSpelled(object source, EventArgs e) => SpellProgressPanel.HighlightNextLetter();
-		private void CraftSpell(object source, SpellType spellType) => DisableSpellProgressPanel();
-		private void CraftFailed(object source, EventArgs e) => DisableSpellProgressPanel();
+		private void CraftedSpell(object source, SpellType spellType) => DisableSpellProgressPanel(spellType);
 
 		private void Start()
 		{
-			GestureReceiver.SpellToCraft += SpellToCraft;
-			GestureReceiver.NextLetterSpelled += NextLetterSpelled;
-			GestureReceiver.CraftSpell += CraftSpell;
-			GestureReceiver.CraftFailed += CraftFailed;
+			GestureReceiver.SpellToCraftEvent += SpellToCraft;
+			GestureReceiver.NextLetterSpelledEvent += NextLetterSpelled;
+			GestureReceiver.CraftedSpellEvent += CraftedSpell;
 		}
 
 		private void Update()
 		{
 			if (SpellProgressPanel.gameObject.activeSelf)
 			{
-				SpellProgressPanel.UpdateSpellTimer(GestureReceiver._spellingDurationTimer.GetProgressPercentage());
+				SpellProgressPanel.UpdateSpellTimer(GestureReceiver._craftingDurationTimer.GetProgressPercentage());
 			}
 		}
 
 		private void EnableSpellProgressPanel(SpellType spellType)
 		{
 			if (!SpellProgressPanel.gameObject.activeSelf)
-			{
 				SpellProgressPanel.gameObject.SetActive(true);
+
+			if(spellType != null)
 				SpellProgressPanel.SpellToCraft(spellType);
-			}
 		}
 
-		private void DisableSpellProgressPanel(SpellType spellType = null)
+		private void DisableSpellProgressPanel(SpellType spellType)
 		{
 			if (SpellProgressPanel.gameObject.activeSelf)
 			{

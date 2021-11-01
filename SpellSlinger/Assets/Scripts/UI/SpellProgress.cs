@@ -23,7 +23,7 @@ namespace SpellSlinger
 		public void SpellToCraft(SpellType spell)
 		{
 			_currentLetterIndex = 0;
-			_spellName.text = spell.GetElementTypeName();
+			_spellName.text = spell.Properties.GetElementTypeName();
 			_spellNameText = _spellName.text;
 			_spellTimer.value = 0.0f;
 			HighlightNextLetter();
@@ -34,7 +34,6 @@ namespace SpellSlinger
 		/// </summary>
 		public void HighlightNextLetter()
 		{
-			//{ColorUtility.ToHtmlStringRGB(_spelledLetterColor)}
 			_spellName.text = $"<color=green>{_spellNameText.Substring(0, _currentLetterIndex + 1)}</color>{_spellNameText.Substring(_currentLetterIndex + 1)}";
 			_currentLetterIndex++;
 		}

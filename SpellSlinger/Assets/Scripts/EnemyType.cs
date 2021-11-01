@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpellSlinger
 {
-    [CreateAssetMenu(fileName = "Spell Type", menuName = "SpellType", order = 1)]
-    public class SpellType : ScriptableObject
+    [CreateAssetMenu(fileName = "Enemy Type", menuName = "EnemyType", order = 1)]
+    public class EnemyType : ScriptableObject
     {
         [SerializeField] private ElementalProperties properties;
         public ElementalProperties Properties { get { return properties; } }
-	}
+    }
 }
