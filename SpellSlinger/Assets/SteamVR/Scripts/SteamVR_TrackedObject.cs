@@ -71,6 +71,8 @@ namespace Valve.VR
                 transform.localPosition = pose.pos;
                 transform.localRotation = pose.rot;
             }
+
+            
         }
 
         SteamVR_Events.Action newPosesAction;
@@ -108,5 +110,5 @@ namespace Valve.VR
             if (System.Enum.IsDefined(typeof(EIndex), index))
                 this.index = (EIndex)index;
         }
-    }
+	}
 }
