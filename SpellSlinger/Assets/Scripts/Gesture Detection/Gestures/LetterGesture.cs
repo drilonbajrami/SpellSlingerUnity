@@ -27,8 +27,8 @@ namespace SpellSlinger
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{
-			if (PoseIsActive && _lastPose == hand.poseName)
-				if (_lastPose.Length <= 1) OnPose();
+			if (PoseIsActive && _lastPose == hand.poseName && _lastPose.Length <= 1)
+				OnPose();
 		}
 
 		protected override void OnInspectorChanges()

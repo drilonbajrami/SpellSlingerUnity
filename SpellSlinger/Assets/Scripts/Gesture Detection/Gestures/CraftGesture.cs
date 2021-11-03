@@ -16,6 +16,7 @@ namespace SpellSlinger
 		[SerializeField] private string POSE_LEFT;
 		[Tooltip("Right hand pose name")]
 		[SerializeField] private string POSE_RIGHT;
+		private string POSE;
 
 		[Header("Other")]
 		[Tooltip("Distance threshold between two hands, used for checking if " +
@@ -26,27 +27,26 @@ namespace SpellSlinger
 		// Pose event
 		public static EventHandler PoseEvent;
 
+		/// <summary>
+		/// Returns a co-join string of both hand pose names
+		/// </summary>
+		/// <returns></returns>
 		private string GetHandPoses() => leftHand.poseName + rightHand.poseName;
 
 		// Override Methods
 		#region Inherited Methods
 		protected override bool PoseIsActive => leftHand.poseActive && 
 												rightHand.poseActive && 
-												GetHandPoses() == POSE_LEFT + POSE_RIGHT;
+												POSE == GetHandPoses();
 
 		protected override void OnPose()
 		{
 			PoseEvent?.Invoke(this, EventArgs.Empty);
 		}
 
-		protected override void PoseStart(object sender, EventArgs e)
-		{
-			_lastPose = GetHandPoses();
-		}
-
 		protected override void PoseEnd(object sender, EventArgs e)
 		{
-			if (_lastPose == GetHandPoses()) {
+			if (PoseIsActive) {
 				if (AreTrackersOn) {
 					float distance = Vector3.Distance(leftHand.transform.position, rightHand.transform.position);
 					if(distance < distanceThreshold) OnPose();
@@ -59,6 +59,7 @@ namespace SpellSlinger
 		{
 			POSE_LEFT = POSE_LEFT.ToUpper();
 			POSE_RIGHT = POSE_RIGHT.ToUpper();
+			POSE = POSE_LEFT + POSE_RIGHT;
 		}
 		#endregion
 	}

@@ -5,58 +5,66 @@ using System;
 
 namespace SpellSlinger
 {
-    public class HandHelp : MonoBehaviour
-    {
-        private List<Transform> panels = new List<Transform>();
-        private int childCount = 0;
-        private int currentPanelIndex = 0;
+	public class HandHelp : MonoBehaviour
+	{
+		private List<GameObject> panels = new List<GameObject>();
+		private int childCount = 0;
+		private int currentPanelIndex = 0;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            childCount = gameObject.transform.childCount;
+		void Start()
+		{
+			childCount = gameObject.transform.childCount;
 
-            for (int i = 0; i < childCount; i++)
-            {
-                panels.Add(gameObject.transform.GetChild(i));
-            }
+			for (int i = 0; i < childCount; i++)
+			{
+				GameObject panel = gameObject.transform.GetChild(i).gameObject;
+				panels.Add(panel);
+				panel.gameObject.SetActive(false);
+			}
 
-            GestureCaster.SwipePoseEvent += SwipePose;
-        }
+			currentPanelIndex = 0;
+			panels[currentPanelIndex].SetActive(true);
+			SwipeGesture.PoseEvent += SwipePose;
+		}
 
 		private void OnEnable()
 		{
-            GestureCaster.SwipePoseEvent += SwipePose;
-        }
+			SwipeGesture.PoseEvent += SwipePose;
+		}
 
 		private void OnDisable()
 		{
-            GestureCaster.SwipePoseEvent -= SwipePose;
-        }
+			SwipeGesture.PoseEvent -= SwipePose;
+		}
 
-		private void SwipePose(object source, EventArgs e)
-        {
-            if (currentPanelIndex < childCount - 1)
-            {
-                currentPanelIndex++;
-                UpdateHelpPanel(currentPanelIndex);
-            }
-            else
-            {
-                currentPanelIndex = 0;
-                UpdateHelpPanel(currentPanelIndex);
-            }
-        }
+		private void SwipePose(object source, SwipeDirections directions)
+		{
+			if (directions.defaultDirection == SwipeDirection.RIGHT) {
+				if (directions.currentDirection == SwipeDirection.RIGHT) Next();
+				else Previous();
+			} 
+			else {
+				if (directions.currentDirection == SwipeDirection.RIGHT) Previous();
+				else Next();
+			}
+		}
 
-        private void UpdateHelpPanel(int index)
-        {
-            for (int i = 0; i < childCount; i++)
-            {
-                if (i != index)
-                    gameObject.transform.GetChild(i).gameObject.SetActive(false);
-                else
-                    gameObject.transform.GetChild(i).gameObject.SetActive(true);
-            }
-        }
-    }
+		private void Next()
+		{
+			panels[currentPanelIndex].gameObject.SetActive(false);
+			currentPanelIndex++;
+			if (currentPanelIndex >= childCount)
+				currentPanelIndex = 0;
+			panels[currentPanelIndex].gameObject.SetActive(true);
+		}
+
+		private void Previous()
+		{
+			panels[currentPanelIndex].gameObject.SetActive(false);
+			currentPanelIndex--;
+			if (currentPanelIndex <= -1)
+				currentPanelIndex = childCount - 1;
+			panels[currentPanelIndex].gameObject.SetActive(true);
+		}
+	}
 }
