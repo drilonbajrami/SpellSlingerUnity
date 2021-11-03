@@ -12,8 +12,7 @@ namespace SpellSlinger
 		[Header("HMD Transform")]
 		[SerializeField] private Transform hmd;
 
-		[Header("Pose names")]
-		[Tooltip("Hand pose name")]
+		[Header("Pose name")]
 		[SerializeField] private string POSE;
 
 		[Header("Other")]

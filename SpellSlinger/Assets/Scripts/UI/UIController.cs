@@ -20,7 +20,7 @@ namespace SpellSlinger
 			GestureReceiver.NextLetterSpelledEvent += NextLetterSpelled;
 			GestureReceiver.CraftedSpellEvent += CraftedSpell;
 
-			GestureCaster.HelpPoseEvent += HelpPose;
+			HelpGesture.PoseEvent += HelpPose;
 		}
 
 		private void Update()
