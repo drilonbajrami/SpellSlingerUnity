@@ -7,21 +7,19 @@ namespace SpellSlinger
 	{
 		/// <summary>
 		/// Keep track if gesture is active or not
+		/// Can be used to turn off gesture recognition when not needed
 		/// </summary>
 		private bool _isOn = true;
+		protected bool IsOn { get { return _isOn; } }
 
 		[Header("Tracker availability")]
-		[SerializeField] protected bool _trackersAreOn;
+		[SerializeField] protected bool _areTrackersOn;
+		protected bool AreTrackersOn { get { return _areTrackersOn; } }
 
 		[Header("Pose timer duration")]
 		[Tooltip("The time span in seconds for a pose to remain stable in order to be captured.\n" +
 				 "It is recommended to keep this time span at 0.5 seconds.")]
 		[Range(0.1f, 2.0f)] [SerializeField] protected float _poseTimeSpan = 0.5f;
-
-		/// <summary>
-		/// Returns the state of the hand poses
-		/// </summary>
-		abstract protected bool PoseIsActive { get; }
 
 		// Cache last known pose name
 		protected string _lastPose;
@@ -80,6 +78,11 @@ namespace SpellSlinger
 		#endregion
 
 		#region Abstract Methods
+		/// <summary>
+		/// Returns the state of the hand poses
+		/// </summary>
+		abstract protected bool PoseIsActive { get; }
+
 		/// <summary>
 		/// On Timer Start event subscriber method
 		/// </summary>

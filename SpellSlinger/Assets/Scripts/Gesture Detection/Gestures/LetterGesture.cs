@@ -12,7 +12,7 @@ namespace SpellSlinger
 		public static EventHandler<char> PoseEvent;
 
 		// Overridden Methods
-		#region Overridden Inherited Methods
+		#region Inherited Methods
 		protected override bool PoseIsActive => hand.poseActive;
 
 		protected override void OnPose()

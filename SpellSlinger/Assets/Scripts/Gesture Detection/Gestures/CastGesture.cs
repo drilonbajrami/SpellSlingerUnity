@@ -46,7 +46,7 @@ namespace SpellSlinger
 		protected override void PoseStart(object sender, EventArgs e)
 		{
 			_lastPose = hand.poseName;
-			if (!_trackersAreOn)
+			if (!AreTrackersOn)
 				_canCompletePose = true;
 			else if (GetDistanceFromHandToHead() < distanceThreshold)
 				_canCompletePose = true;
@@ -61,7 +61,7 @@ namespace SpellSlinger
 		{
 			if (_canCompletePose && _lastPose == hand.poseName)
 			{
-				if (!_trackersAreOn) OnPose();
+				if (!AreTrackersOn) OnPose();
 				else {
 					if (GetDistanceFromHandToHead() > distanceThreshold)
 						OnPose();
