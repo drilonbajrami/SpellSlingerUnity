@@ -61,12 +61,12 @@ namespace SpellSlinger
 		private void Start()
 		{
 			_craftingDurationTimer = new Timer(_craftingDurationInSeconds);
-			_craftingDurationTimer.Deactivate();
-			_craftingDurationTimer.TimerFinish += CraftingDurationTimerFinish;
+			_craftingDurationTimer.Pause();
+			_craftingDurationTimer.TimerEnd += CraftingDurationTimerFinish;
 
-			GestureCaster.LetterPoseEvent += LetterPose;
-			GestureCaster.CraftPoseEvent += CraftPose;
-			GestureCaster.CastPoseEvent += CastPose;
+			LetterGesture.PoseEvent += LetterPose;
+			CraftGesture.PoseEvent += CraftPose;
+			CastGesture.PoseEvent += CastPose;
 		}
 
 		private void Update()
@@ -91,9 +91,9 @@ namespace SpellSlinger
 			if (_isCurrentlyCrafting)
 			{
 				if (!_isSpellAvailable)
-				{
+				{		
 					_isSpellAvailable = IsSpellAvailable(letter);
-					if (_isSpellAvailable) _craftingDurationTimer.Activate();
+					if (_isSpellAvailable) _craftingDurationTimer.Continue();
 				}
 				else
 					CheckNextLetterSpelled(letter);
@@ -115,6 +115,7 @@ namespace SpellSlinger
 		/// </summary>
 		private void CastPose(object source, EventArgs e)
 		{
+			Debug.Log("YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSS!");
 			if (_isReadyToCast)
 			{
 				OnCastSpell();
@@ -143,7 +144,7 @@ namespace SpellSlinger
 			_currentSpellingLetterIndex = 1;
 			_isSpellAvailable = false;
 			_isReadyToCast = false;
-			_craftingDurationTimer.ResetTimer();
+			_craftingDurationTimer.Start();
 		}
 
 		/// <summary>
@@ -158,7 +159,7 @@ namespace SpellSlinger
 			if (_currentSpell != null)
 			{
 				OnSpellToCraft(); // Raises SpellToCraftEvent
-				_craftingDurationTimer.Activate();
+				_craftingDurationTimer.Continue();
 				return true;
 			}
 			else return false;
@@ -180,7 +181,7 @@ namespace SpellSlinger
 				if (_currentSpellingLetterIndex == _currentSpell.Properties.GetElementTypeNameLength())
 				{
 					OnCraftedSpell(_currentSpell); // Raises CraftSpellEvent
-					_craftingDurationTimer.Deactivate();
+					_craftingDurationTimer.Pause();
 					_isReadyToCast = true;
 				}
 			}
