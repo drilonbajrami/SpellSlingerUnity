@@ -5,84 +5,52 @@ using System;
 
 namespace SpellSlinger
 {
-	public enum SwipeDirection { LEFT, RIGHT }
-
-	public class SwipeDirections : EventArgs
-	{
-		public SwipeDirection defaultDirection { get; }
-		public SwipeDirection currentDirection { get; }
-
-		public SwipeDirections(SwipeDirection _defaultDirection, SwipeDirection _currentDirection)
-		{
-			defaultDirection = _defaultDirection;
-			currentDirection = _currentDirection;
-		}
-	}
-
 	public class SwipeGesture : Gesture
 	{
 		[Header("Hand")]
 		[SerializeField] private HandEngine_Client hand;
 
-		[Header("Pose names")]
-		[SerializeField] private string POSE_START;
-		[SerializeField] private string POSE_END;
+		[Header("Pose name")]
+		[SerializeField] private string POSE;
 
-		// TO DO: change the sweep poses in Hand Engine to 
-		// SWEEPLEFT, SWEEPRIGHT
-
-		[Header("Other")]
-		[Tooltip("Set swiping to bidirectional behaviour on/off.")]
-		[SerializeField] private bool _biDirectional = false;
-		[Tooltip("Set default swipe direction when bidirectional behavior is off.")]
-		[SerializeField] private SwipeDirection swipeDefaultDirection = SwipeDirection.RIGHT;
-		private SwipeDirection swipeCurrentDirection = SwipeDirection.RIGHT;
-		private SwipeDirections swipeDirections;
+		//private Tuple<float, float> EndingRange = new Tuple<float, float>(30.0f, 80.0f);
+		//private Tuple<float, float> StartingRange = new Tuple<float, float>(250.0f, 330.0f);
 
 		// Pose event
-		public static EventHandler<SwipeDirections> PoseEvent;
+		public static EventHandler PoseEvent;
+
+		//private bool isInRange(Tuple<float, float> range)
+		//{
+		//	float rotation = hand.transform.rotation.eulerAngles.x;
+
+		//	if (rotation >= range.Item1 && rotation <= range.Item2)
+		//		return true;
+		//	else
+		//		return false;
+		//}
 
 		#region Inherited Methods
-		protected override bool PoseIsActive => hand.poseActive && (hand.poseName == POSE_START || hand.poseName == POSE_END);
+		protected override bool PoseIsActive => hand.poseActive && hand.poseName == POSE && hand.transform.rotation.x < 0.0f;
 
 		protected override void OnPose()
 		{
-			PoseEvent?.Invoke(this, new SwipeDirections(swipeDefaultDirection, swipeCurrentDirection));
+			PoseEvent?.Invoke(this, EventArgs.Empty);
 		}
 
 		protected override void PoseStart(object sender, EventArgs e)
 		{
-			_lastPose = hand.poseName;
+			
 		}
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{
-			if (PoseIsActive) {
-				if (!_biDirectional) {
-					if (_lastPose == POSE_START && hand.poseName == POSE_END){
-						swipeCurrentDirection = swipeDefaultDirection;
-						OnPose();
-					}				
-				} else {
-					if (_lastPose == POSE_START && hand.poseName == POSE_END)
-					{
-						swipeCurrentDirection = SwipeDirection.RIGHT;
-						OnPose();
-					}
-					else if (_lastPose == POSE_END && hand.poseName == POSE_START)
-					{
-						swipeCurrentDirection = SwipeDirection.LEFT;
-						OnPose();
-					}
-				}
-			}
+			if (hand.poseActive && hand.poseName == POSE && hand.transform.rotation.x > 0.0f)
+				OnPose();
 		}
 
 		protected override void OnInspectorChanges()
 		{
-			POSE_START = POSE_START.ToUpper();
-			POSE_END = POSE_END.ToUpper();
-			_biDirectional = !_biDirectional;
+			POSE= POSE.ToUpper();
 		}
 		#endregion
 	}

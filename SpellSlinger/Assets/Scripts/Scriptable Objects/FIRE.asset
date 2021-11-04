@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854f1dd73559ff9418978dfb12e5f9b2, type: 3}
   m_Name: FIRE
   m_EditorClassIdentifier: 
-  type: 0
-  color: {r: 1, g: 0.19607843, b: 0, a: 1}
+  properties:
+    color: {r: 1, g: 0, b: 0, a: 1}
+    currentType: 0
+    strengthType: 2
+    weaknessType: 1

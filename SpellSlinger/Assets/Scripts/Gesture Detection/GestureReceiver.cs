@@ -115,7 +115,6 @@ namespace SpellSlinger
 		/// </summary>
 		private void CastPose(object source, EventArgs e)
 		{
-			Debug.Log("YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSSSSSSSSS!");
 			if (_isReadyToCast)
 			{
 				OnCastSpell();

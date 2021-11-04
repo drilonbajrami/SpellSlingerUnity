@@ -13,19 +13,13 @@ namespace SpellSlinger
 		[Header("Pose name")]
 		[SerializeField] private string POSE;
 
-		[Header("Other")]
-		[Tooltip("Distance threshold between the right hand and the head (HMD Device).\n" +
-				 "Used to check for the CAST pose.")]
-		[Range(0.2f, 0.5f)] [SerializeField] private float distanceThreshold = 0.5f;
-
-		private float _handLastYAxisPosition;
-		private bool open = true;
+		private bool open = false;
 
 		// Pose event
 		public static EventHandler<bool> PoseEvent;
 
 		#region Inherited Methods
-		protected override bool PoseIsActive => hand.poseActive && hand.poseName == POSE;
+		protected override bool PoseIsActive => (!open && hand.poseActive && hand.poseName == POSE) || (open && hand.poseName != POSE);
 
 		protected override void OnPose()
 		{
@@ -34,18 +28,23 @@ namespace SpellSlinger
 
 		protected override void PoseStart(object sender, EventArgs e)
 		{
-			_handLastYAxisPosition = hand.transform.position.y;
+			// If open is true then negate it and raise event
+			// This will close the help menu
+			if (open)
+			{
+				open = false;
+				OnPose();
+				_timer.Pause();
+			}
 		}
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{
-			if (PoseIsActive)
+			// If pose detection has started and continued
+			// Check if the actual pose the correct one and the open is false (menu not open yet)
+			if (!open && hand.poseActive && hand.poseName == POSE)
 			{
-				if (hand.transform.position.y - _handLastYAxisPosition > distanceThreshold)
-					open = true;
-				else if (_handLastYAxisPosition - hand.transform.position.y > distanceThreshold)
-					open = false;
-
+				open = true;
 				OnPose();
 			}
 		}

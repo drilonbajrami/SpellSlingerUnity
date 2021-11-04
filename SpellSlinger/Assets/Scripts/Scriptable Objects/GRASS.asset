@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 854f1dd73559ff9418978dfb12e5f9b2, type: 3}
-  m_Name: FIRE
+  m_Name: GRASS
   m_EditorClassIdentifier: 
   properties:
-    color: {r: 1, g: 0, b: 0, a: 1}
-    currentType: 0
-    strengthType: 2
-    weaknessType: 1
+    color: {r: 0, g: 1, b: 0, a: 1}
+    currentType: 2
+    strengthType: 1
+    weaknessType: 0

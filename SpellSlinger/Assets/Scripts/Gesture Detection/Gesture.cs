@@ -12,8 +12,8 @@ namespace SpellSlinger
 		private bool _isOn = true;
 		protected bool IsOn { get { return _isOn; } }
 
-		[Header("Tracker availability")]
-		[SerializeField] protected bool _areTrackersOn;
+		// Tracker availability
+		private bool _areTrackersOn;
 		protected bool AreTrackersOn { get { return _areTrackersOn; } }
 
 		[Header("Pose timer duration")]
@@ -75,6 +75,12 @@ namespace SpellSlinger
 		/// Disables gesture
 		/// </summary>
 		public void TurnOff() => _isOn = false;
+
+		/// <summary>
+		/// Enable and Disable tracking
+		/// </summary>
+		/// <param name="state"></param>
+		public void TrackingOn(bool state) => _areTrackersOn = state;
 		#endregion
 
 		#region Abstract Methods
@@ -86,7 +92,7 @@ namespace SpellSlinger
 		/// <summary>
 		/// On Timer Start event subscriber method
 		/// </summary>
-		protected abstract void PoseStart(object sender, EventArgs e);
+		protected virtual void PoseStart(object sender, EventArgs e) { }
 
 		/// <summary>
 		/// On Timer End event subscriber method

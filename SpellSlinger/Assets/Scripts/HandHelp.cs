@@ -7,6 +7,8 @@ namespace SpellSlinger
 {
 	public class HandHelp : MonoBehaviour
 	{
+		//[SerializeField] Transform hand;
+
 		private List<GameObject> panels = new List<GameObject>();
 		private int childCount = 0;
 		private int currentPanelIndex = 0;
@@ -27,6 +29,11 @@ namespace SpellSlinger
 			SwipeGesture.PoseEvent += SwipePose;
 		}
 
+		//private void Update()
+		//{
+		//	transform.parent.transform.position = new Vector3(hand.position.x + 0.03f, hand.position.y + 0.15f, hand.position.z + 0.08f);
+		//}
+
 		private void OnEnable()
 		{
 			SwipeGesture.PoseEvent += SwipePose;
@@ -37,16 +44,9 @@ namespace SpellSlinger
 			SwipeGesture.PoseEvent -= SwipePose;
 		}
 
-		private void SwipePose(object source, SwipeDirections directions)
+		private void SwipePose(object source, EventArgs e)
 		{
-			if (directions.defaultDirection == SwipeDirection.RIGHT) {
-				if (directions.currentDirection == SwipeDirection.RIGHT) Next();
-				else Previous();
-			} 
-			else {
-				if (directions.currentDirection == SwipeDirection.RIGHT) Previous();
-				else Next();
-			}
+			Next();
 		}
 
 		private void Next()
