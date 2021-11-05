@@ -13,21 +13,8 @@ namespace SpellSlinger
 		[Header("Pose name")]
 		[SerializeField] private string POSE;
 
-		//private Tuple<float, float> EndingRange = new Tuple<float, float>(30.0f, 80.0f);
-		//private Tuple<float, float> StartingRange = new Tuple<float, float>(250.0f, 330.0f);
-
 		// Pose event
 		public static EventHandler PoseEvent;
-
-		//private bool isInRange(Tuple<float, float> range)
-		//{
-		//	float rotation = hand.transform.rotation.eulerAngles.x;
-
-		//	if (rotation >= range.Item1 && rotation <= range.Item2)
-		//		return true;
-		//	else
-		//		return false;
-		//}
 
 		#region Inherited Methods
 		protected override bool PoseIsActive => hand.poseActive && hand.poseName == POSE && hand.transform.rotation.x < 0.0f;

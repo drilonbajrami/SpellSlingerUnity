@@ -5,47 +5,45 @@ namespace SpellSlinger
 {
     public class UIController : MonoBehaviour
     {
-		[SerializeField] private SpellProgress SpellProgressPanel;
-		[SerializeField] private HandHelp HandHelpPanel;
+		[SerializeField] private SpellProgress SpellProgress;
+		[SerializeField] private HandHelp HandHelp;
 
-		private void SpellToCraft(object source, SpellType spellType) => EnableSpellProgressPanel(spellType);
-		private void NextLetterSpelled(object source, EventArgs e) => SpellProgressPanel.HighlightNextLetter();
-		private void CraftedSpell(object source, SpellType spellType) => DisableSpellProgressPanel(spellType);
-
-		private void HelpPose(object source, bool open) => HandHelpPanel.gameObject.SetActive(open);
+		private void NextLetterSpelled(object source, EventArgs e) => SpellProgress.HighlightNextLetter();
 
 		private void Start()
 		{
-			GestureReceiver.SpellToCraftEvent += SpellToCraft;
+			GestureReceiver.SpellToCraftEvent += EnableSpellProgressPanel;
 			GestureReceiver.NextLetterSpelledEvent += NextLetterSpelled;
-			GestureReceiver.CraftedSpellEvent += CraftedSpell;
+			GestureReceiver.CraftedSpellEvent += DisableSpellProgressPanel;
 
 			HelpGesture.PoseEvent += HelpPose;
 		}
 
 		private void Update()
 		{
-			if (SpellProgressPanel.gameObject.activeSelf)
+			if (SpellProgress.gameObject.activeSelf)
 			{
-				SpellProgressPanel.UpdateSpellTimer(GestureReceiver._craftingDurationTimer.GetProgressPercentage());
+				SpellProgress.UpdateSpellTimer(GestureReceiver._craftingDurationTimer.GetProgressPercentage());
 			}
 		}
 
-		private void EnableSpellProgressPanel(SpellType spellType)
+		private void HelpPose(object source, bool open) => HandHelp.gameObject.SetActive(open);
+
+		private void EnableSpellProgressPanel(object source, SpellType spellType)
 		{
-			if (!SpellProgressPanel.gameObject.activeSelf)
-				SpellProgressPanel.gameObject.SetActive(true);
+			if (!SpellProgress.gameObject.activeSelf)
+				SpellProgress.gameObject.SetActive(true);
 
 			if(spellType != null)
-				SpellProgressPanel.SpellToCraft(spellType);
+				SpellProgress.SpellToCraft(spellType);
 		}
 
-		private void DisableSpellProgressPanel(SpellType spellType)
+		private void DisableSpellProgressPanel(object source, SpellType spellType)
 		{
-			if (SpellProgressPanel.gameObject.activeSelf)
+			if (SpellProgress.gameObject.activeSelf)
 			{
-				SpellProgressPanel.ResetText();
-				SpellProgressPanel.gameObject.SetActive(false);
+				SpellProgress.ResetText();
+				SpellProgress.gameObject.SetActive(false);
 			}
 		}
 	}
