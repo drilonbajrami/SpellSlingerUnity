@@ -7,7 +7,7 @@ namespace SpellSlinger
 {
 	public class HandHelp : MonoBehaviour
 	{
-		private List<GameObject> panels = new List<GameObject>();
+		private List<GameObject> hints = new List<GameObject>();
 		private int childCount = 0;
 		private int currentPanelIndex = 0;
 
@@ -19,13 +19,13 @@ namespace SpellSlinger
 
 			for (int i = 0; i < childCount; i++)
 			{
-				GameObject panel = gameObject.transform.GetChild(i).gameObject;
-				panels.Add(panel);
-				panel.gameObject.SetActive(false);
+				GameObject hint = gameObject.transform.GetChild(i).gameObject;
+				hints.Add(hint);
+				hint.SetActive(false);
 			}
 
 			currentPanelIndex = 0;
-			panels[currentPanelIndex].SetActive(true);
+			hints[currentPanelIndex].SetActive(true);
 
 			SwipeGesture.PoseEvent += SwipePose;
 		}
@@ -47,11 +47,20 @@ namespace SpellSlinger
 
 		private void Next()
 		{
-			panels[currentPanelIndex].gameObject.SetActive(false);
+			hints[currentPanelIndex].gameObject.SetActive(false);
 			currentPanelIndex++;
 			if (currentPanelIndex >= childCount)
 				currentPanelIndex = 0;
-			panels[currentPanelIndex].gameObject.SetActive(true);
+			hints[currentPanelIndex].gameObject.SetActive(true);
+		}
+
+		public void RestartPanel()
+		{
+			foreach (GameObject hint in hints)
+				hint.SetActive(false);
+
+			currentPanelIndex = 0;
+			hints[currentPanelIndex].SetActive(true);
 		}
 	}
 }

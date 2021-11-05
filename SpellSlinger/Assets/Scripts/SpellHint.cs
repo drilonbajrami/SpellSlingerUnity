@@ -35,5 +35,14 @@ namespace SpellSlinger
 			if (currentLetterIndex < transform.childCount)
 				followingLetters[currentLetterIndex].enabled = true;
 		}
+
+		public void ResetView()
+		{
+			startingLetter.enabled = true;
+			currentLetterIndex = 0;
+
+			for (int i = 0; i < transform.childCount; i++)
+				followingLetters[i].enabled = false;
+		}
 	}
 }

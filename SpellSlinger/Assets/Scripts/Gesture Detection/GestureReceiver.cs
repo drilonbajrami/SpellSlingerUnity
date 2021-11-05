@@ -90,11 +90,8 @@ namespace SpellSlinger
 			// Check if player is currently on crafting state
 			if (_isCurrentlyCrafting)
 			{
-				if (!_isSpellAvailable)
-				{		
+				if (!_isSpellAvailable)	
 					_isSpellAvailable = IsSpellAvailable(letter);
-					if (_isSpellAvailable) _craftingDurationTimer.Continue();
-				}
 				else
 					CheckNextLetterSpelled(letter);
 			}
@@ -152,9 +149,10 @@ namespace SpellSlinger
 		/// </summary>
 		private bool IsSpellAvailable(char spellFirstLetter)
 		{
+			// Cache the spell type if it is available
 			_currentSpell = _spells.Find(a => a.Properties.GetElementLetterByIndex(0) == spellFirstLetter);
 
-			// Cache the spell type if it is available
+			// If spell is available
 			if (_currentSpell != null)
 			{
 				OnSpellToCraft(); // Raises SpellToCraftEvent

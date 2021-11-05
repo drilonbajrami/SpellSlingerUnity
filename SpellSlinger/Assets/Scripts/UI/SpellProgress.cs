@@ -14,7 +14,7 @@ namespace SpellSlinger
 		[SerializeField] private TMP_Text _spellName;
 		private string _spellNameText;
 		private int _currentLetterIndex = 0;
-		[SerializeField] private Slider _spellTimer;
+		[SerializeField] private Slider _spellTimerBar;
 
 		/// <summary>
 		/// Get the name of the spell to be crafted.
@@ -25,7 +25,7 @@ namespace SpellSlinger
 			_currentLetterIndex = 0;
 			_spellName.text = spell.Properties.GetElementTypeName();
 			_spellNameText = _spellName.text;
-			_spellTimer.value = 0.0f;
+			_spellTimerBar.value = 0.0f;
 			HighlightNextLetter();
 		}
 
@@ -39,21 +39,18 @@ namespace SpellSlinger
 		}
 
 		/// <summary>
-		/// Reset spell name text fields.
-		/// </summary>
-		public void ResetText()
-		{
-			_spellName.text = string.Empty;
-			_spellNameText = string.Empty;
-		}
-
-		/// <summary>
 		/// Update spell timer progress bar
 		/// </summary>
 		/// <param name="percentage"></param>
 		public void UpdateSpellTimer(float percentage)
 		{
-			_spellTimer.value = percentage;
+			_spellTimerBar.value = percentage;
+		}
+
+		public void OnDisable()
+		{
+			_spellName.text = string.Empty;
+			_spellNameText = string.Empty;
 		}
 	}
 }

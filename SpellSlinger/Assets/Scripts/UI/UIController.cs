@@ -8,15 +8,17 @@ namespace SpellSlinger
 		[SerializeField] private SpellProgress SpellProgress;
 		[SerializeField] private HandHelp HandHelp;
 
-		private void NextLetterSpelled(object source, EventArgs e) => SpellProgress.HighlightNextLetter();
+		private SpellType currentSpellType = null;
+
+		
 
 		private void Start()
 		{
-			GestureReceiver.SpellToCraftEvent += EnableSpellProgressPanel;
+			GestureReceiver.SpellToCraftEvent += EnableSpellProgress;		
+			GestureReceiver.CraftedSpellEvent += DisableSpellProgress;
 			GestureReceiver.NextLetterSpelledEvent += NextLetterSpelled;
-			GestureReceiver.CraftedSpellEvent += DisableSpellProgressPanel;
 
-			HelpGesture.PoseEvent += HelpPose;
+			HelpGesture.PoseEvent += OpenHandHelp;
 		}
 
 		private void Update()
@@ -27,9 +29,9 @@ namespace SpellSlinger
 			}
 		}
 
-		private void HelpPose(object source, bool open) => HandHelp.gameObject.SetActive(open);
+		private void OpenHandHelp(object source, bool open) => HandHelp.gameObject.SetActive(open);
 
-		private void EnableSpellProgressPanel(object source, SpellType spellType)
+		private void EnableSpellProgress(object source, SpellType spellType)
 		{
 			if (!SpellProgress.gameObject.activeSelf)
 				SpellProgress.gameObject.SetActive(true);
@@ -38,13 +40,14 @@ namespace SpellSlinger
 				SpellProgress.SpellToCraft(spellType);
 		}
 
-		private void DisableSpellProgressPanel(object source, SpellType spellType)
+		private void DisableSpellProgress(object source, SpellType spellType)
 		{
 			if (SpellProgress.gameObject.activeSelf)
-			{
-				SpellProgress.ResetText();
 				SpellProgress.gameObject.SetActive(false);
-			}
+
+			HandHelp.RestartPanel();
 		}
+
+		private void NextLetterSpelled(object source, EventArgs e) => SpellProgress.HighlightNextLetter();
 	}
 }
