@@ -141,6 +141,7 @@ namespace SpellSlinger
 			_isSpellAvailable = false;
 			_isReadyToCast = false;
 			_craftingDurationTimer.Start();
+			_craftingDurationTimer.Pause();
 		}
 
 		/// <summary>

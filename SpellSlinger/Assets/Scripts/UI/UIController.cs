@@ -45,7 +45,7 @@ namespace SpellSlinger
 			if (SpellProgress.gameObject.activeSelf)
 				SpellProgress.gameObject.SetActive(false);
 
-			HandHelp.RestartPanel();
+			//HandHelp.RestartPanel();
 		}
 
 		private void NextLetterSpelled(object source, EventArgs e) => SpellProgress.HighlightNextLetter();

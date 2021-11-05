@@ -20,7 +20,8 @@ namespace SpellSlinger
 
 		public void OnCreateSpell(object source, SpellType spellType)
         {
-            currentSpell = Instantiate(spellPrefab, hand.transform);
+            if(spellType != null)
+                currentSpell = Instantiate(spellPrefab, hand.transform);
         }
 
         public void OnCastSpell(object source, EventArgs e)
