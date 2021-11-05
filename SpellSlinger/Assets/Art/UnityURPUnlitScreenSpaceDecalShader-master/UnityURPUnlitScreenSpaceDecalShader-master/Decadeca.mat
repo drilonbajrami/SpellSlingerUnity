@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3d7e23f397bd4e347bc2a33df00d0897, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2a2bde68b82114948808feafb598972c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -30,7 +30,7 @@ Material:
     - _MulAlphaToRGB: 0
     - _ProjectionAngleDiscardEnable: 0
     - _ProjectionAngleDiscardThreshold: 0
-    - _SrcBlend: 2
+    - _SrcBlend: 5
     - _StencilComp: 0
     - _StencilRef: 0
     - _SupportOrthographicCamera: 0
