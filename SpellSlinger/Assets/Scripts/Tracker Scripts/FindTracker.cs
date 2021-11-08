@@ -9,7 +9,7 @@ namespace SpellSlinger
     {
         public TrackerID trackerToUse = TrackerID.LeftHandTracker;
 
-		private void Start()
+		private void Awake()
 		{
             TryGetTracker();
 		}

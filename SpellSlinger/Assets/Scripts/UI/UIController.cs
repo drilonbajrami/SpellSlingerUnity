@@ -6,9 +6,7 @@ namespace SpellSlinger
     public class UIController : MonoBehaviour
     {
 		[SerializeField] private SpellProgress spellProgress;
-		[SerializeField] private HelpPanel helpPanel;
-
-		private SpellType currentSpellType = null;	
+		[SerializeField] private SpellHint spellHint;
 
 		private void Start()
 		{
@@ -27,7 +25,7 @@ namespace SpellSlinger
 			}
 		}
 
-		private void OpenHandHelp(object source, bool condition) => helpPanel.gameObject.SetActive(condition);
+		private void OpenHandHelp(object source, bool condition) => spellHint.gameObject.SetActive(condition);
 
 		private void EnableSpellProgress(object source, SpellType spellType)
 		{
@@ -37,8 +35,7 @@ namespace SpellSlinger
 			if (spellType != null)
 			{
 				spellProgress.SpellToCraft(spellType);
-				helpPanel.SetCurrentSpellHint(spellType);
-				helpPanel.EnableSwipe(false);
+				spellHint.SetCurrentSpellElement(spellType);
 			}
 		}
 
@@ -47,13 +44,13 @@ namespace SpellSlinger
 			if (spellProgress.gameObject.activeSelf)
 				spellProgress.gameObject.SetActive(false);
 
-			helpPanel.ResetPanel();
+			spellHint.ResetPanel();
 		}
 
 		private void OnLetterSpell(object source, EventArgs e)
 		{
 			spellProgress.HighlightLetter();
-			helpPanel.NextLetterHint();
+			spellHint.Refresh();
 		}
 	}
 }

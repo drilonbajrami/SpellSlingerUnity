@@ -14,6 +14,7 @@ namespace SpellSlinger
 		[SerializeField] private TMP_Text _spellName;
 		[SerializeField] private Slider _spellTimerBar;
 		private int _currentLetterIndex = 0;
+		private string spellName;
 
 		/// <summary>
 		/// Get the name of the spell to be crafted.
@@ -23,6 +24,7 @@ namespace SpellSlinger
 		{
 			_currentLetterIndex = 0;
 			_spellName.text = spell.Properties.GetElementTypeName();
+			spellName = _spellName.text;
 			_spellTimerBar.value = 0.0f;
 			HighlightLetter();
 		}
@@ -32,7 +34,7 @@ namespace SpellSlinger
 		/// </summary>
 		public void HighlightLetter()
 		{
-			_spellName.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(_spelledLetterColor)}>{_spellName.text.Substring(0, _currentLetterIndex + 1)}</color>{_spellName.text.Substring(_currentLetterIndex + 1)}";
+			_spellName.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(_spelledLetterColor)}>{spellName.Substring(0, _currentLetterIndex + 1)}</color>{spellName.Substring(_currentLetterIndex + 1)}";
 			_currentLetterIndex++;
 		}
 
@@ -48,6 +50,7 @@ namespace SpellSlinger
 		public void OnDisable()
 		{
 			_spellName.text = string.Empty;
+			spellName = string.Empty;
 		}
 	}
 }

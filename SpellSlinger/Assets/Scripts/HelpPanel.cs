@@ -30,6 +30,12 @@ namespace SpellSlinger
 			hints[currentPanelIndex].gameObject.SetActive(true);
 		}
 
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Space))
+				hints[currentPanelIndex].NextSignLetter();
+		}
+
 		private void OnEnable()
 		{
 			EnableSwipe(true);
@@ -79,7 +85,7 @@ namespace SpellSlinger
 		{
 			foreach (SpellHint hint in hints)
 			{
-				hint.ResetView();
+				//hint.ResetView();
 				hint.gameObject.SetActive(false);		
 			}
 
@@ -97,7 +103,7 @@ namespace SpellSlinger
 
 		public void NextLetterHint()
 		{
-			_currentSpellHintInUse.ShowNextLetterTip();
+			//_currentSpellHintInUse.ShowNextLetterTip();
 		}
 	}
 }
