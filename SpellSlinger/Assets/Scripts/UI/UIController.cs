@@ -5,49 +5,55 @@ namespace SpellSlinger
 {
     public class UIController : MonoBehaviour
     {
-		[SerializeField] private SpellProgress SpellProgress;
-		[SerializeField] private HandHelp HandHelp;
+		[SerializeField] private SpellProgress spellProgress;
+		[SerializeField] private HelpPanel helpPanel;
 
-		private SpellType currentSpellType = null;
-
-		
+		private SpellType currentSpellType = null;	
 
 		private void Start()
 		{
-			GestureReceiver.SpellToCraftEvent += EnableSpellProgress;		
-			GestureReceiver.CraftedSpellEvent += DisableSpellProgress;
-			GestureReceiver.NextLetterSpelledEvent += NextLetterSpelled;
+			SpellCrafter.StartCrafting += EnableSpellProgress;		
+			SpellCrafter.CraftSpell += DisableSpellProgress;
+			SpellCrafter.LetterSent += OnLetterSpell;
 
 			HelpGesture.PoseEvent += OpenHandHelp;
 		}
 
 		private void Update()
 		{
-			if (SpellProgress.gameObject.activeSelf)
+			if (spellProgress.gameObject.activeSelf)
 			{
-				SpellProgress.UpdateSpellTimer(GestureReceiver._craftingDurationTimer.GetProgressPercentage());
+				spellProgress.UpdateSpellTimer(SpellCrafter._craftingTimer.GetProgressPercentage());
 			}
 		}
 
-		private void OpenHandHelp(object source, bool open) => HandHelp.gameObject.SetActive(open);
+		private void OpenHandHelp(object source, bool condition) => helpPanel.gameObject.SetActive(condition);
 
 		private void EnableSpellProgress(object source, SpellType spellType)
 		{
-			if (!SpellProgress.gameObject.activeSelf)
-				SpellProgress.gameObject.SetActive(true);
+			if (!spellProgress.gameObject.activeSelf)
+				spellProgress.gameObject.SetActive(true);
 
-			if(spellType != null)
-				SpellProgress.SpellToCraft(spellType);
+			if (spellType != null)
+			{
+				spellProgress.SpellToCraft(spellType);
+				helpPanel.SetCurrentSpellHint(spellType);
+				helpPanel.EnableSwipe(false);
+			}
 		}
 
 		private void DisableSpellProgress(object source, SpellType spellType)
 		{
-			if (SpellProgress.gameObject.activeSelf)
-				SpellProgress.gameObject.SetActive(false);
+			if (spellProgress.gameObject.activeSelf)
+				spellProgress.gameObject.SetActive(false);
 
-			//HandHelp.RestartPanel();
+			helpPanel.ResetPanel();
 		}
 
-		private void NextLetterSpelled(object source, EventArgs e) => SpellProgress.HighlightNextLetter();
+		private void OnLetterSpell(object source, EventArgs e)
+		{
+			spellProgress.HighlightLetter();
+			helpPanel.NextLetterHint();
+		}
 	}
 }

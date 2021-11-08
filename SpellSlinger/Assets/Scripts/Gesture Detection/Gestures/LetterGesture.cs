@@ -30,11 +30,6 @@ namespace SpellSlinger
 			if (PoseIsActive && _lastPose == hand.poseName && _lastPose.Length <= 1)
 				OnPose();
 		}
-
-		protected override void OnInspectorChanges()
-		{
-			
-		}
 		#endregion
 	}
 }

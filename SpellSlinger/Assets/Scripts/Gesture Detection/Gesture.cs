@@ -107,7 +107,7 @@ namespace SpellSlinger
 		/// <summary>
 		/// Called by OnValidate when changing values in the inspector
 		/// </summary>
-		protected abstract void OnInspectorChanges();
+		protected virtual void OnInspectorChanges() { }
 		#endregion
 	}
 }

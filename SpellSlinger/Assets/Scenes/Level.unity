@@ -406,7 +406,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f47d4b177f24169488103cd1743ac072, type: 2}
   - {fileID: 11400000, guid: 33cda7afff558b14e96c18a9ae0fdc40, type: 2}
   - {fileID: 11400000, guid: d7c4e6a6a16f6b243b55c9b156c602d5, type: 2}
-  _craftingDurationInSeconds: 8
+  _craftingDuration: 8
 --- !u!4 &290855046
 Transform:
   m_ObjectHideFlags: 0
@@ -795,8 +795,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1360,7 +1360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47057b330929c4c40890d92f3f81796b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spelledLetterColor: {r: 0, g: 1, b: 0, a: 1}
+  _spelledLetterColor: {r: 1, g: 0, b: 0, a: 1}
   _spellName: {fileID: 767199297}
   _spellTimerBar: {fileID: 30241197}
 --- !u!1 &1403589305
@@ -1654,17 +1654,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1517702513 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1492180267810965631, guid: ec51144c0c5f7db4391ef92b2ff23e6a, type: 3}
-  m_PrefabInstance: {fileID: 772865249}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30768dcda8d388840b492879ef262aa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1527593635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2011,7 +2000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6721baa61ab5d4f831fd0c15e6208e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trackersOn: 1
+  _trackersOn: 0
 --- !u!4 &1723715237
 Transform:
   m_ObjectHideFlags: 0
@@ -2249,8 +2238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c2d1d4b3f227d24fbef17436069a308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpellProgress: {fileID: 1382233703}
-  HandHelp: {fileID: 1517702513}
+  spellProgress: {fileID: 0}
+  helpPanel: {fileID: 0}
 --- !u!20 &1934006225 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1492180267534019723, guid: ec51144c0c5f7db4391ef92b2ff23e6a, type: 3}

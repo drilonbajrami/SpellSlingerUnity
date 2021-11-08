@@ -7,42 +7,42 @@ namespace SpellSlinger
 {
     public class SpellHint : MonoBehaviour
     {
-  //      private Image startingLetter;
+		private Image startingLetter;
+		private List<Image> followingLetters;
 
-		//private List<Image> followingLetters;
+		private int currentLetterIndex = 0;
 
-		//private int currentLetterIndex = 0;
+		private void Start()
+		{
+			startingLetter = GetComponent<Image>();
 
-		//private void Start()
-		//{
-		//	startingLetter = GetComponent<Image>();
+			for (int i = 0; i < transform.childCount; i++)
+			{
+				followingLetters.Add(transform.GetChild(i).GetComponent<Image>());
+				followingLetters[i].enabled = false;
+			}
+		}
 
-		//	for (int i = 0; i < transform.childCount; i++)
-		//	{
-		//		followingLetters.Add(transform.GetChild(i).GetComponent<Image>());
-		//		followingLetters[i].enabled = false;
-		//	}
-		//}
+		public void ShowNextLetterTip()
+		{
+			if (startingLetter.enabled)
+			{
+				startingLetter.enabled = false;
+				currentLetterIndex++;
+			}
 
-		//public void ShowNextLetter()
-		//{
-		//	if (startingLetter.enabled)
-		//	{
-		//		startingLetter.enabled = false;
-		//		currentLetterIndex++;
-		//	}
+			if (currentLetterIndex < transform.childCount)
+			{
+				followingLetters[currentLetterIndex].enabled = true;
+				currentLetterIndex++;
+			}
+		}
 
-		//	if (currentLetterIndex < transform.childCount)
-		//		followingLetters[currentLetterIndex].enabled = true;
-		//}
-
-		//public void ResetView()
-		//{
-		//	startingLetter.enabled = true;
-		//	currentLetterIndex = 0;
-
-		//	for (int i = 0; i < transform.childCount; i++)
-		//		followingLetters[i].enabled = false;
-		//}
+		public void ResetView()
+		{
+			followingLetters[currentLetterIndex].enabled = false;
+			startingLetter.enabled = true;
+			currentLetterIndex = 0;
+		}
 	}
 }

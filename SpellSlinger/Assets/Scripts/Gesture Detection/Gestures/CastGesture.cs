@@ -50,7 +50,7 @@ namespace SpellSlinger
 				_canCompletePose = true;
 			else
 			{
-				_timer.Pause();
+				_timer.Stop();
 				_canCompletePose = false;
 			}
 		}
@@ -65,7 +65,7 @@ namespace SpellSlinger
 						OnPose();
 					else
 					{
-						_timer.Pause();
+						_timer.Stop();
 						_canCompletePose = false;
 					}
 				}

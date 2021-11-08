@@ -33,8 +33,8 @@ namespace SpellSlinger
 			if (open)
 			{
 				open = false;
+				_timer.Stop();
 				OnPose();
-				_timer.Pause();
 			}
 		}
 

@@ -14,8 +14,8 @@ namespace SpellSlinger
 
 		private void Start()
 		{
-            GestureReceiver.CraftedSpellEvent += OnCreateSpell;
-            GestureReceiver.CastSpellEvent += OnCastSpell;
+            SpellCrafter.CraftSpell += OnCreateSpell;
+            CastGesture.PoseEvent += OnCastSpell;
 		}
 
 		public void OnCreateSpell(object source, SpellType spellType)
@@ -25,6 +25,12 @@ namespace SpellSlinger
         }
 
         public void OnCastSpell(object source, EventArgs e)
+        {
+            if (currentSpell != null)
+                CastSpell();
+        }
+
+        private void CastSpell()
         {
             currentSpell.GetComponent<Spell>().CastSpell();
             currentSpell = null;
