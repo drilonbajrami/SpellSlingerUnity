@@ -9,7 +9,7 @@ namespace SpellSlinger
 		[SerializeField] private HandEngine_Client hand;
 
 		// Pose event
-		public static EventHandler<char> PoseEvent;
+		public static EventHandler<char> PoseForm;
 
 		// Overridden Methods
 		#region Inherited Methods
@@ -17,7 +17,7 @@ namespace SpellSlinger
 
 		protected override void OnPose()
 		{
-			PoseEvent?.Invoke(this, char.Parse(_lastPose));
+			PoseForm?.Invoke(this, char.Parse(_lastPose));
 		}
 
 		protected override void PoseStart(object sender, EventArgs e)

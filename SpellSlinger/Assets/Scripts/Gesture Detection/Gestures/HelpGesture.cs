@@ -16,14 +16,14 @@ namespace SpellSlinger
 		private bool open = false;
 
 		// Pose event
-		public static EventHandler<bool> PoseEvent;
+		public static EventHandler<bool> PoseForm;
 
 		#region Inherited Methods
 		protected override bool PoseIsActive => (!open && hand.poseActive && hand.poseName == POSE) || (open && hand.poseName != POSE);
 
 		protected override void OnPose()
 		{
-			PoseEvent?.Invoke(this, open);
+			PoseForm?.Invoke(this, open);
 		}
 
 		protected override void PoseStart(object sender, EventArgs e)

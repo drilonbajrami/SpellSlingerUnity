@@ -13,7 +13,17 @@ namespace SpellSlinger
 
 		private void Awake()
 		{		
+			// Get the alphabet 
 			alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+
+			// Store all element background sprites
+			foreach (string name in Enum.GetNames(typeof(Element)))
+			{
+				Sprite background = Resources.Load<Sprite>("UI/GestureHints/" + $"{name}BG");
+
+				if (background != null)
+					Elements.Add(name, background);
+			}
 
 			// Store all sign letter sprites
 			for (int i = 0; i < alpha.Length; i++)
@@ -22,15 +32,6 @@ namespace SpellSlinger
 
 				if (letter != null)
 					Alphabet.Add(alpha[i], letter);
-			}
-
-			// Store all element background sprites
-			foreach(string name in Enum.GetNames(typeof(Element)))
-			{
-				Sprite background = Resources.Load<Sprite>("UI/GestureHints/" + $"{name}BG");
-
-				if (background != null)
-					Elements.Add(name, background);
 			}
 		}
 	}

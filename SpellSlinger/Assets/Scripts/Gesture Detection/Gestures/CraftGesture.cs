@@ -25,10 +25,10 @@ namespace SpellSlinger
 		[Range(0.2f, 0.5f)] [SerializeField] private float distanceThreshold = 0.25f;
 		
 		// Pose event
-		public static EventHandler PoseEvent;
+		public static EventHandler PoseForm;
 
 		/// <summary>
-		/// Returns a co-join string of both hand pose names
+		/// Returns a co-joined string of both hand pose names
 		/// </summary>
 		/// <returns></returns>
 		private string GetHandPoses() => leftHand.poseName + rightHand.poseName;
@@ -41,7 +41,7 @@ namespace SpellSlinger
 
 		protected override void OnPose()
 		{
-			PoseEvent?.Invoke(this, EventArgs.Empty);
+			PoseForm?.Invoke(this, EventArgs.Empty);
 		}
 
 		protected override void PoseEnd(object sender, EventArgs e)

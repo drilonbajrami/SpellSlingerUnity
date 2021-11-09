@@ -315,7 +315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spelledLetterColor: {r: 0, g: 1, b: 0, a: 1}
   _spellName: {fileID: 1308907263533155918}
-  _spellTimer: {fileID: 1308907263060443042}
+  _spellTimerBar: {fileID: 0}
 --- !u!1 &1308907264533925317
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,5 +615,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c2d1d4b3f227d24fbef17436069a308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpellProgressPanel: {fileID: 1308907264375732328}
-  HandHelpPanel: {fileID: 0}
+  spellProgress: {fileID: 1308907264375732328}
+  spellHint: {fileID: 0}

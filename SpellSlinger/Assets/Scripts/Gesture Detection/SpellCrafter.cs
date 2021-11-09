@@ -39,7 +39,6 @@ namespace SpellSlinger
 		#endregion
 
 		#region Event Handlers
-		// For UI
 		public static EventHandler<SpellType> StartCrafting;
 		public static EventHandler<SpellType> CraftSpell;
 		public static EventHandler LetterSent;
@@ -59,8 +58,8 @@ namespace SpellSlinger
 			_craftingTimer.TimerEnd += CraftFailed;
 
 			// Subscribe to gesture events
-			LetterGesture.PoseEvent += GetLetter;
-			CraftGesture.PoseEvent += Craft;
+			LetterGesture.PoseForm += GetLetter;
+			CraftGesture.PoseForm += Craft;
 		}
 
 		private void Update()

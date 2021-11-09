@@ -13,8 +13,6 @@ namespace SpellSlinger
 			SpellCrafter.StartCrafting += EnableSpellProgress;		
 			SpellCrafter.CraftSpell += DisableSpellProgress;
 			SpellCrafter.LetterSent += OnLetterSpell;
-
-			HelpGesture.PoseEvent += OpenHandHelp;
 		}
 
 		private void Update()
@@ -25,32 +23,39 @@ namespace SpellSlinger
 			}
 		}
 
-		private void OpenHandHelp(object source, bool condition) => spellHint.gameObject.SetActive(condition);
+		private void OpenSpellHint(object source, bool condition) => spellHint.gameObject.SetActive(condition);
 
 		private void EnableSpellProgress(object source, SpellType spellType)
 		{
 			if (!spellProgress.gameObject.activeSelf)
+			{
 				spellProgress.gameObject.SetActive(true);
+				HelpGesture.PoseForm += OpenSpellHint;
+			}
 
 			if (spellType != null)
 			{
 				spellProgress.SpellToCraft(spellType);
-				spellHint.SetCurrentSpellElement(spellType);
+				spellHint.SetCurrentSpellElement(spellType.Properties.GetElementType());
 			}
 		}
 
 		private void DisableSpellProgress(object source, SpellType spellType)
 		{
 			if (spellProgress.gameObject.activeSelf)
+			{
 				spellProgress.gameObject.SetActive(false);
+				HelpGesture.PoseForm -= OpenSpellHint;
+			}
 
 			spellHint.ResetPanel();
+			spellHint.gameObject.SetActive(false);
 		}
 
 		private void OnLetterSpell(object source, EventArgs e)
 		{
 			spellProgress.HighlightLetter();
-			spellHint.Refresh();
+			spellHint.NextSignLetter();
 		}
 	}
 }

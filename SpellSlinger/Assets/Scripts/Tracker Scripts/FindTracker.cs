@@ -7,6 +7,7 @@ namespace SpellSlinger
     [RequireComponent(typeof(SteamVR_TrackedObject))]
     public class FindTracker : MonoBehaviour
     {
+        // Hand Tracker to be used
         public TrackerID trackerToUse = TrackerID.LeftHandTracker;
 
 		private void Awake()
@@ -14,6 +15,9 @@ namespace SpellSlinger
             TryGetTracker();
 		}
 
+        /// <summary>
+        /// Search for all available trackers and assign the matching one to this current object
+        /// </summary>
         void TryGetTracker()
         {
             for (int i = 0; i < SteamVR.connected.Length; ++i)
@@ -31,6 +35,9 @@ namespace SpellSlinger
         }
     }
 
+    /// <summary>
+    /// Stores the tracker serial name in a string on enum values
+    /// </summary>
     public enum TrackerID : int
     {
         [StringValue("LHR-91E2A79C")]

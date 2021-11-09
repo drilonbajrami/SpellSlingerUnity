@@ -8,6 +8,9 @@ namespace SpellSlinger
 {
     public class GameManager : MonoBehaviour
     {
+        /// <summary>
+        /// List all available tracking devices and print out the serial and model numbers
+        /// </summary>
 		void ListDevices()
         {
             for (int i = 0; i < SteamVR.connected.Length; ++i)

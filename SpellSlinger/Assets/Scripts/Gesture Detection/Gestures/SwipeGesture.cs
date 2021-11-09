@@ -14,19 +14,14 @@ namespace SpellSlinger
 		[SerializeField] private string POSE;
 
 		// Pose event
-		public static EventHandler PoseEvent;
+		public static EventHandler PoseForm;
 
 		#region Inherited Methods
 		protected override bool PoseIsActive => hand.poseActive && hand.poseName == POSE && hand.transform.rotation.x < 0.0f;
 
 		protected override void OnPose()
 		{
-			PoseEvent?.Invoke(this, EventArgs.Empty);
-		}
-
-		protected override void PoseStart(object sender, EventArgs e)
-		{
-			
+			PoseForm?.Invoke(this, EventArgs.Empty);
 		}
 
 		protected override void PoseEnd(object sender, EventArgs e)
