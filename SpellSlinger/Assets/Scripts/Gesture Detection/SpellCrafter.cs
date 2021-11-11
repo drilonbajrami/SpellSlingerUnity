@@ -58,7 +58,6 @@ namespace SpellSlinger
 			_craftingTimer.TimerEnd += CraftFailed;
 
 			// Subscribe to gesture events
-			LetterGesture.PoseForm += GetLetter;
 			CraftGesture.PoseForm += Craft;
 		}
 
@@ -88,7 +87,6 @@ namespace SpellSlinger
 					NextLetter(letter);
 				else // Check if there is any spell available with this starting letter
 					_isSpellAvailable = IsSpellAvailable(letter);
-
 			}
 		}
 
@@ -100,6 +98,7 @@ namespace SpellSlinger
 			ResetCrafting();
 			_isCurrentlyCrafting = true;
 			OnStartCrafting(_spellType);
+			LetterGesture.PoseForm += GetLetter;
 		}
 
 		/// <summary>
@@ -108,8 +107,8 @@ namespace SpellSlinger
 		private void CraftFailed(object source, EventArgs e)
 		{
 			// Pass spell type as null since crafting failed due to timer ending
-			OnCraftSpell(null);
 			ResetCrafting();
+			OnCraftSpell(null);
 		}
 		#endregion
 
@@ -119,8 +118,9 @@ namespace SpellSlinger
 		/// </summary>
 		private void ResetCrafting()
 		{
+			LetterGesture.PoseForm -= GetLetter;
 			_currentLetterIndex = 1;
-			_spellType = null;	
+			_spellType = null;
 			_isSpellAvailable = false;
 			_isCurrentlyCrafting = false;
 			_craftingTimer.Stop();
@@ -162,8 +162,10 @@ namespace SpellSlinger
 				{
 					OnCraftSpell(_spellType);
 					_craftingTimer.Stop();
+					ResetCrafting();
 				}
 			}
+
 		}
 		#endregion
 	}

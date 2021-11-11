@@ -26,7 +26,7 @@ namespace SpellSlinger
 		private char[] _letters;
 		private int _currentLetterIndex = 0;
 
-		private void Start()
+		private void Awake()
 		{
 			// Store the number of element types
 			// Need to loop through the elements when using swipe behaviour
@@ -45,8 +45,10 @@ namespace SpellSlinger
 			// Set default bg and first sign letter of the current element
 			_backgroundImg.sprite = SpriteLibrary.Elements[_element.ToString()];
 			_signLetterImg.sprite = SpriteLibrary.Alphabet[_letters[_currentLetterIndex]];
+		}
 
-			// Listen to swipe gestures
+		private void OnEnable()
+		{
 			SwipeGesture.PoseForm += OnSwipe;
 		}
 

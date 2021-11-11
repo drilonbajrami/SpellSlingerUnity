@@ -10,7 +10,7 @@ namespace SpellSlinger
         // Hand Tracker to be used
         public TrackerID trackerToUse = TrackerID.LeftHandTracker;
 
-		private void Awake()
+		private void Start()
 		{
             TryGetTracker();
 		}

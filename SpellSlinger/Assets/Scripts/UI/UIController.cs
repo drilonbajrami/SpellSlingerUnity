@@ -13,6 +13,9 @@ namespace SpellSlinger
 			SpellCrafter.StartCrafting += EnableSpellProgress;		
 			SpellCrafter.CraftSpell += DisableSpellProgress;
 			SpellCrafter.LetterSent += OnLetterSpell;
+
+			spellHint.gameObject.SetActive(true);
+			spellHint.gameObject.SetActive(false);
 		}
 
 		private void Update()
