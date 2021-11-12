@@ -5,8 +5,8 @@ namespace SpellSlinger
 {
     public class UIController : MonoBehaviour
     {
-		[SerializeField] private SpellProgress spellProgress;
-		[SerializeField] private SpellHint spellHint;
+		[SerializeField] private SpellProgress _spellProgress;
+		[SerializeField] private SpellHint _spellHint;
 
 		private void Start()
 		{
@@ -14,51 +14,52 @@ namespace SpellSlinger
 			SpellCrafter.CraftSpell += DisableSpellProgress;
 			SpellCrafter.LetterSent += OnLetterSpell;
 
-			spellHint.gameObject.SetActive(true);
-			spellHint.gameObject.SetActive(false);
+			_spellHint.gameObject.SetActive(true);
+			_spellHint.gameObject.SetActive(false);
 		}
 
 		private void Update()
 		{
-			if (spellProgress.gameObject.activeSelf)
+			if (_spellProgress.gameObject.activeSelf)
 			{
-				spellProgress.UpdateSpellTimer(SpellCrafter._craftingTimer.GetProgressPercentage());
+				_spellProgress.UpdateSpellTimer(SpellCrafter._craftingTimer.GetProgressPercentage());
 			}
 		}
 
-		private void OpenSpellHint(object source, bool condition) => spellHint.gameObject.SetActive(condition);
+		private void OpenSpellHint(object source, bool condition) => _spellHint.gameObject.SetActive(condition);
 
 		private void EnableSpellProgress(object source, SpellType spellType)
 		{
-			if (!spellProgress.gameObject.activeSelf)
+			if (!_spellProgress.gameObject.activeSelf)
 			{
-				spellProgress.gameObject.SetActive(true);
+				_spellProgress.gameObject.SetActive(true);
 				HelpGesture.PoseForm += OpenSpellHint;
 			}
+			
 
 			if (spellType != null)
 			{
-				spellProgress.SpellToCraft(spellType);
-				spellHint.SetCurrentSpellElement(spellType.Properties.GetElementType());
+				_spellProgress.SpellToCraft(spellType);
+				_spellHint.SetCurrentSpellElement(spellType.Properties.GetElementType());
 			}
 		}
 
 		private void DisableSpellProgress(object source, SpellType spellType)
 		{
-			if (spellProgress.gameObject.activeSelf)
+			if (_spellProgress.gameObject.activeSelf)
 			{
-				spellProgress.gameObject.SetActive(false);
-				HelpGesture.PoseForm -= OpenSpellHint;
+				_spellProgress.gameObject.SetActive(false);
+				HelpGesture.PoseForm -= OpenSpellHint;			
 			}
 
-			spellHint.ResetPanel();
-			spellHint.gameObject.SetActive(false);
+			_spellHint.ResetPanel();
+			_spellHint.gameObject.SetActive(false);
 		}
 
 		private void OnLetterSpell(object source, EventArgs e)
 		{
-			spellProgress.HighlightLetter();
-			spellHint.NextSignLetter();
+			_spellProgress.HighlightLetter();
+			_spellHint.NextSignLetter();
 		}
 	}
 }

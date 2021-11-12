@@ -18,10 +18,16 @@ namespace SpellSlinger
             CastGesture.PoseForm += OnCastSpell;
 		}
 
+		private void Update()
+		{
+            if (currentSpell != null)
+                currentSpell.transform.position = hand.transform.position;
+		}
+
 		public void OnCreateSpell(object source, SpellType spellType)
         {
             if(spellType != null)
-                currentSpell = Instantiate(spellPrefab, hand.transform);
+                currentSpell = Instantiate(spellPrefab);
         }
 
         public void OnCastSpell(object source, EventArgs e)

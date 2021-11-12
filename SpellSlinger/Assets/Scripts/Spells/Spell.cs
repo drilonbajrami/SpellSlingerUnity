@@ -19,7 +19,9 @@ namespace SpellSlinger
 
         float radius;
 
-		private void Awake()
+        Vector3 forward;
+
+        private void Awake()
 		{
             rb = GetComponent<Rigidbody>();
             collider = GetComponent<SphereCollider>();
@@ -28,12 +30,20 @@ namespace SpellSlinger
 
 		private void Update()
 		{
+            float rotation = 45 * Time.deltaTime;
+            transform.Rotate(0, 0, rotation);
+            
+
+            if (!fired)
+            {
+                forward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+            }
             if (fired)
             {
                 radius += speed * Time.deltaTime / 50.0f;
                 collider.radius = radius;
 
-                transform.Translate(transform.forward * speed / 100.0f, Space.World);
+                transform.Translate(forward * speed / 100.0f, Space.World);
             }
 		}
 

@@ -26,16 +26,6 @@ namespace SpellSlinger
 		/// Keep track of which letter is to be spelled next.
 		/// </summary>
 		private int _currentLetterIndex = 1;
-
-		/// <summary>
-		/// Keep track if there is a spell available to be crafted
-		/// </summary>
-		private bool _isSpellAvailable = false;
-
-		/// <summary>
-		/// Keep track if we are currently crafting any spells
-		/// </summary>
-		private bool _isCurrentlyCrafting = false;
 		#endregion
 
 		#region Event Handlers
@@ -79,15 +69,8 @@ namespace SpellSlinger
 		/// </summary>
 		private void GetLetter(object source, char letter)
 		{
-			// Check if player is currently crafting
-			if (_isCurrentlyCrafting)
-			{
-				// If spell exists then proceed to check the next spelled/posed letter
-				if (_isSpellAvailable)
-					NextLetter(letter);
-				else // Check if there is any spell available with this starting letter
-					_isSpellAvailable = IsSpellAvailable(letter);
-			}
+			if (_spellType != null) NextLetter(letter);
+			else IsSpellAvailable(letter);
 		}
 
 		/// <summary>
@@ -96,7 +79,6 @@ namespace SpellSlinger
 		private void Craft(object source, EventArgs e)
 		{
 			ResetCrafting();
-			_isCurrentlyCrafting = true;
 			OnStartCrafting(_spellType);
 			LetterGesture.PoseForm += GetLetter;
 		}
@@ -119,18 +101,16 @@ namespace SpellSlinger
 		private void ResetCrafting()
 		{
 			LetterGesture.PoseForm -= GetLetter;
+			_craftingTimer.Stop();
 			_currentLetterIndex = 1;
 			_spellType = null;
-			_isSpellAvailable = false;
-			_isCurrentlyCrafting = false;
-			_craftingTimer.Stop();
 		}
 
 		/// <summary>
 		/// Check if there is any spells that start with the given letter.
 		/// Invokes the SpellToCraft event.
 		/// </summary>
-		private bool IsSpellAvailable(char spellFirstLetter)
+		private void IsSpellAvailable(char spellFirstLetter)
 		{
 			// Cache the spell type if it is available
 			_spellType = _spells.Find(a => a.Properties.GetElementLetterByIndex(0) == spellFirstLetter);
@@ -140,9 +120,7 @@ namespace SpellSlinger
 			{
 				OnStartCrafting(_spellType);
 				_craftingTimer.Start();
-				return true;
 			}
-			else return false;
 		}
 
 		/// <summary>
@@ -161,11 +139,9 @@ namespace SpellSlinger
 				if (_currentLetterIndex == _spellType.Properties.GetElementTypeNameLength())
 				{
 					OnCraftSpell(_spellType);
-					_craftingTimer.Stop();
 					ResetCrafting();
 				}
 			}
-
 		}
 		#endregion
 	}
