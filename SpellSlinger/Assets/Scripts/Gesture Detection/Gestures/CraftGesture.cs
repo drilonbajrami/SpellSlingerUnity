@@ -35,9 +35,7 @@ namespace SpellSlinger
 
 		// Override Methods
 		#region Inherited Methods
-		protected override bool PoseIsActive => leftHand.poseActive && 
-												rightHand.poseActive && 
-												POSE == GetHandPoses();
+		protected override bool PoseIsActive => leftHand.poseActive && rightHand.poseActive && POSE == GetHandPoses();
 
 		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
 

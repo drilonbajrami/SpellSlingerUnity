@@ -6,58 +6,70 @@ namespace SpellSlinger
 {
     [System.Serializable]
     public class Spell : MonoBehaviour
-    {
-
-        // Element
+    { 
+        // Element properties
         private ElementalProperties _properties;
         public ElementalProperties Properties => _properties;
 
-        private SphereCollider collider;
+        // Cache the collider of this spell
+        private SphereCollider _collider;
 
+        // Speed of spell when fired
         public float speed = 5.0f;
-        private bool fired = false;
-        private float radius;
 
+        // Keep track if fired or not
+        private bool fired = false;
+
+        // Spell life span 
+        [SerializeField] private float _spellLifeSpanInSeconds = 10.0f;
+
+        // Cache the Camera forward vector on X and Z axes
+        // Use to aim the spell towards the center view of the screen (Camera)
         Vector3 forward;
 
         private void Awake()
 		{
-            collider = GetComponent<SphereCollider>();
-            radius = collider.radius;
+            _collider = GetComponent<SphereCollider>();
 		}
 
 		private void Update()
 		{
+            // If not fired yet, update the forward vector based on the camera forward vector
             if (!fired)
             {
                 forward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
             }
             if (fired)
             {                                                                                                                                                                                               
-                radius += speed * Time.deltaTime / 50.0f;
-                collider.radius = radius;
-
+                _collider.radius = speed * Time.deltaTime / 50.0f;
                 transform.Translate(forward * speed / 100.0f, Space.World);
             }
 		}
 
         public void SetType(ElementalProperties properties)
         {
-            this._properties = new ElementalProperties(properties);
-            gameObject.GetComponent<MeshRenderer>().material.SetColor("MainColor", properties.GetColor());
-            
+            _properties = new ElementalProperties(properties);
+            gameObject.GetComponent<MeshRenderer>().material = properties.GetMaterial();
         }
 
+        /// <summary>
+        /// Dettached the spell from parent and fires it.
+        /// </summary>
         public void CastSpell()
         {
             transform.parent = null;
             fired = true;
-            StartCoroutine(LifeSpan());
+            StartCoroutine(LifeSpan(_spellLifeSpanInSeconds));
         }
 
-        private IEnumerator LifeSpan()
+        /// <summary>
+        /// Destroy the spell after given amount of seconds have passed.
+        /// </summary>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
+        private IEnumerator LifeSpan(float seconds)
         {
-            yield return new WaitForSeconds(15f);
+            yield return new WaitForSeconds(seconds);
             Destroy(this.gameObject);
         }
     }

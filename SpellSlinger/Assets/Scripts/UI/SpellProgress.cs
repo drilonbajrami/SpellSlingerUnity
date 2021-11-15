@@ -33,7 +33,7 @@ namespace SpellSlinger
 			_spellNameCache = _spellName.text;
 			_spellTimerBar.value = 0.0f;
 
-			// Highlight the first letter when we know which spell type we are crafting
+			// Highlight the first letter when we know which spell type we are crafting since we already picked the spell type
 			HighlightLetter();
 		}
 
@@ -47,11 +47,14 @@ namespace SpellSlinger
 		}
 
 		/// <summary>
-		/// Update spell timer progress bar
+		/// Update spell timer progress bar.
 		/// </summary>
 		/// <param name="percentage"></param>
 		public void UpdateSpellTimer(float percentage) => _spellTimerBar.value = percentage;
 
+		/// <summary>
+		/// Reset spell progress text.
+		/// </summary>
 		public void ResetText()
 		{
 			_currentLetterIndex = 0;

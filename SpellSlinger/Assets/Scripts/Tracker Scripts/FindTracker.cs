@@ -4,6 +4,9 @@ using System.Text;
 
 namespace SpellSlinger
 {
+    /// <summary>
+    /// Finds the specified tracker and assigns it automatically to the gameObject it is a component of.
+    /// </summary>
     [RequireComponent(typeof(SteamVR_TrackedObject))]
     public class FindTracker : MonoBehaviour
     {
