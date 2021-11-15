@@ -7,6 +7,8 @@ namespace SpellSlinger
     [System.Serializable]
     public class Spell : MonoBehaviour
     {
+
+        // Element
         private ElementalProperties _properties;
         public ElementalProperties Properties => _properties;
 
