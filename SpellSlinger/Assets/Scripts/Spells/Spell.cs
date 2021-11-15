@@ -7,39 +7,31 @@ namespace SpellSlinger
     [System.Serializable]
     public class Spell : MonoBehaviour
     {
-        private ElementalProperties properties;
-        public ElementalProperties Properties { get { return properties; } }
+        private ElementalProperties _properties;
+        public ElementalProperties Properties => _properties;
 
-        private Rigidbody rb;
         private SphereCollider collider;
 
         public float speed = 5.0f;
-
-        bool fired = false;
-
-        float radius;
+        private bool fired = false;
+        private float radius;
 
         Vector3 forward;
 
         private void Awake()
 		{
-            rb = GetComponent<Rigidbody>();
             collider = GetComponent<SphereCollider>();
             radius = collider.radius;
 		}
 
 		private void Update()
 		{
-            float rotation = 45 * Time.deltaTime;
-            transform.Rotate(0, 0, rotation);
-            
-
             if (!fired)
             {
                 forward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
             }
             if (fired)
-            {
+            {                                                                                                                                                                                               
                 radius += speed * Time.deltaTime / 50.0f;
                 collider.radius = radius;
 
@@ -47,7 +39,12 @@ namespace SpellSlinger
             }
 		}
 
-		public void SetType(ElementalProperties properties) => properties = new ElementalProperties(properties);
+        public void SetType(ElementalProperties properties)
+        {
+            this._properties = new ElementalProperties(properties);
+            gameObject.GetComponent<MeshRenderer>().material.SetColor("MainColor", properties.GetColor());
+            
+        }
 
         public void CastSpell()
         {

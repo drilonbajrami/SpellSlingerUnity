@@ -39,10 +39,7 @@ namespace SpellSlinger
 												rightHand.poseActive && 
 												POSE == GetHandPoses();
 
-		protected override void OnPose()
-		{
-			PoseForm?.Invoke(this, EventArgs.Empty);
-		}
+		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{

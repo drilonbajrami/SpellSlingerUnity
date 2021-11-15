@@ -35,6 +35,10 @@ namespace SpellSlinger
 				_spellProgress.gameObject.SetActive(true);
 				HelpGesture.PoseForm += OpenSpellHint;
 			}
+			else if (spellType == null)
+			{
+				_spellProgress.ResetText();
+			}
 			
 
 			if (spellType != null)

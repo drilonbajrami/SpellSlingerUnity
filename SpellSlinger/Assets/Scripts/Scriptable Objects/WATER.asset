@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WATER
   m_EditorClassIdentifier: 
   properties:
-    color: {r: 0, g: 0, b: 1, a: 1}
+    color: {r: 0, g: 0.49803922, b: 1, a: 1}
     currentType: 1
     strengthType: 0
     weaknessType: 2

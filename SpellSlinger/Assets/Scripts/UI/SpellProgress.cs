@@ -50,9 +50,13 @@ namespace SpellSlinger
 		/// Update spell timer progress bar
 		/// </summary>
 		/// <param name="percentage"></param>
-		public void UpdateSpellTimer(float percentage)
+		public void UpdateSpellTimer(float percentage) => _spellTimerBar.value = percentage;
+
+		public void ResetText()
 		{
-			_spellTimerBar.value = percentage;
+			_currentLetterIndex = 0;
+			_spellName.text = string.Empty;
+			_spellNameCache = string.Empty;
 		}
 
 		public void OnDisable()

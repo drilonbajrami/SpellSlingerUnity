@@ -6,6 +6,6 @@ namespace SpellSlinger
     public class SpellType : ScriptableObject
     {
         [SerializeField] private ElementalProperties properties;
-        public ElementalProperties Properties { get { return properties; } }
+        public ElementalProperties Properties => properties;
 	}
 }

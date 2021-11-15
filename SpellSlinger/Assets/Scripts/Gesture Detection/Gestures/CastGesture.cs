@@ -41,10 +41,7 @@ namespace SpellSlinger
 		#region Overridden Inherited Methods
 		protected override bool PoseIsActive => hand.poseActive && hand.poseName == POSE;
 
-		protected override void OnPose()
-		{
-			PoseForm?.Invoke(this, EventArgs.Empty);
-		}
+		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
 
 		protected override void PoseStart(object sender, EventArgs e)
 		{
@@ -76,10 +73,7 @@ namespace SpellSlinger
 			}
 		}
 
-		protected override void OnInspectorChanges()
-		{
-			POSE = POSE.ToUpper();
-		}
+		protected override void OnInspectorChanges() => POSE = POSE.ToUpper();
 		#endregion
 	}
 }

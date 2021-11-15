@@ -11,7 +11,7 @@ namespace SpellSlinger
         /// Cache the state of the timer whether it's running or not.
         /// </summary>
         private bool running;
-        public bool Running { get { return running; } }
+        public bool Running => running;
 
         private float timerInterval;
         private float elapsedTime;

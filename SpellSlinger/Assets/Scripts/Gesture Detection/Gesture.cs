@@ -10,11 +10,11 @@ namespace SpellSlinger
 		/// Can be used to turn off gesture recognition when not needed
 		/// </summary>
 		private bool _isOn = true;
-		protected bool IsOn { get { return _isOn; } }
+		protected bool IsOn => _isOn;
 
 		// Tracker availability
 		private bool _areTrackersOn;
-		protected bool AreTrackersOn { get { return _areTrackersOn; } }
+		protected bool AreTrackersOn => _areTrackersOn;
 
 		[Header("Pose timer duration")]
 		[Tooltip("The time span in seconds for a pose to remain stable in order to be captured.\n" +
@@ -33,7 +33,7 @@ namespace SpellSlinger
 			// Setup the timer and subscribe to timer events
 			_timer = new Timer(_poseTimeSpan);
 			_timer.TimerStart += PoseStart;
-			_timer.TimerEnd += PoseEnd;	
+			_timer.TimerEnd += PoseEnd;
 		}		
 
 		private void FixedUpdate()
@@ -61,10 +61,7 @@ namespace SpellSlinger
 		/// <summary>
 		/// Change the pose time span
 		/// </summary>
-		public void ChangePoseTimeSpan(float seconds)
-		{
-			_poseTimeSpan = seconds;
-		}
+		public void ChangePoseTimeSpan(float seconds) => _poseTimeSpan = seconds;
 
 		/// <summary>
 		/// Enables gesture

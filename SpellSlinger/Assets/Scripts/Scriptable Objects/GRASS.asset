@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GRASS
   m_EditorClassIdentifier: 
   properties:
-    color: {r: 0, g: 1, b: 0, a: 1}
+    color: {r: 0.15686275, g: 0.78431374, b: 0.15686275, a: 1}
     currentType: 2
     strengthType: 1
     weaknessType: 0

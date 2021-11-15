@@ -26,8 +26,11 @@ namespace SpellSlinger
 
 		public void OnCreateSpell(object source, SpellType spellType)
         {
-            if(spellType != null)
+            if (spellType != null)
+            {
                 currentSpell = Instantiate(spellPrefab);
+                currentSpell.GetComponent<Spell>().SetType(spellType.Properties);
+            }
         }
 
         public void OnCastSpell(object source, EventArgs e)

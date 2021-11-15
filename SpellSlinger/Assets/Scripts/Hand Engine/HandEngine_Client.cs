@@ -45,6 +45,7 @@ public class HandEngine_Client : MonoBehaviour
         {
             //Reset connect flag
             Connect = false;
+
             //Try establish connection to tcp socket
             ConnectToTcpServer();
         }

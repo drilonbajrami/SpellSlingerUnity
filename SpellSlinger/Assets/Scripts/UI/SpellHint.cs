@@ -47,15 +47,9 @@ namespace SpellSlinger
 			_signLetterImg.sprite = SpriteLibrary.Alphabet[_letters[_currentLetterIndex]];
 		}
 
-		private void OnEnable()
-		{
-			SwipeGesture.PoseForm += OnSwipe;
-		}
+		private void OnEnable() => SwipeGesture.PoseForm += OnSwipe;
 
-		private void OnSwipe(object source, EventArgs e)
-		{
-			NextElement();
-		}
+		private void OnSwipe(object source, EventArgs e) => NextElement();
 
 		/// <summary>
 		/// Cache the current spell type.
@@ -132,9 +126,6 @@ namespace SpellSlinger
 		/// <summary>
 		/// Update the current letter sign image regarding the current letter being shown.
 		/// </summary>
-		private void UpdateLetterSign()
-		{
-			_signLetterImg.sprite = SpriteLibrary.Alphabet[_letters[_currentLetterIndex]];
-		}
+		private void UpdateLetterSign() => _signLetterImg.sprite = SpriteLibrary.Alphabet[_letters[_currentLetterIndex]];
 	}
 }

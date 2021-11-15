@@ -15,15 +15,9 @@ namespace SpellSlinger
 		#region Inherited Methods
 		protected override bool PoseIsActive => hand.poseActive;
 
-		protected override void OnPose()
-		{
-			PoseForm?.Invoke(this, char.Parse(_lastPose));
-		}
+		protected override void OnPose() => PoseForm?.Invoke(this, char.Parse(_lastPose));
 
-		protected override void PoseStart(object sender, EventArgs e)
-		{
-			_lastPose = hand.poseName;
-		}
+		protected override void PoseStart(object sender, EventArgs e) => _lastPose = hand.poseName;
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{

@@ -15,9 +15,6 @@ namespace SpellSlinger
         /// Constructor used to initalize a StringValue Attribute
         /// </summary>
         /// <param name="value"></param>
-        public StringValueAttribute(string value)
-        {
-            this.StringValue = value;
-        }
+        public StringValueAttribute(string value) => this.StringValue = value;
     }
 }
