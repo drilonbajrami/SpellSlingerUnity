@@ -29,7 +29,7 @@ namespace SpellSlinger
             if (spellType != null)
             {
                 currentSpell = Instantiate(spellPrefab);
-                currentSpell.GetComponent<Spell>().SetType(spellType.Properties);
+                currentSpell.GetComponent<Spell>().SetType(spellType);
             }
         }
 

@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854f1dd73559ff9418978dfb12e5f9b2, type: 3}
   m_Name: WATER
   m_EditorClassIdentifier: 
-  properties:
-    material: {fileID: 2100000, guid: 8eb15fd752bfc814bb873b8a592b4746, type: 2}
-    currentType: 1
-    strengthType: 0
-    weaknessType: 2
+  _element: 1
+  _material: {fileID: 2100000, guid: 8eb15fd752bfc814bb873b8a592b4746, type: 2}
+  _effect: {fileID: 2075047553807121761, guid: 775162ecab9a1af42a83a7d3c02b044b, type: 3}

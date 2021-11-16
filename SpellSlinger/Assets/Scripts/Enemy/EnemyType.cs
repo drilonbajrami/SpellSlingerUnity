@@ -8,7 +8,16 @@ namespace SpellSlinger
     [CreateAssetMenu(fileName = "Enemy Type", menuName = "EnemyType", order = 1)]
     public class EnemyType : ScriptableObject
     {
-        [SerializeField] private ElementalProperties properties;
-        public ElementalProperties Properties => properties;
+        [SerializeField] private Element _element;
+        public Element Element => _element;
+
+        [SerializeField] private Element _strength;
+        public Element Strength => _strength;
+
+        [SerializeField] private Element _weakness;
+        public Element Weakness => _weakness;
+
+        [SerializeField] private Color _color;
+        public Color Color => _color;
     }
 }

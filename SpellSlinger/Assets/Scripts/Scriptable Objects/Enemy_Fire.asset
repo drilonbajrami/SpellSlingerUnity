@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e49aa545aca49943b3eef4a20141f69, type: 3}
   m_Name: Enemy_Fire
   m_EditorClassIdentifier: 
-  properties:
-    color: {r: 1, g: 0, b: 0, a: 1}
-    material: {fileID: 0}
-    currentType: 0
-    strengthType: 2
-    weaknessType: 1
+  _element: 0
+  _strength: 2
+  _weakness: 1
+  _color: {r: 1, g: 0, b: 0, a: 1}

@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854f1dd73559ff9418978dfb12e5f9b2, type: 3}
   m_Name: GRASS
   m_EditorClassIdentifier: 
-  properties:
-    material: {fileID: 2100000, guid: b89fd4f7f34b0894bb2e65c849ac1d47, type: 2}
-    currentType: 2
-    strengthType: 1
-    weaknessType: 0
+  _element: 2
+  _material: {fileID: 2100000, guid: b89fd4f7f34b0894bb2e65c849ac1d47, type: 2}
+  _effect: {fileID: 8569630429605555206, guid: 6daa08e3985bb4847aaa686440b4d0e1, type: 3}

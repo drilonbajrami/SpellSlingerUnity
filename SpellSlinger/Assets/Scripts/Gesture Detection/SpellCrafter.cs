@@ -113,7 +113,7 @@ namespace SpellSlinger
 		private void IsSpellAvailable(char spellFirstLetter)
 		{
 			// Cache the spell type if it is available
-			_spellType = _spells.Find(a => a.Properties.GetElementLetterByIndex(0) == spellFirstLetter);
+			_spellType = _spells.Find(a => a.GetElementLetterByIndex(0) == spellFirstLetter);
 
 			// If spell is available
 			if (_spellType != null)
@@ -130,13 +130,13 @@ namespace SpellSlinger
 		/// </summary>
 		private void NextLetter(char nextLetter)
 		{
-			if (nextLetter == _spellType.Properties.GetElementLetterByIndex(_currentLetterIndex))
+			if (nextLetter == _spellType.GetElementLetterByIndex(_currentLetterIndex))
 			{
 				OnLetterSent();
 				_currentLetterIndex++;
 
 				// Check if all letters have been spelled already
-				if (_currentLetterIndex == _spellType.Properties.GetElementTypeNameLength())
+				if (_currentLetterIndex == _spellType.GetElementTypeNameLength())
 				{
 					OnCraftSpell(_spellType);
 					ResetCrafting();

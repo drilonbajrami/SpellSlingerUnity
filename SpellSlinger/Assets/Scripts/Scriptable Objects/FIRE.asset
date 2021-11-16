@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854f1dd73559ff9418978dfb12e5f9b2, type: 3}
   m_Name: FIRE
   m_EditorClassIdentifier: 
-  properties:
-    material: {fileID: 2100000, guid: be874d9e205b54347a076423a808ba74, type: 2}
-    currentType: 0
-    strengthType: 2
-    weaknessType: 1
+  _element: 0
+  _material: {fileID: 2100000, guid: be874d9e205b54347a076423a808ba74, type: 2}
+  _effect: {fileID: 7089095526888282078, guid: 445da0eba8566bd41a6f4b5e126c6e43, type: 3}

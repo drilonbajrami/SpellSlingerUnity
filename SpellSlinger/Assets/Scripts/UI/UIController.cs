@@ -44,7 +44,7 @@ namespace SpellSlinger
 			if (spellType != null)
 			{
 				_spellProgress.SpellToCraft(spellType);
-				_spellHint.SetCurrentSpellElement(spellType.Properties.GetElementType());
+				_spellHint.SetCurrentSpellElement(spellType.Element);
 			}
 		}
 

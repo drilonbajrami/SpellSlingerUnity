@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e49aa545aca49943b3eef4a20141f69, type: 3}
   m_Name: Enemy_Grass
   m_EditorClassIdentifier: 
-  properties:
-    color: {r: 0, g: 0, b: 0, a: 0}
-    material: {fileID: 0}
-    currentType: 2
-    strengthType: 1
-    weaknessType: 0
+  _element: 2
+  _strength: 1
+  _weakness: 0
+  _color: {r: 0, g: 1, b: 0, a: 1}

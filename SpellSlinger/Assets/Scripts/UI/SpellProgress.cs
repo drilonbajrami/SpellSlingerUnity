@@ -29,7 +29,7 @@ namespace SpellSlinger
 		public void SpellToCraft(SpellType spell)
 		{
 			_currentLetterIndex = 0;
-			_spellName.text = spell.Properties.GetElementTypeName();
+			_spellName.text = spell.GetElementName();
 			_spellNameCache = _spellName.text;
 			_spellTimerBar.value = 0.0f;
 

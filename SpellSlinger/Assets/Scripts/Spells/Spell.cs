@@ -7,9 +7,9 @@ namespace SpellSlinger
     [System.Serializable]
     public class Spell : MonoBehaviour
     { 
-        // Element properties
-        private ElementalProperties _properties;
-        public ElementalProperties Properties => _properties;
+        // Type of spell
+        private SpellType _type;
+        public SpellType Type => _type;
 
         // Cache the collider of this spell
         private SphereCollider _collider;
@@ -41,15 +41,15 @@ namespace SpellSlinger
             }
             if (fired)
             {                                                                                                                                                                                               
-                _collider.radius = speed * Time.deltaTime / 50.0f;
+                _collider.radius += speed * Time.deltaTime / 50.0f;
                 transform.Translate(forward * speed / 100.0f, Space.World);
             }
 		}
 
-        public void SetType(ElementalProperties properties)
+        public void SetType(SpellType type)
         {
-            _properties = new ElementalProperties(properties);
-            gameObject.GetComponent<MeshRenderer>().material = properties.GetMaterial();
+            _type = type;
+            gameObject.GetComponent<MeshRenderer>().material = type.Material;
         }
 
         /// <summary>
@@ -72,5 +72,13 @@ namespace SpellSlinger
             yield return new WaitForSeconds(seconds);
             Destroy(this.gameObject);
         }
-    }
+
+  //      private void OnTriggerEnter(Collider other)
+  //      {
+  //          if (other.gameObject.CompareTag("Enemy"))
+  //          {
+
+  //          }
+		//}
+	}
 }
