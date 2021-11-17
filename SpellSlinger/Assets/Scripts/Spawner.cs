@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,26 +5,28 @@ namespace SpellSlinger
 {
     public class Spawner : MonoBehaviour
     {
-        public List<GameObject> _spawnPoints;
+        [Header("Spawn Point")]
+        [SerializeField] private Transform spawnPointParent;
+        [SerializeField] private GameObject spawnPointPrefab;
+        private List<GameObject> _spawnPoints = new List<GameObject>();
 
+        [Space(10)]
 
+        [Header("Enemy Spawner")]     
         [SerializeField] private List<EnemyType> _enemyTypes = new List<EnemyType>();
-
-        public GameObject enemyPrefab;
+        [SerializeField] private GameObject enemyPrefab;
+        [SerializeField] private Transform enemyParent;
 
         public float spawnRate = 5.0f;
         private float _spawnTime = 0.0f;
 
-        // Used for keeping track if recording spawn points or not in Editor mode
-		[SerializeField] public bool recordingSpawnPoints = false;
+        private void Start()
+        {
+            foreach(Transform spawnPoint in spawnPointParent) _spawnPoints.Add(spawnPoint.gameObject);
+        }
 
-		private void Start()
-		{
-            foreach (GameObject point in _spawnPoints)
-                point.GetComponent<MeshRenderer>().enabled = false;
-		}
-
-		void Update()
+        #region Spawn Methods
+        void Update()
         {
             _spawnTime += Time.deltaTime;
 
@@ -36,40 +37,55 @@ namespace SpellSlinger
             }
         }
 
+        /// <summary>
+        /// Spawns an enemy and parents it to the Enemy GO transform.
+        /// </summary>
         void SpawnEnemy()
         {
-            GameObject enemy = Instantiate(enemyPrefab, GetRandomPosition(), Quaternion.Euler(0, 180, 0));
+            GameObject enemy = Instantiate(enemyPrefab, 
+                                           _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position, 
+                                           Quaternion.Euler(0, 180, 0),
+                                           enemyParent);
             enemy.GetComponent<Enemy>().SetType(_enemyTypes[Random.Range(0, _enemyTypes.Count)]);
         }
+        #endregion
 
-        Vector3 GetRandomPosition()
+        // These methods are called in the SpawnerEditor script on inspector buttons clicked.
+        #region Spawn Point Methods
+        /// <summary>
+        /// Spawns a spawn point and returns it.
+        /// </summary>
+        public GameObject AddSpawnPoint()
         {
-            return new Vector3(Random.Range(-45f, 45f), 1f, Random.Range(70f, 85f));
+            Vector3 randPos = new Vector3(Random.Range(transform.position.x - 5f, transform.position.x + 5f),  // x
+                                          1,                                                                   // y
+                                          Random.Range(transform.position.z - 5f, transform.position.z + 5f)); // z
+
+            GameObject point = Instantiate(spawnPointPrefab, randPos, Quaternion.identity, spawnPointParent);
+            return point;
         }
 
-        public void AddSpawnPoint(GameObject spawnPoint)
+        /// <summary>
+        /// Remove scene selected spawn point.
+        /// </summary>
+        /// <param name="selected"></param>
+        public void RemoveSelectedPoint(GameObject selected)
         {
-            if (_spawnPoints == null)
-                _spawnPoints = new List<GameObject>();
-
-            _spawnPoints.Add(spawnPoint);
+            if(selected.GetComponent<SpawnPoint>() != null) DestroyImmediate(selected);   
         }
 
-        public void RemoveLastPoint()
+        public void AddSelectedPoint(GameObject selected)
         {
-            if (_spawnPoints == null)
-                return;
-            else
-                _spawnPoints.RemoveAt(_spawnPoints.Count - 1);
+            if (selected.GetComponent<SpawnPoint>() != null) DestroyImmediate(selected);
         }
 
+        /// <summary>
+        /// Clear all spawn points.
+        /// </summary>
         public void ClearAllPoints()
         {
-            _spawnPoints.Clear();
+            foreach (Transform point in spawnPointParent) DestroyImmediate(point.gameObject);
         }
-        
-        public void TurnRecordingOn() => recordingSpawnPoints = true;
-
-        public void TurnRecordingOff() => recordingSpawnPoints = false;
+        #endregion
     }
 }
