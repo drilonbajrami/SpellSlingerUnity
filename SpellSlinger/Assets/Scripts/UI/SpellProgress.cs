@@ -21,6 +21,7 @@ namespace SpellSlinger
 
 		// We cache the spell name again so we can change colors for each specific letter individually
 		private string _spellNameCache;
+		private string _defaultText = "Start spelling";
 
 		/// <summary>
 		/// Get the name of the spell to be crafted.
@@ -30,6 +31,7 @@ namespace SpellSlinger
 		{
 			_currentLetterIndex = 0;
 			_spellName.text = spell.GetElementName();
+			SpellText();
 			_spellNameCache = _spellName.text;
 			_spellTimerBar.value = 0.0f;
 
@@ -58,14 +60,27 @@ namespace SpellSlinger
 		public void ResetText()
 		{
 			_currentLetterIndex = 0;
-			_spellName.text = string.Empty;
 			_spellNameCache = string.Empty;
+			DefaultText();
 		}
 
 		public void OnDisable()
-		{
-			_spellName.text = string.Empty;
+		{	
 			_spellNameCache = string.Empty;
+			DefaultText();
+		}
+
+		private void DefaultText()
+        {
+			_spellName.fontSize = 30;
+			_spellName.characterSpacing = 0;
+			_spellName.text = _defaultText;
+		}
+
+		private void SpellText()
+		{
+			_spellName.fontSize = 50;
+			_spellName.characterSpacing = 50;
 		}
 	}
 }
