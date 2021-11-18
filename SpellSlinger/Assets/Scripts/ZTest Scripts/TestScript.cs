@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SpellSlinger
 {
@@ -15,11 +16,12 @@ namespace SpellSlinger
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.R))
-                CreateSpell();
+            //if (Input.GetKeyDown(KeyCode.R))
+            //    CreateSpell();
 
             if (Input.GetKeyDown(KeyCode.Space))
-                CastSpell();
+                SceneManager.LoadScene("Level");
+                //CastSpell();
         }
 
         private void CreateSpell()

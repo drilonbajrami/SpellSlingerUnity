@@ -34,10 +34,14 @@ namespace SpellSlinger
 			{
 				_spellProgress.gameObject.SetActive(true);
 				HelpGesture.PoseForm += OpenSpellHint;
+				_spellHint.ResetPanel();
+				_spellHint.TurnOnSwipe();
 			}
 			else if (spellType == null)
 			{
 				_spellProgress.ResetText();
+				_spellHint.ResetPanel();
+				_spellHint.TurnOnSwipe();
 			}
 			
 

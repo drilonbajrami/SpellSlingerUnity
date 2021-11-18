@@ -7,12 +7,25 @@ namespace SpellSlinger
 {
     public class Player : MonoBehaviour
     {
+        public static Player Instance { get; private set; }
+
         public GameObject spellPrefab;
         private GameObject currentSpell;
 
         public GameObject hand;
 
-		private void Start()
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+                Destroy(gameObject);
+        }
+
+        private void Start()
 		{
             SpellCrafter.CraftSpell += OnCreateSpell;
             CastGesture.PoseForm += OnCastSpell;

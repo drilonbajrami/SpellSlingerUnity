@@ -1236,7 +1236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6721baa61ab5d4f831fd0c15e6208e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _trackersOn: 1
+  _trackersOn: 0
 --- !u!1 &5512312565897578657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,7 +1365,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5512312565937643448}
-  - component: {fileID: 5512312565937643450}
   - component: {fileID: 5512312565937643451}
   m_Layer: 0
   m_Name: Game Manager
@@ -1388,18 +1387,6 @@ Transform:
   m_Father: {fileID: 5512312566194366776}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5512312565937643450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5512312565937643449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad365ba116b18d24eb1224d5539e2136, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5512312565937643451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2027,8 +2014,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8d234cf91b6001748abe0a3c84190a20, type: 2}
-  m_sharedMaterial: {fileID: -7021346094205251826, guid: 8d234cf91b6001748abe0a3c84190a20, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2600,7 +2587,7 @@ GameObject:
   - component: {fileID: 5512312566596958960}
   - component: {fileID: 5512312566596958961}
   m_Layer: 0
-  m_Name: CanvasHelpPanel
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

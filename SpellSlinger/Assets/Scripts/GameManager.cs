@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using Valve.VR;
 using System.Text;
 
@@ -8,6 +9,16 @@ namespace SpellSlinger
 {
     public class GameManager : MonoBehaviour
     {
+        public GameObject gameObject;
+
+        public GameObject player;
+
+        private void Start()
+        {
+            //PrefabUtility.InstantiatePrefab(gameObject, Vector3.zero, Quaternion.identity);
+            PrefabUtility.InstantiatePrefab(gameObject);
+        }
+
         /// <summary>
         /// List all available tracking devices and print out the serial and model numbers
         /// </summary>

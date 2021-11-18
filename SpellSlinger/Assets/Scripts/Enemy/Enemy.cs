@@ -44,8 +44,7 @@ namespace SpellSlinger
 		}
 
 		private void OnCollisionEnter(Collision collision)
-		{
-            
+		{      
             if (collision.gameObject.CompareTag("Spell"))
             {
                 Spell spell = collision.gameObject.GetComponent<Spell>();
@@ -58,7 +57,7 @@ namespace SpellSlinger
 		private IEnumerator SlowDown()
         {
             _agent.speed = _minSpeed;
-            yield return new WaitForSeconds(HitEffect._effectDuration);
+            yield return new WaitForSeconds(3);
             _agent.speed = _maxSpeed;
         }
     }

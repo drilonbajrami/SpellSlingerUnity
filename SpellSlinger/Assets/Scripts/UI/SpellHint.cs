@@ -26,6 +26,8 @@ namespace SpellSlinger
 		private char[] _letters;
 		private int _currentLetterIndex = 0;
 
+		private bool _currentlyCrafting = false;
+
 		private void Awake()
 		{
 			// Store the number of element types
@@ -47,7 +49,16 @@ namespace SpellSlinger
 			_signLetterImg.sprite = SpriteLibrary.Alphabet[_letters[_currentLetterIndex]];
 		}
 
-		private void OnEnable() => SwipeGesture.PoseForm += OnSwipe;
+        public void TurnOnSwipe()
+		{
+			SwipeGesture.PoseForm += OnSwipe;
+			Debug.Log("Swiping turned ON");
+		}
+		public void TurnOffSwipe()
+		{
+			SwipeGesture.PoseForm -= OnSwipe;
+			Debug.Log("Swiping turned OFF");
+		}
 
 		private void OnSwipe(object source, EventArgs e) => NextElement();
 
@@ -57,9 +68,8 @@ namespace SpellSlinger
 		/// <param name="type"></param>
 		public void SetCurrentSpellElement(Element element)
 		{
-			// Once we know the spell we are crafting, stop listening to swipe gestures
-			SwipeGesture.PoseForm -= OnSwipe;
-
+			TurnOffSwipe();
+			_currentlyCrafting = true;
 			// Update the current element type based on the given spell being crafted
 			_element = element;
 			_letters = _element.ToString().ToCharArray();
@@ -74,7 +84,8 @@ namespace SpellSlinger
 		/// </summary>
 		public void ResetPanel()
 		{
-			SwipeGesture.PoseForm += OnSwipe;
+			TurnOffSwipe();
+			_currentlyCrafting = false;
 			_currentElementIndex = 0;
 			_currentLetterIndex = 0;
 			UpdateElementBackground();
