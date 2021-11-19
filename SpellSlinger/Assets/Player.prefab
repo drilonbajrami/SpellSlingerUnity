@@ -46,7 +46,7 @@ MonoBehaviour:
   _poseTimeSpan: 0.5
   hand: {fileID: 5512312565713735592}
   head: {fileID: 5512312566934460694}
-  POSE: CAST
+  POSE: CASTB
   distanceThreshold: 0.4
 --- !u!1 &5512312564926928704
 GameObject:
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poseTimeSpan: 0.45
   hand: {fileID: 5512312565713735592}
-  POSE: HELP
+  POSE: HELPB
 --- !u!1 &5512312565444745268
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,7 +877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poseTimeSpan: 0.1
   hand: {fileID: 5512312565713735592}
-  POSE: HELP
+  POSE: HELPB
 --- !u!1 &5512312565660489658
 GameObject:
   m_ObjectHideFlags: 0
@@ -2220,7 +2220,7 @@ MonoBehaviour:
   leftHand: {fileID: 5512312565477901658}
   rightHand: {fileID: 5512312565713735592}
   POSE_LEFT: CASTL
-  POSE_RIGHT: CASTR
+  POSE_RIGHT: CASTRB
   distanceThreshold: 0.25
 --- !u!1 &5512312566412089387
 GameObject:

@@ -14,6 +14,8 @@ namespace SpellSlinger
 
         public GameObject hand;
 
+        public GestureCaster GestureCaster;
+
         private void Awake()
         {
             if (Instance == null)
@@ -23,12 +25,16 @@ namespace SpellSlinger
             }
             else
                 Destroy(gameObject);
+
+            GestureCaster = FindObjectOfType<GestureCaster>();
         }
 
         private void Start()
 		{
             SpellCrafter.CraftSpell += OnCreateSpell;
             CastGesture.PoseForm += OnCastSpell;
+
+            GestureCaster.Enable<CastGesture>();
 		}
 
 		private void Update()

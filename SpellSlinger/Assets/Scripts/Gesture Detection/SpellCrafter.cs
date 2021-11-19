@@ -48,7 +48,10 @@ namespace SpellSlinger
 			_craftingTimer.TimerEnd += CraftFailed;
 
 			// Subscribe to gesture events
-			CraftGesture.PoseForm += Craft;
+			CraftGesture.PoseForm += Craft; // DO ONCE
+			LetterGesture.PoseForm += GetLetter; // DO ONCE
+
+			Player.Instance.GestureCaster.Enable<CraftGesture>();            // NEW
 		}
 
 		private void Update()
@@ -80,7 +83,8 @@ namespace SpellSlinger
 		{
 			ResetCrafting();
 			OnStartCrafting(_spellType);
-			LetterGesture.PoseForm += GetLetter;
+			//LetterGesture.PoseForm += GetLetter;                    CHANGED ********************
+			Player.Instance.GestureCaster.Enable<LetterGesture>();
 		}
 
 		/// <summary>
@@ -100,7 +104,8 @@ namespace SpellSlinger
 		/// </summary>
 		private void ResetCrafting()
 		{
-			LetterGesture.PoseForm -= GetLetter;
+			//LetterGesture.PoseForm -= GetLetter;						CHANGED ********************
+			Player.Instance.GestureCaster.Disable<LetterGesture>();
 			_craftingTimer.Stop();
 			_currentLetterIndex = 1;
 			_spellType = null;

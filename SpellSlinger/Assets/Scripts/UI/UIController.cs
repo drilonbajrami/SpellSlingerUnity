@@ -13,6 +13,7 @@ namespace SpellSlinger
 			SpellCrafter.StartCrafting += EnableSpellProgress;		
 			SpellCrafter.CraftSpell += DisableSpellProgress;
 			SpellCrafter.LetterSent += OnLetterSpell;
+			HelpGesture.PoseForm += OpenSpellHint;
 
 			_spellHint.gameObject.SetActive(true);
 			_spellHint.gameObject.SetActive(false);
@@ -33,17 +34,19 @@ namespace SpellSlinger
 			if (!_spellProgress.gameObject.activeSelf)
 			{
 				_spellProgress.gameObject.SetActive(true);
-				HelpGesture.PoseForm += OpenSpellHint;
+				//HelpGesture.PoseForm += OpenSpellHint;
+				Player.Instance.GestureCaster.Enable<HelpGesture>();					// CHANGED ******************
 				_spellHint.ResetPanel();
-				_spellHint.TurnOnSwipe();
+				//_spellHint.TurnOnSwipe();
+				Player.Instance.GestureCaster.Enable<SwipeGesture>();					// CHANGED ******************
 			}
 			else if (spellType == null)
 			{
 				_spellProgress.ResetText();
 				_spellHint.ResetPanel();
-				_spellHint.TurnOnSwipe();
+				//_spellHint.TurnOnSwipe();
+				Player.Instance.GestureCaster.Enable<SwipeGesture>();                   // CHANGED ******************
 			}
-			
 
 			if (spellType != null)
 			{
@@ -57,7 +60,8 @@ namespace SpellSlinger
 			if (_spellProgress.gameObject.activeSelf)
 			{
 				_spellProgress.gameObject.SetActive(false);
-				HelpGesture.PoseForm -= OpenSpellHint;			
+				//HelpGesture.PoseForm -= OpenSpellHint;								CHANGED *************
+				Player.Instance.GestureCaster.Disable<HelpGesture>();
 			}
 
 			_spellHint.ResetPanel();

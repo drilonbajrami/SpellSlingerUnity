@@ -47,20 +47,22 @@ namespace SpellSlinger
 			// Set default bg and first sign letter of the current element
 			_backgroundImg.sprite = SpriteLibrary.Elements[_element.ToString()];
 			_signLetterImg.sprite = SpriteLibrary.Alphabet[_letters[_currentLetterIndex]];
-		}
 
-        public void TurnOnSwipe()
-		{
 			SwipeGesture.PoseForm += OnSwipe;
-			Debug.Log("Swiping turned ON");
-		}
-		public void TurnOffSwipe()
-		{
-			SwipeGesture.PoseForm -= OnSwipe;
-			Debug.Log("Swiping turned OFF");
 		}
 
-		private void OnSwipe(object source, EventArgs e) => NextElement();
+        //      public void TurnOnSwipe()
+        //{
+        //	SwipeGesture.PoseForm += OnSwipe;
+        //	Debug.Log("Swiping turned ON");
+        //}
+        //public void TurnOffSwipe()
+        //{
+        //	SwipeGesture.PoseForm -= OnSwipe;
+        //	Debug.Log("Swiping turned OFF");
+        //}
+
+        private void OnSwipe(object source, EventArgs e) => NextElement();
 
 		/// <summary>
 		/// Cache the current spell type.
@@ -68,7 +70,8 @@ namespace SpellSlinger
 		/// <param name="type"></param>
 		public void SetCurrentSpellElement(Element element)
 		{
-			TurnOffSwipe();
+			//TurnOffSwipe();
+			Player.Instance.GestureCaster.Disable<SwipeGesture>();							// CHANGED **********************
 			_currentlyCrafting = true;
 			// Update the current element type based on the given spell being crafted
 			_element = element;
@@ -84,7 +87,8 @@ namespace SpellSlinger
 		/// </summary>
 		public void ResetPanel()
 		{
-			TurnOffSwipe();
+			//TurnOffSwipe();
+			Player.Instance.GestureCaster.Disable<SwipeGesture>();                          // CHANGED **********************
 			_currentlyCrafting = false;
 			_currentElementIndex = 0;
 			_currentLetterIndex = 0;

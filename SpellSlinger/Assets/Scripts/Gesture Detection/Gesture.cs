@@ -9,8 +9,8 @@ namespace SpellSlinger
 		/// Keep track if gesture is active or not
 		/// Can be used to turn off gesture recognition when not needed
 		/// </summary>
-		private bool _isOn = true;
-		protected bool IsOn => _isOn;
+		private bool _isEnabled = false;
+		protected bool IsEnabled => _isEnabled;
 
 		// Tracker availability
 		private bool _areTrackersOn;
@@ -38,7 +38,7 @@ namespace SpellSlinger
 
 		private void FixedUpdate()
 		{
-			if (!_isOn) return;
+			if (!_isEnabled) return;
 
 			// Check if timer is running or not and if hands currently have active poses
 			// If timer is not running and hands are in active poses then start timer
@@ -64,14 +64,14 @@ namespace SpellSlinger
 		public void ChangePoseTimeSpan(float seconds) => _poseTimeSpan = seconds;
 
 		/// <summary>
-		/// Enables gesture
+		/// Enables the gesture
 		/// </summary>
-		public void TurnOn() => _isOn = true;
+		public void Enable() => _isEnabled = true;
 
 		/// <summary>
-		/// Disables gesture
+		/// Disables the gesture
 		/// </summary>
-		public void TurnOff() => _isOn = false;
+		public void Disable() => _isEnabled = false;
 
 		/// <summary>
 		/// Enable and Disable tracking

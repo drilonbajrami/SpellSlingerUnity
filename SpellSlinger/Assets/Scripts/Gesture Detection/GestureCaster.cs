@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SpellSlinger
 {
-	public class GestureCaster : MonoBehaviour
+    public class GestureCaster : MonoBehaviour
 	{
 		[SerializeField] private bool _trackersOn = true;
 
@@ -28,5 +28,17 @@ namespace SpellSlinger
 			foreach (Gesture gesture in gestures)
 				gesture.TrackingOn(_trackersOn);
 		}
-	}
+
+		/// <summary>
+		/// Enables the specified gesture
+		/// </summary>
+		/// <typeparam name="T">Gesture Type</typeparam>
+		public void Enable<T>() where T : Gesture => gestures.OfType<T>().FirstOrDefault().Enable();
+
+		/// <summary>
+		/// Disables the specified gesture
+		/// </summary>
+		/// <typeparam name="T">Gesture Type</typeparam>
+        public void Disable<T>() where T : Gesture => gestures.OfType<T>().FirstOrDefault().Disable();
+    }
 }
