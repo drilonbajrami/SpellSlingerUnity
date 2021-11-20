@@ -27,8 +27,8 @@ namespace SpellSlinger
 		// Pose Timer
 		protected Timer _timer;
 
-		#region UNITY
-		private void Start()
+        #region UNITY
+        private void Start()
 		{
 			// Setup the timer and subscribe to timer events
 			_timer = new Timer(_poseTimeSpan);

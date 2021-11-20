@@ -25,13 +25,13 @@ namespace SpellSlinger
 		private bool _canCompletePose = false;
 
 		// Pose event
-		public static EventHandler PoseForm;		
+		public static EventHandler PoseForm;
 
-		/// <summary>
-		/// Returns the distance between the hand and head (HMD).
-		/// </summary>
-		/// <returns></returns>
-		private float GetDistanceFromHandToHead()
+        /// <summary>
+        /// Returns the distance between the hand and head (HMD).
+        /// </summary>
+        /// <returns></returns>
+        private float GetDistanceFromHandToHead()
 		{
 			return Vector2.Distance(new Vector2(head.position.x, head.position.z),
 									new Vector2(hand.transform.position.x, hand.transform.position.z));
@@ -39,13 +39,18 @@ namespace SpellSlinger
 
 		// Overridden Methods
 		#region Overridden Inherited Methods
-		protected override bool PoseIsActive => hand.poseActive && hand.poseName == POSE;
+		protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetMouseButton(0) : hand.poseActive && hand.poseName == POSE;
 
 		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
 
 		protected override void PoseStart(object sender, EventArgs e)
 		{
-			if (!AreTrackersOn)
+			if (Player.NO_GLOVES)
+			{
+				_canCompletePose = false;
+				PoseForm?.Invoke(this, EventArgs.Empty);
+			}	
+			else if (!AreTrackersOn)
 				_canCompletePose = true;
 			else if (GetDistanceFromHandToHead() < distanceThreshold)
 				_canCompletePose = true;

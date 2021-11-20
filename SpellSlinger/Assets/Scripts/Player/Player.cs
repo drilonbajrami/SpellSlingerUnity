@@ -16,6 +16,9 @@ namespace SpellSlinger
 
         public GestureCaster GestureCaster;
 
+        public bool noGloves;
+        public static bool NO_GLOVES;
+
         private void Awake()
         {
             if (Instance == null)
@@ -62,6 +65,11 @@ namespace SpellSlinger
         {
             currentSpell.GetComponent<Spell>().CastSpell();
             currentSpell = null;
+        }
+
+        public void OnValidate()
+        {
+            NO_GLOVES = noGloves;
         }
     }
 }

@@ -17,13 +17,17 @@ namespace SpellSlinger
 		public static EventHandler PoseForm;
 
 		#region Inherited Methods
-		protected override bool PoseIsActive => hand.poseActive && hand.poseName == POSE && hand.transform.rotation.x < 0.0f;
+		protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetKey(KeyCode.LeftControl)
+												: hand.poseActive && hand.poseName == POSE && hand.transform.rotation.x < 0.0f;
 
 		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{
 			if (hand.poseActive && hand.poseName == POSE && hand.transform.rotation.x > 0.0f)
+				OnPose();
+
+			if (!Input.GetKey(KeyCode.LeftControl))
 				OnPose();
 		}
 
