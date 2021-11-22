@@ -5,11 +5,11 @@ namespace SpellSlinger
 {
 	public abstract class Gesture : MonoBehaviour
 	{
-		/// <summary>
-		/// Keep track if gesture is active or not
-		/// Can be used to turn off gesture recognition when not needed
-		/// </summary>
-		private bool _isEnabled = false;
+        /// <summary>
+        /// Keep track if gesture is active or not
+        /// Can be used to turn off gesture recognition when not needed
+        /// </summary>
+        [SerializeField] private bool _isEnabled = false;
 		protected bool IsEnabled => _isEnabled;
 
 		// Tracker availability
@@ -21,13 +21,10 @@ namespace SpellSlinger
 				 "It is recommended to keep this time span at 0.5 seconds.")]
 		[Range(0.1f, 2.0f)] [SerializeField] protected float _poseTimeSpan = 0.5f;
 
-		// Cache last known pose name
-		protected string _lastPose;
-
 		// Pose Timer
 		protected Timer _timer;
 
-        #region UNITY
+        #region UNITY Methods
         private void Start()
 		{
 			// Setup the timer and subscribe to timer events

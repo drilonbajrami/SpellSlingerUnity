@@ -15,7 +15,7 @@ namespace SpellSlinger
         private SphereCollider _collider;
 
         // Speed of spell when fired
-        public float speed = 5.0f;
+        [SerializeField] private float speed = 5.0f;
 
         // Keep track if fired or not
         private bool fired = false;
@@ -25,8 +25,9 @@ namespace SpellSlinger
 
         // Cache the Camera forward vector on X and Z axes
         // Use to aim the spell towards the center view of the screen (Camera)
-        Vector3 forward;
+        private Vector3 forward;
 
+        #region UNITY Methods
         private void Awake()
 		{
             _collider = GetComponent<SphereCollider>();
@@ -35,17 +36,16 @@ namespace SpellSlinger
 		private void Update()
 		{
             // If not fired yet, update the forward vector based on the camera forward vector
-            if (!fired)
-            {
-                forward = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
-            }
-            if (fired)
-            {                                                                                                                                                                                               
+            if (!fired) {
+                forward = new Vector3(Camera.main.transform.forward.x, 0f, Camera.main.transform.forward.z);
+            } else {
                 _collider.radius += speed * Time.deltaTime / 50.0f;
                 transform.Translate(forward * speed / 100.0f, Space.World);
             }
 		}
+        #endregion
 
+        #region Other Methods
         public void SetType(SpellType type)
         {
             _type = type;
@@ -72,13 +72,6 @@ namespace SpellSlinger
             yield return new WaitForSeconds(seconds);
             Destroy(this.gameObject);
         }
-
-  //      private void OnTriggerEnter(Collider other)
-  //      {
-  //          if (other.gameObject.CompareTag("Enemy"))
-  //          {
-
-  //          }
-		//}
-	}
+        #endregion
+    }
 }

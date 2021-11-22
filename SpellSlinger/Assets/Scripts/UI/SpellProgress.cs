@@ -10,10 +10,10 @@ namespace SpellSlinger
 {
 	public class SpellProgress : MonoBehaviour
 	{
-		/// <summary>
-		/// The color for a spelled letter to highlight
-		/// </summary>
-		[SerializeField] private Color _spelledLetterColor;
+        /// <summary>
+        /// The color for a spelled letter to highlight
+        /// </summary>
+        [SerializeField] private Color _spelledLetterColor;
 
 		[SerializeField] private TMP_Text _spellName;
 		[SerializeField] private Slider _spellTimerBar;
@@ -23,26 +23,69 @@ namespace SpellSlinger
 		private string _spellNameCache;
 		private string _defaultText = "Start spelling";
 
-		/// <summary>
-		/// Get the name of the spell to be crafted.
-		/// </summary>
-		/// <param name="spell"></param>
-		public void SpellToCraft(SpellType spell)
+        #region UNITY Methods
+        private void Start()
+        {
+			SpellCrafter.StartCrafting += OnStartCrafting;
+			SpellCrafter.CraftSpell += OnCraftSpell;
+			SpellCrafter.LetterSent += OnLetterSent;
+
+			gameObject.SetActive(false);
+		}
+
+        private void Update() => UpdateSpellTimer(SpellCrafter._craftingTimer.GetProgressPercentage());
+
+		private void OnDisable()
 		{
-			_currentLetterIndex = 0;
+			_spellNameCache = string.Empty;
+			ResetTextToDefault();
+		}
+		#endregion
+
+		#region Event Subscriber Methods
+		private void OnStartCrafting(object sender, SpellType spellType)
+		{
+			if (!gameObject.activeSelf)
+			{
+				Player.Instance.GestureCaster.Enable<HelpGesture>();
+				gameObject.SetActive(true);
+			}
+			else if (spellType == null) ResetTextToDefault();
+			else SpellToCraft(spellType);
+		}
+
+		private void OnCraftSpell(object sender, SpellType spellType)
+		{
+			Player.Instance.GestureCaster.Disable<HelpGesture>();
+			ResetTextToDefault();
+			gameObject.SetActive(false);
+		}
+
+		private void OnLetterSent(object sender, EventArgs e) => HighlightLetter();
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Get the name of the spell to be crafted.
+        /// </summary>
+        /// <param name="spell"></param>
+        private void SpellToCraft(SpellType spell)
+        {
+            _currentLetterIndex = 0;
 			_spellName.text = spell.GetElementName();
-			SpellText();
+			_spellName.fontSize = 50;
+			_spellName.characterSpacing = 50;
 			_spellNameCache = _spellName.text;
 			_spellTimerBar.value = 0.0f;
 
-			// Highlight the first letter when we know which spell type we are crafting since we already picked the spell type
-			HighlightLetter();
-		}
+            // Highlight the first letter when we know which spell type we are crafting since we already picked the spell type
+            HighlightLetter();
+        }
 
-		/// <summary>
-		/// Highlight the current spelled letter.
-		/// </summary>
-		public void HighlightLetter()
+        /// <summary>
+        /// Highlight the current spelled letter.
+        /// </summary>
+        private void HighlightLetter()
 		{
 			_spellName.text = $"<color=#{ColorUtility.ToHtmlStringRGBA(_spelledLetterColor)}>{_spellNameCache.Substring(0, _currentLetterIndex + 1)}</color>{_spellNameCache.Substring(_currentLetterIndex + 1)}";
 			_currentLetterIndex++;
@@ -52,35 +95,22 @@ namespace SpellSlinger
 		/// Update spell timer progress bar.
 		/// </summary>
 		/// <param name="percentage"></param>
-		public void UpdateSpellTimer(float percentage) => _spellTimerBar.value = percentage;
+		private void UpdateSpellTimer(float percentage) => _spellTimerBar.value = percentage;
 
 		/// <summary>
 		/// Reset spell progress text.
 		/// </summary>
-		public void ResetText()
+		private void ResetTextToDefault()
 		{
 			_currentLetterIndex = 0;
 			_spellNameCache = string.Empty;
-			DefaultText();
-		}
-
-		public void OnDisable()
-		{	
-			_spellNameCache = string.Empty;
-			DefaultText();
-		}
-
-		private void DefaultText()
-        {
+			/* Decrease font size and character spacing
+			 * and reset progress bar text to default text */
 			_spellName.fontSize = 30;
 			_spellName.characterSpacing = 0;
 			_spellName.text = _defaultText;
-		}
 
-		private void SpellText()
-		{
-			_spellName.fontSize = 50;
-			_spellName.characterSpacing = 50;
 		}
+		#endregion
 	}
 }

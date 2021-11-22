@@ -1,6 +1,7 @@
 using UnityEngine;
 using Valve.VR;
 using System.Text;
+using System;
 
 namespace SpellSlinger
 {
@@ -13,12 +14,28 @@ namespace SpellSlinger
         // Hand Tracker to be used
         public TrackerID trackerToUse = TrackerID.LeftHandTracker;
 
-		private void Start() => TryGetTracker();
+        private void Start()
+        {
+            SteamVR_TrackedObject trackedObject = GetComponent<SteamVR_TrackedObject>();
+
+            while(trackedObject.index == SteamVR_TrackedObject.EIndex.None)
+            {
+                try 
+                { 
+                    TryGetTracker(trackedObject); 
+                }
+                catch 
+                {
+                    Debug.Log("Failed to find tracker... Trying agian!");
+                }
+            }
+                
+        }
 
         /// <summary>
         /// Search for all available trackers and assign the matching one to this current object
         /// </summary>
-        void TryGetTracker()
+        void TryGetTracker(SteamVR_TrackedObject pTrackedObject)
         {
             for (int i = 0; i < SteamVR.connected.Length; ++i)
             {
@@ -28,7 +45,7 @@ namespace SpellSlinger
            
                 if (serialNumber.ToString() == trackerToUse.GetStringValue())
                 {
-                    GetComponent<SteamVR_TrackedObject>().SetDeviceIndex(i);
+                    pTrackedObject.SetDeviceIndex(i);
                     break;
                 }
             }

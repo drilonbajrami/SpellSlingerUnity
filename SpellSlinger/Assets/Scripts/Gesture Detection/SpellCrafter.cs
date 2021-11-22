@@ -6,17 +6,12 @@ namespace SpellSlinger
 {
 	public class SpellCrafter : MonoBehaviour
 	{
-		#region Private Fields
 		[Header("Available Spells")]
 		[SerializeField] private List<SpellType> _spells;
 
-		/// <summary>
-		/// Timer for a spell to be crafted completely.
-		/// </summary>
-		public static Timer _craftingTimer;
 		[Tooltip("Crafting timer duration in seconds.")]
 		[Range(1.0f, 15.0f)] [SerializeField] private float _craftingDuration = 8.0f;
-
+		
 		/// <summary>
 		/// Keep track the type of the current spell being crafted.
 		/// </summary>
@@ -26,15 +21,18 @@ namespace SpellSlinger
 		/// Keep track of which letter is to be spelled next.
 		/// </summary>
 		private int _currentLetterIndex = 1;
-		#endregion
 
-		#region Event Handlers
+		/// <summary>
+		/// Timer for a spell to be crafted completely.
+		/// </summary>
+		public static Timer _craftingTimer;
+
+		#region Events
 		public static EventHandler<SpellType> StartCrafting;
 		public static EventHandler<SpellType> CraftSpell;
 		public static EventHandler LetterSent;
-		#endregion
 
-		#region Event Raisers
+		// Event Rasier Methods
 		private void OnStartCrafting(SpellType spellType) => StartCrafting?.Invoke(this, spellType);
 		private void OnCraftSpell(SpellType spellType) => CraftSpell?.Invoke(this, spellType);
 		private void OnLetterSent() => LetterSent?.Invoke(this, EventArgs.Empty);
@@ -51,7 +49,8 @@ namespace SpellSlinger
 			CraftGesture.PoseForm += Craft; // DO ONCE
 			LetterGesture.PoseForm += GetLetter; // DO ONCE
 
-			Player.Instance.GestureCaster.Enable<CraftGesture>();            // NEW
+			// Always enable Craft Gesture on start
+			Player.Instance.GestureCaster.Enable<CraftGesture>();
 		}
 
 		private void Update()
@@ -81,10 +80,9 @@ namespace SpellSlinger
 		/// </summary>
 		private void Craft(object source, EventArgs e)
 		{
+			Player.Instance.GestureCaster.Enable<LetterGesture>();
 			ResetCrafting();
 			OnStartCrafting(_spellType);
-			//LetterGesture.PoseForm += GetLetter;                    CHANGED ********************
-			Player.Instance.GestureCaster.Enable<LetterGesture>();
 		}
 
 		/// <summary>
@@ -92,6 +90,7 @@ namespace SpellSlinger
 		/// </summary>
 		private void CraftFailed(object source, EventArgs e)
 		{
+			Player.Instance.GestureCaster.Disable<LetterGesture>();
 			// Pass spell type as null since crafting failed due to timer ending
 			ResetCrafting();
 			OnCraftSpell(null);
@@ -104,8 +103,6 @@ namespace SpellSlinger
 		/// </summary>
 		private void ResetCrafting()
 		{
-			//LetterGesture.PoseForm -= GetLetter;						CHANGED ********************
-			Player.Instance.GestureCaster.Disable<LetterGesture>();
 			_craftingTimer.Stop();
 			_currentLetterIndex = 1;
 			_spellType = null;
@@ -143,7 +140,8 @@ namespace SpellSlinger
 				// Check if all letters have been spelled already
 				if (_currentLetterIndex == _spellType.GetElementTypeNameLength())
 				{
-					OnCraftSpell(_spellType);
+					Player.Instance.GestureCaster.Disable<LetterGesture>();
+					OnCraftSpell(_spellType);		
 					ResetCrafting();
 				}
 			}

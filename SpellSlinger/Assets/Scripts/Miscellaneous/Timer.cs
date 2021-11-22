@@ -38,7 +38,7 @@ namespace SpellSlinger
         }
 
         /// <summary>
-        /// Increment the timer by give amount in seconds.
+        /// Increment the timer by given amount in seconds.
         /// </summary>
         /// <param name="seconds"></param>
         public void UpdateTimer(float seconds)

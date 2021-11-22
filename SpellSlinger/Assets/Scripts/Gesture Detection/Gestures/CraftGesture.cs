@@ -7,7 +7,7 @@ namespace SpellSlinger
 {
 	public class CraftGesture : Gesture
 	{
-		[Header("Hands")]
+        [Header("Hands")]
 		[SerializeField] private HandEngine_Client leftHand;
 		[SerializeField] private HandEngine_Client rightHand;
 
@@ -23,9 +23,9 @@ namespace SpellSlinger
 				 "hands are close enough during some specific spells/gestures.\n" +
 				 "Optimal distance threshold is around 0.25f units")]
 		[Range(0.2f, 0.5f)] [SerializeField] private float distanceThreshold = 0.25f;
-		
-		// Pose event
-		public static EventHandler PoseForm;
+
+        // Pose event
+        public static EventHandler PoseForm;
 
 		/// <summary>
 		/// Returns a co-joined string of both hand pose names

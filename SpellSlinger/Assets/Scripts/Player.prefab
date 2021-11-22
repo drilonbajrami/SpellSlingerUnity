@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c1ef1f3183a36345bd54a9efad791f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 0
   _poseTimeSpan: 0.5
   hand: {fileID: 5512312565713735592}
   head: {fileID: 5512312566934460694}
@@ -428,6 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e086b0333b9714e8d06805d51f84cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 0
   _poseTimeSpan: 0.45
   hand: {fileID: 5512312565713735592}
   POSE: HELPB
@@ -875,6 +877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d6c7dd62ca6fc41ac72d825a7bec5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 0
   _poseTimeSpan: 0.1
   hand: {fileID: 5512312565713735592}
   POSE: HELPB
@@ -1765,6 +1768,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellPrefab: {fileID: 412360807489085016, guid: 3901d80927f61d245b009611d4147337, type: 3}
   hand: {fileID: 5512312566176708556}
+  GestureCaster: {fileID: 0}
+  noGloves: 0
 --- !u!1 &5512312566201165166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1945,6 +1950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce18f0516d88af4c8f8cc449b86d695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 0
   _poseTimeSpan: 0.2
   hand: {fileID: 5512312565477901658}
 --- !u!1 &5512312566282200193
@@ -2216,6 +2222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3ad19b9f9d60d49886695657f73c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnabled: 0
   _poseTimeSpan: 0.2
   leftHand: {fileID: 5512312565477901658}
   rightHand: {fileID: 5512312565713735592}
@@ -2234,7 +2241,6 @@ GameObject:
   - component: {fileID: 5512312566412089391}
   - component: {fileID: 5512312566412089388}
   - component: {fileID: 5512312566412089389}
-  - component: {fileID: 5512312566412089386}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2324,20 +2330,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5512312566412089386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5512312566412089387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c2d1d4b3f227d24fbef17436069a308, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spellProgress: {fileID: 5512312566052107564}
-  _spellHint: {fileID: 5512312565904928373}
 --- !u!1 &5512312566418018180
 GameObject:
   m_ObjectHideFlags: 0

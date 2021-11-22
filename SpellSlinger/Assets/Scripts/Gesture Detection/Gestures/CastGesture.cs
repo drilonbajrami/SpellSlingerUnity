@@ -7,7 +7,7 @@ namespace SpellSlinger
 {
 	public class CastGesture : Gesture
 	{
-		[Header("Hand & Head Transform")]
+        [Header("Hand & Head Transform")]
 		[SerializeField] private HandEngine_Client hand;
 		[SerializeField] private Transform head;
 
@@ -24,8 +24,8 @@ namespace SpellSlinger
 		// Keep track if completing cast pose is available
 		private bool _canCompletePose = false;
 
-		// Pose event
-		public static EventHandler PoseForm;
+        // Pose event
+        public static EventHandler PoseForm;
 
         /// <summary>
         /// Returns the distance between the hand and head (HMD).
@@ -38,7 +38,7 @@ namespace SpellSlinger
 		}
 
 		// Overridden Methods
-		#region Overridden Inherited Methods
+		#region Inherited Methods
 		protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetMouseButton(0) : hand.poseActive && hand.poseName == POSE;
 
 		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);

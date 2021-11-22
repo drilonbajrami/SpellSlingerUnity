@@ -7,7 +7,7 @@ namespace SpellSlinger
 {
 	public class HelpGesture : Gesture
 	{
-		[Header("Hand")]
+        [Header("Hand")]
 		[SerializeField] private HandEngine_Client hand;
 
 		[Header("Pose name")]
@@ -15,14 +15,14 @@ namespace SpellSlinger
 
 		private bool open = false;
 
-		// Pose event
-		public static EventHandler<bool> PoseForm;
+        // Pose event
+        public static EventHandler<bool> PoseForm;
 
-		protected override bool PoseIsActive => Player.NO_GLOVES ? (!open && Input.GetKey(KeyCode.Space)) || (open && !Input.GetKey(KeyCode.Space))
-												: (!open && hand.poseActive && hand.poseName == POSE) || (open && hand.poseName != POSE);
-
+		// Overridden Methods
 		#region Inherited Methods
 		//protected override bool PoseIsActive => (!open && hand.poseActive && hand.poseName == POSE) || (open && hand.poseName != POSE);
+		protected override bool PoseIsActive => Player.NO_GLOVES ? (!open && Input.GetKey(KeyCode.Space)) || (open && !Input.GetKey(KeyCode.Space))
+												: (!open && hand.poseActive && hand.poseName == POSE) || (open && hand.poseName != POSE);
 
 		protected override void OnPose() => PoseForm?.Invoke(this, open);
 

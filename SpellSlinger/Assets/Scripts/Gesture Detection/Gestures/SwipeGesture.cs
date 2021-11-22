@@ -7,14 +7,14 @@ namespace SpellSlinger
 {
 	public class SwipeGesture : Gesture
 	{
-		[Header("Hand")]
+        [Header("Hand")]
 		[SerializeField] private HandEngine_Client hand;
 
 		[Header("Pose name")]
 		[SerializeField] private string POSE;
 
-		// Pose event
-		public static EventHandler PoseForm;
+        // Pose event
+        public static EventHandler PoseForm;
 
 		#region Inherited Methods
 		protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetKey(KeyCode.LeftControl)

@@ -8,8 +8,8 @@ namespace SpellSlinger
 {
 	public class SpellHint : MonoBehaviour
 	{
-		// Store the element type of the spell
-		private Element _element;
+        // Store the element type of the spell
+        private Element _element;
 
 		// Background sign for the element
 		private Image _backgroundImg;
@@ -26,9 +26,8 @@ namespace SpellSlinger
 		private char[] _letters;
 		private int _currentLetterIndex = 0;
 
-		private bool _currentlyCrafting = false;
-
-		private void Awake()
+        #region UNITY Methods
+        private void Start()
 		{
 			// Store the number of element types
 			// Need to loop through the elements when using swipe behaviour
@@ -48,31 +47,57 @@ namespace SpellSlinger
 			_backgroundImg.sprite = SpriteLibrary.Elements[_element.ToString()];
 			_signLetterImg.sprite = SpriteLibrary.Alphabet[_letters[_currentLetterIndex]];
 
+			SpellCrafter.StartCrafting += OnStartCrafting;
+			SpellCrafter.CraftSpell += OnCraftSpell;
+			SpellCrafter.LetterSent += OnLetterSent;
+			HelpGesture.PoseForm += TogglePanel;
 			SwipeGesture.PoseForm += OnSwipe;
+
+			gameObject.SetActive(false);
+		}
+        #endregion
+
+        #region Event Subscriber Methods
+        private void OnStartCrafting(object sender, SpellType spellType)
+		{
+			if (spellType == null) ResetPanel();
+			else SetCurrentSpellElement(spellType.Element);
 		}
 
-        //      public void TurnOnSwipe()
-        //{
-        //	SwipeGesture.PoseForm += OnSwipe;
-        //	Debug.Log("Swiping turned ON");
-        //}
-        //public void TurnOffSwipe()
-        //{
-        //	SwipeGesture.PoseForm -= OnSwipe;
-        //	Debug.Log("Swiping turned OFF");
-        //}
+        private void OnCraftSpell(object sender, SpellType e)
+        {
+			ResetPanel();
+			gameObject.SetActive(false);
+        }
 
-        private void OnSwipe(object source, EventArgs e) => NextElement();
+		private void OnLetterSent(object sender, EventArgs e) => NextSignLetter();
 
-		/// <summary>
-		/// Cache the current spell type.
-		/// </summary>
-		/// <param name="type"></param>
-		public void SetCurrentSpellElement(Element element)
+		private void TogglePanel(object sender, bool e)
 		{
-			//TurnOffSwipe();
-			Player.Instance.GestureCaster.Disable<SwipeGesture>();							// CHANGED **********************
-			_currentlyCrafting = true;
+			if(e) {
+				// Turn on hint panel and enable swipe gesture if no element selected for crafting yet
+				gameObject.SetActive(e);
+				if (_currentLetterIndex == 0)
+					Player.Instance.GestureCaster.Enable<SwipeGesture>();	
+            } else {
+				// Disable Swipe gesture since we are closing the help/hint panel
+				Player.Instance.GestureCaster.Disable<SwipeGesture>();
+				gameObject.SetActive(e);
+			}
+		}
+
+		private void OnSwipe(object source, EventArgs e) => NextElement();
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Cache the current spell type.
+        /// </summary>
+        /// <param name="type"></param>
+        private void SetCurrentSpellElement(Element element)
+		{
+			// Turn off swipe gesture since we do not need it anymore once we know the element we are crafting
+			Player.Instance.GestureCaster.Disable<SwipeGesture>();
 			// Update the current element type based on the given spell being crafted
 			_element = element;
 			_letters = _element.ToString().ToCharArray();
@@ -85,13 +110,11 @@ namespace SpellSlinger
 		/// <summary>
 		/// Reset everything related to the spell hint panel
 		/// </summary>
-		public void ResetPanel()
+		private void ResetPanel()
 		{
-			//TurnOffSwipe();
-			Player.Instance.GestureCaster.Disable<SwipeGesture>();                          // CHANGED **********************
-			_currentlyCrafting = false;
 			_currentElementIndex = 0;
 			_currentLetterIndex = 0;
+			_element = (Element)_currentElementIndex;
 			UpdateElementBackground();
 			UpdateLetterSign();
 		}
@@ -116,7 +139,7 @@ namespace SpellSlinger
 		/// <summary>
 		/// Show next sign letter.
 		/// </summary>
-		public void NextSignLetter()
+		private void NextSignLetter()
 		{
 			// Increment letter index counter
 			_currentLetterIndex++;
@@ -142,5 +165,6 @@ namespace SpellSlinger
 		/// Update the current letter sign image regarding the current letter being shown.
 		/// </summary>
 		private void UpdateLetterSign() => _signLetterImg.sprite = SpriteLibrary.Alphabet[_letters[_currentLetterIndex]];
-	}
+        #endregion
+    }
 }

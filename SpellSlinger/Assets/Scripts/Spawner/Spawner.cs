@@ -11,21 +11,22 @@ namespace SpellSlinger
         private List<GameObject> _spawnPoints = new List<GameObject>();
 
         [Space(10)]
-
         [Header("Enemy Spawner")]     
         [SerializeField] private List<EnemyType> _enemyTypes = new List<EnemyType>();
         [SerializeField] private GameObject enemyPrefab;
         [SerializeField] private Transform enemyParent;
 
+        [Space(10)]
+        [Header("Spawn Rate")]
         public float spawnRate = 5.0f;
         private float _spawnTime = 0.0f;
 
+        #region UNITY Methods
         private void Start()
         {
             foreach(Transform spawnPoint in spawnPointParent) _spawnPoints.Add(spawnPoint.gameObject);
         }
 
-        #region Spawn Methods
         void Update()
         {
             _spawnTime += Time.deltaTime;
@@ -36,7 +37,9 @@ namespace SpellSlinger
                 _spawnTime = 0.0f;
             }
         }
+        #endregion
 
+        #region Spawn Enemy Methods
         /// <summary>
         /// Spawns an enemy and parents it to the Enemy GO transform.
         /// </summary>

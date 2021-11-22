@@ -5,34 +5,34 @@ namespace SpellSlinger
 {
 	public class LetterGesture : Gesture
 	{
-		[Header("Hand")]
+        [Header("Hand")]
 		[SerializeField] private HandEngine_Client hand;
 
+		// Cache the alphabet
 		private char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
-		// Pose event
-		public static EventHandler<char> PoseForm;
+		// Cache last received pose name
+		private string _lastPose;
 
-		string currentKey;
-		char key;
+        // Pose event
+        public static EventHandler<char> PoseForm;
 
         private void Update()
         {
-            if(Player.NO_GLOVES && Input.anyKeyDown)
+            if(Player.NO_GLOVES && Input.anyKeyDown && IsEnabled)
             {
-				currentKey = Input.inputString;
-
+				string currentKey = Input.inputString;
+				char key;
 				if (currentKey.Length > 0)
 				{
 					currentKey = currentKey.Substring(0, 1).ToUpper();
 					key = char.Parse(currentKey);
+					foreach (char c in alpha)
+					{
+						if (c == key)
+							PoseForm?.Invoke(this, key);
+					}
 				}
-				
-				foreach(char c in alpha)
-                {
-					if (c == key)
-						PoseForm?.Invoke(this, key);
-                }
             }
         }
 
