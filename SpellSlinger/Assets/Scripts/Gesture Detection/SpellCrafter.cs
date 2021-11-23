@@ -46,11 +46,8 @@ namespace SpellSlinger
 			_craftingTimer.TimerEnd += CraftFailed;
 
 			// Subscribe to gesture events
-			CraftGesture.PoseForm += Craft; // DO ONCE
-			LetterGesture.PoseForm += GetLetter; // DO ONCE
-
-			// Always enable Craft Gesture on start
-			Player.Instance.GestureCaster.Enable<CraftGesture>();
+			CraftGesture.PoseForm += Craft;
+			LetterGesture.PoseForm += GetLetter;
 		}
 
 		private void Update()

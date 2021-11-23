@@ -6,9 +6,16 @@ namespace SpellSlinger
 {
     public class EndGameState : State
     {
-        public override void HandleState(Player player)
+        #region Inherited Methods
+        public override void OnStateStart()
         {
             throw new System.NotImplementedException();
         }
+
+        public override void OnStateEnd()
+        {
+            throw new System.NotImplementedException();
+        }
+        #endregion
     }
 }

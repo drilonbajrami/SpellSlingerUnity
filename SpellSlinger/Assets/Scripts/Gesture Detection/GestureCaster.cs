@@ -29,6 +29,11 @@ namespace SpellSlinger
 				gesture.TrackingOn(_trackersOn);
 		}
 
+		public void DisableAllGestures()
+        {
+			foreach (Gesture gesture in gestures) gesture.Disable();
+        }
+
 		/// <summary>
 		/// Enables the specified gesture
 		/// </summary>

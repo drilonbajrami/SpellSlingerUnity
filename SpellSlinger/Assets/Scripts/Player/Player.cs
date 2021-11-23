@@ -8,16 +8,25 @@ namespace SpellSlinger
     public class Player : MonoBehaviour
     {
         public static Player Instance { get; private set; }
+        public GestureCaster GestureCaster;
+        public State _state;
 
+        [Space(5)]
+        [Header("Gloves ON/OFF")]
+        [SerializeField] private bool noGloves;
+        public static bool NO_GLOVES;
+
+        [Space(10)]
+        [Header("State References")]
+        // State related references
+        public GameObject StartScreen;
+        public Tutorial TutorialScreen;
+        public GameObject OverlayCanvas;
+        
+        [Space(10)]
         public GameObject spellPrefab;
         private GameObject currentSpell;
-
         public GameObject hand;
-
-        public GestureCaster GestureCaster;
-
-        public bool noGloves;
-        public static bool NO_GLOVES;
 
         private void Awake()
         {
@@ -29,15 +38,17 @@ namespace SpellSlinger
             else
                 Destroy(gameObject);
 
-            GestureCaster = FindObjectOfType<GestureCaster>();
+            StartScreen = GameObject.FindGameObjectWithTag("StartScreen");
+            TutorialScreen = GameObject.FindGameObjectWithTag("TutorialScreen").GetComponent<Tutorial>();    
         }
 
         private void Start()
 		{
             SpellCrafter.CraftSpell += OnCreateSpell;
             CastGesture.PoseForm += OnCastSpell;
-
-            GestureCaster.Enable<CastGesture>();
+            StartScreen.SetActive(false);
+            TutorialScreen.gameObject.SetActive(false);
+            _state = new StartScreenState();
 		}
 
 		private void Update()
@@ -46,6 +57,12 @@ namespace SpellSlinger
                 currentSpell.transform.position = hand.transform.position;
 		}
 
+        public void ChangeState(State state)
+        {
+            _state.OnStateEnd();
+            _state = state;
+        }
+        
 		public void OnCreateSpell(object source, SpellType spellType)
         {
             if (spellType != null)

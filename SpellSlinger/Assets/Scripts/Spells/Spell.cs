@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace SpellSlinger
 {
@@ -31,6 +32,8 @@ namespace SpellSlinger
         private void Awake()
 		{
             _collider = GetComponent<SphereCollider>();
+            transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 1);
 		}
 
 		private void Update()
@@ -68,7 +71,7 @@ namespace SpellSlinger
         /// <param name="seconds"></param>
         /// <returns></returns>
         private IEnumerator LifeSpan(float seconds)
-        {
+        { 
             yield return new WaitForSeconds(seconds);
             Destroy(this.gameObject);
         }

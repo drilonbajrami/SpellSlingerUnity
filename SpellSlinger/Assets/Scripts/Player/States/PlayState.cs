@@ -6,9 +6,18 @@ namespace SpellSlinger
 {
     public class PlayState : State
     {
-        public override void HandleState(Player player)
+        #region Inherited Methods
+        public override void OnStateStart()
+        {
+            Player.Instance.OverlayCanvas.SetActive(false);
+            Player.Instance.GestureCaster.DisableAllGestures();
+            Player.Instance.GestureCaster.Enable<CraftGesture>();
+        }
+
+        public override void OnStateEnd()
         {
             throw new System.NotImplementedException();
         }
+        #endregion
     }
 }

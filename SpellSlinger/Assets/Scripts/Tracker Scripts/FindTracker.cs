@@ -18,24 +18,33 @@ namespace SpellSlinger
         {
             SteamVR_TrackedObject trackedObject = GetComponent<SteamVR_TrackedObject>();
 
-            while(trackedObject.index == SteamVR_TrackedObject.EIndex.None)
+            try
             {
-                try 
-                { 
-                    TryGetTracker(trackedObject); 
-                }
-                catch 
-                {
-                    Debug.Log("Failed to find tracker... Trying agian!");
-                }
+                TryGetTracker(trackedObject);
             }
-                
+            catch
+            {
+                Debug.Log("Failed to find tracker... Trying agian!");
+            }
+
+            //while(trackedObject.index == SteamVR_TrackedObject.EIndex.None)
+            //{
+            //    try 
+            //    { 
+            //        TryGetTracker(trackedObject); 
+            //    }
+            //    catch 
+            //    {
+            //        Debug.Log("Failed to find tracker... Trying agian!");
+            //    }
+            //}
+
         }
 
         /// <summary>
         /// Search for all available trackers and assign the matching one to this current object
         /// </summary>
-        void TryGetTracker(SteamVR_TrackedObject pTrackedObject)
+            void TryGetTracker(SteamVR_TrackedObject pTrackedObject)
         {
             for (int i = 0; i < SteamVR.connected.Length; ++i)
             {

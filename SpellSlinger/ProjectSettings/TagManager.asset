@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Spell
+  - TutorialScreen
+  - StartScreen
   layers:
   - Default
   - TransparentFX

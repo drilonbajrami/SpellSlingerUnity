@@ -25,14 +25,12 @@ namespace SpellSlinger
         {
             backdrop.sprite = Tutorial.tutorialBackground;
 
-            if(_animationSprite != null) _animationImg.gameObject.SetActive(true);
+            if(_animationSprite != null)
+            { 
+                _animationImg.sprite = _animationSprite;
+                _animationImg.gameObject.SetActive(true); 
+            }
             else _animationImg.gameObject.SetActive(false);
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
 
         private void OnValidate()
