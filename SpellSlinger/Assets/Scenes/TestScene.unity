@@ -346,8 +346,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _message
-      value: Use this> sign to reset or restart <color=#FFF2A9>crafting</color> spells
-        again or use <color=#FFF2A9>thumbs up</color> to start playing
+      value: Use this sign to craft other spells or use <color=#FFF2A9>thumbs up</color>
+        to finish the tutorial
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _animationSprite
@@ -534,8 +534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _message
-      value: Browse through the available spells by <color=#FFF2A9>rotating</color>
-        your wrist
+      value: Browse through the spells by <color=#FFF2A9>rotating</color> your wrist
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _animationSprite
@@ -867,8 +866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _message
-      value: Use this sign to throw the crafted <color=#FFF2A9>spell</color> while
-        bringing your arm close to your chest and extending it forward
+      value: Throw the magic ball to defeat the enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _animationSprite
@@ -1055,8 +1053,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _message
-      value: Use this sign with your <color=#FFF2A9>right hand</color> sign to start
-        playing to see what <color=#FFF2A9>spells</color> you can craft
+      value: Use this sign with your <color=#FFF2A9>right hand</color> to see what
+        <color=#FFF2A9>spells</color> you can craft
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _animationSprite
@@ -1365,8 +1363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _message
-      value: Start <color=#FFF2A9>crafting</color> a <color=#FFF2A9>spell</color>
-        by posing the first letter sign of the preferred <color=#FFF2A9>element</color>
+      value: Start crafting a spell with your <color=#FFF2A9>left</color> hand
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _animationSprite
@@ -1725,8 +1722,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _message
-      value: Open the <color=#FFF2A9>help</color> panel to see the next letter sign
-        hint if you don't know it or remember it
+      value: Open the <color=#FFF2A9>help</color> panel to see the next letter of
+        the spell
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _animationSprite
