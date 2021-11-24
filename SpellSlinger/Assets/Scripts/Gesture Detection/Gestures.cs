@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SpellSlinger
 {
-    public class GestureCaster : MonoBehaviour
+    public class Gestures : MonoBehaviour
 	{
 		[SerializeField] private bool _trackersOn = true;
 

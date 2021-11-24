@@ -6,10 +6,16 @@ namespace SpellSlinger
 {
     public abstract class State
     {
-        protected State() => OnStateStart();
+        private protected Player _player;
 
-        public abstract void OnStateStart();
+        protected State(Player player)
+        {
+            _player = player;
+            OnEnter();
+        }
 
-        public abstract void OnStateEnd();
+        public abstract void OnEnter();
+
+        public abstract void OnExit();
     }
 }

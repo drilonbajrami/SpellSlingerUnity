@@ -78,10 +78,10 @@ namespace SpellSlinger
 				// Turn on hint panel and enable swipe gesture if no element selected for crafting yet
 				gameObject.SetActive(e);
 				if (_currentLetterIndex == 0)
-					Player.Instance.GestureCaster.Enable<SwipeGesture>();	
+					Player.Instance.Gestures.Enable<SwipeGesture>();	
             } else {
 				// Disable Swipe gesture since we are closing the help/hint panel
-				Player.Instance.GestureCaster.Disable<SwipeGesture>();
+				Player.Instance.Gestures.Disable<SwipeGesture>();
 				gameObject.SetActive(e);
 			}
 		}
@@ -97,7 +97,7 @@ namespace SpellSlinger
         private void SetCurrentSpellElement(Element element)
 		{
 			// Turn off swipe gesture since we do not need it anymore once we know the element we are crafting
-			Player.Instance.GestureCaster.Disable<SwipeGesture>();
+			Player.Instance.Gestures.Disable<SwipeGesture>();
 			// Update the current element type based on the given spell being crafted
 			_element = element;
 			_letters = _element.ToString().ToCharArray();

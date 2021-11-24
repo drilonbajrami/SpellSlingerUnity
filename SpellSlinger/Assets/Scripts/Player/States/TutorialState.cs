@@ -7,47 +7,55 @@ namespace SpellSlinger
 {
     public class TutorialState : State
     {
-        private bool IsInStep(TutorialStepIndex index) => Player.Instance.TutorialScreen.IsInStep(index);
+        public TutorialState(Player player) : base(player) { }
+
+        private bool IsInStep(TutorialStepIndex index) => GameManager.Instance.Tutorial.IsInStep(index);
+
+        //private void OnThumbsUp(object sender, EventArgs e)
+        //{
+        //    if (IsInStep(TutorialStepIndex.RESTARTORCONTINUE))
+        //        Player.Instance.ChangeState(new PlayState());
+        //    else if (IsInStep(TutorialStepIndex.SPELLSELECT))
+        //    {
+        //        Player.Instance.GestureCaster.Enable<LetterGesture>();
+        //        Player.Instance.TutorialScreen.NextStep();
+        //    }
+        //    else if (IsInStep(TutorialStepIndex.HELPREMINDER))
+        //    {
+        //        Player.Instance.GestureCaster.Enable<CastGesture>();
+        //        Player.Instance.TutorialScreen.NextStep();
+        //    }
+        //    else Player.Instance.TutorialScreen.NextStep();
+        //}
 
         private void OnThumbsUp(object sender, EventArgs e)
         {
-            if (IsInStep(TutorialStepIndex.RESTARTORCONTINUE))
-                Player.Instance.ChangeState(new PlayState());
-            else if (IsInStep(TutorialStepIndex.SPELLSELECT))
-            {
-                Player.Instance.GestureCaster.Enable<LetterGesture>();
-                Player.Instance.TutorialScreen.NextStep();
-            }
-            else if (IsInStep(TutorialStepIndex.HELPREMINDER))
-            {
-                Player.Instance.GestureCaster.Enable<CastGesture>();
-                Player.Instance.TutorialScreen.NextStep();
-            }
-            else Player.Instance.TutorialScreen.NextStep();
+            _player.ChangeState(new PlayState(_player));
         }
 
         private void OnCraftGesture(object sender, EventArgs e)
         {
-            if (Player.Instance.TutorialScreen.IsInStep(TutorialStepIndex.CRAFTGESTURE))
-                Player.Instance.GestureCaster.Disable<LetterGesture>();
+            if (GameManager.Instance.Tutorial.IsInStep(TutorialStepIndex.CRAFTGESTURE))
+                _player.Gestures.Disable<LetterGesture>();
         }
 
         #region Inherited Methods
-        public override void OnStateStart()
+        public override void OnEnter()
         {
-            Player.Instance.OverlayCanvas.SetActive(true);
-            Player.Instance.TutorialScreen.gameObject.SetActive(true);
-          
-            Player.Instance.GestureCaster.Enable<CraftGesture>();
+            // Enable tutorial
+            GameManager.Instance.Tutorial.gameObject.SetActive(true);
 
             CraftGesture.PoseForm += OnCraftGesture;
             ThumbsUpGesture.PoseForm += OnThumbsUp;
+            _player.Gestures.Enable<CraftGesture>();     
         }
 
-        public override void OnStateEnd()
+        public override void OnExit()
         {
-            Player.Instance.TutorialScreen.gameObject.SetActive(false);
-            Player.Instance.OverlayCanvas.SetActive(false);
+            // Disable tutorial
+            GameManager.Instance.Tutorial.gameObject.SetActive(false);
+
+            _player.Gestures.Disable<ThumbsUpGesture>();
         }
         #endregion
     }

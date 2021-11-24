@@ -9,6 +9,23 @@ namespace SpellSlinger
 {
     public class GameManager : MonoBehaviour
     {
+        public static GameManager Instance;
+
+        public GameObject StartScreen;
+        public Tutorial Tutorial;
+        public GameObject Overlay;
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+                Destroy(gameObject);
+        }
+
         /// <summary>
         /// List all available tracking devices and print out the serial and model numbers
         /// </summary>

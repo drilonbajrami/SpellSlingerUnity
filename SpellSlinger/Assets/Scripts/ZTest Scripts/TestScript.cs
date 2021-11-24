@@ -7,40 +7,25 @@ namespace SpellSlinger
 {
     public class TestScript : MonoBehaviour
     {
-        public GameObject spellPrefab;
 
-        public GameObject spell;
-
-        int counter;
-
-        // Update is called once per frame
-        void Update()
+        private void Awake()
         {
-            //if (Input.GetKeyDown(KeyCode.R))
-            //    CreateSpell();
-
-            if (Input.GetKeyDown(KeyCode.Space))
-                SceneManager.LoadScene("Level");
-                //CastSpell();
+            print("Awake Called");    
         }
 
-        private void CreateSpell()
+        private void Start()
         {
-            if (spell == null)
-            {
-                spell = Instantiate(spellPrefab, transform);
-                spell.name = $"Spell {counter}";
-                counter++;
-            }
+            print("Start Called");
         }
 
-        private void CastSpell()
+        private void OnEnable()
         {
-            if (spell != null)
-            {
-                spell.GetComponent<Spell>().CastSpell();
-                spell = null;
-            }
+            print("OnEnable Called");
+        }
+
+        private void OnDisable()
+        {
+            print("OnDisable Called");
         }
     }
 }

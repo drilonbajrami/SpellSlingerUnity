@@ -47,7 +47,7 @@ namespace SpellSlinger
 		{
 			if (!gameObject.activeSelf)
 			{
-				Player.Instance.GestureCaster.Enable<HelpGesture>();
+				Player.Instance.Gestures.Enable<HelpGesture>();
 				gameObject.SetActive(true);
 			}
 			else if (spellType == null) ResetTextToDefault();
@@ -56,7 +56,7 @@ namespace SpellSlinger
 
 		private void OnCraftSpell(object sender, SpellType spellType)
 		{
-			Player.Instance.GestureCaster.Disable<HelpGesture>();
+			Player.Instance.Gestures.Disable<HelpGesture>();
 			ResetTextToDefault();
 			gameObject.SetActive(false);
 		}

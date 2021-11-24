@@ -8,7 +8,7 @@ namespace SpellSlinger
     public class Player : MonoBehaviour
     {
         public static Player Instance { get; private set; }
-        public GestureCaster GestureCaster;
+        public Gestures Gestures;
         public State _state;
 
         [Space(5)]
@@ -16,11 +16,6 @@ namespace SpellSlinger
         [SerializeField] private bool noGloves;
         public static bool NO_GLOVES;
 
-        [Space(10)]
-        [Header("State References")]
-        // State related references
-        public GameObject StartScreen;
-        public Tutorial TutorialScreen;
         public GameObject OverlayCanvas;
         
         [Space(10)]
@@ -36,19 +31,14 @@ namespace SpellSlinger
                 DontDestroyOnLoad(gameObject);
             }
             else
-                Destroy(gameObject);
-
-            StartScreen = GameObject.FindGameObjectWithTag("StartScreen");
-            TutorialScreen = GameObject.FindGameObjectWithTag("TutorialScreen").GetComponent<Tutorial>();    
+                Destroy(gameObject);  
         }
 
         private void Start()
 		{
             SpellCrafter.CraftSpell += OnCreateSpell;
             CastGesture.PoseForm += OnCastSpell;
-            StartScreen.SetActive(false);
-            TutorialScreen.gameObject.SetActive(false);
-            _state = new StartScreenState();
+            _state = new StartScreenState(this);
 		}
 
 		private void Update()
@@ -59,7 +49,7 @@ namespace SpellSlinger
 
         public void ChangeState(State state)
         {
-            _state.OnStateEnd();
+            _state.OnExit();
             _state = state;
         }
         

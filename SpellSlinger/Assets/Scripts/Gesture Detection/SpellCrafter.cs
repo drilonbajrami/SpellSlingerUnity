@@ -77,7 +77,7 @@ namespace SpellSlinger
 		/// </summary>
 		private void Craft(object source, EventArgs e)
 		{
-			Player.Instance.GestureCaster.Enable<LetterGesture>();
+			Player.Instance.Gestures.Enable<LetterGesture>();
 			ResetCrafting();
 			OnStartCrafting(_spellType);
 		}
@@ -87,7 +87,7 @@ namespace SpellSlinger
 		/// </summary>
 		private void CraftFailed(object source, EventArgs e)
 		{
-			Player.Instance.GestureCaster.Disable<LetterGesture>();
+			Player.Instance.Gestures.Disable<LetterGesture>();
 			// Pass spell type as null since crafting failed due to timer ending
 			ResetCrafting();
 			OnCraftSpell(null);
@@ -137,7 +137,7 @@ namespace SpellSlinger
 				// Check if all letters have been spelled already
 				if (_currentLetterIndex == _spellType.GetElementTypeNameLength())
 				{
-					Player.Instance.GestureCaster.Disable<LetterGesture>();
+					Player.Instance.Gestures.Disable<LetterGesture>();
 					OnCraftSpell(_spellType);		
 					ResetCrafting();
 				}

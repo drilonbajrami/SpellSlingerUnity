@@ -33,30 +33,29 @@ namespace SpellSlinger
 
         private void Start()
         {
-            counter = 0;
-
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
                 tutorialSteps.Add(gameObject.transform.GetChild(i).gameObject);
                 tutorialSteps[i].SetActive(false);
             }
 
+            Activate(false);
+        }
+
+        private void OnEnable()
+        {
+            counter = 0;
             tutorialSteps[counter].SetActive(true);
         }
 
-        //private void Update()
-        //{
-        //    if(Input.GetKeyDown(KeyCode.DownArrow))
-        //    {
-        //        tutorialSteps[counter].SetActive(false);
-        //        counter++;
-        //        if (counter == tutorialSteps.Count)
-        //            counter = 0;
-
-        //        tutorialSteps[counter].SetActive(true);
-        //    }
-        //}
+        private void OnDisable()
+        {
+            foreach(GameObject step in tutorialSteps)
+                step.SetActive(false);
+        }
         #endregion
+
+        public void Activate(bool e) => gameObject.SetActive(e);
 
         public void NextStep()
         {
