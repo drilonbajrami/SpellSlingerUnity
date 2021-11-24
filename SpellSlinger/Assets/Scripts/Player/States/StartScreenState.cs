@@ -7,14 +7,13 @@ namespace SpellSlinger
 {
     public class StartScreenState : State
     {
-        public StartScreenState(Player player) : base(player) { }
-
         private void OnThumbsUp(object sender, EventArgs e)
         {
             _player.ChangeState(new TutorialState(_player));
         }
 
         #region Inherited Methods
+        public StartScreenState(Player player) : base(player) { }
         public override void OnEnter()
         {
             // Enable Start Screen and Overlay

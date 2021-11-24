@@ -5,24 +5,23 @@ using UnityEngine.UI;
 
 namespace SpellSlinger
 {
-    public enum TutorialStepIndex
+    public enum StepIndex
     {
-        CRAFTGESTURE = 0,
-        HELPGESTURE = 1,
-        SWIPEGESTURE = 2,
-        SPELLBAR = 3,
-        SPELLSELECT = 4,
-        HELPREMINDER = 5,
-        CASTGESTURE = 6,
-        RESTARTORCONTINUE = 7
+        CRAFT   = 1,
+        HELP    = 2,
+        SWIPE   = 3,
+        SELECT  = 4,
+        REMIND  = 5,
+        CAST    = 6,
+        LAST    = 7
     }
 
     public class Tutorial : MonoBehaviour
     {
+        // Cache the tutorial background sprite
         public static Sprite tutorialBackground;
 
         public List<GameObject> tutorialSteps;
-
         int counter = 0;
 
         #region UNITY Methods
@@ -45,7 +44,9 @@ namespace SpellSlinger
         private void OnEnable()
         {
             counter = 0;
-            tutorialSteps[counter].SetActive(true);
+
+            if(tutorialSteps.Count != 0)
+                tutorialSteps[counter].SetActive(true);
         }
 
         private void OnDisable()
@@ -55,8 +56,12 @@ namespace SpellSlinger
         }
         #endregion
 
+        #region Public Methods
         public void Activate(bool e) => gameObject.SetActive(e);
 
+        /// <summary>
+        /// Goes to the next tutorial step
+        /// </summary>
         public void NextStep()
         {
             tutorialSteps[counter].SetActive(false);
@@ -67,13 +72,23 @@ namespace SpellSlinger
             tutorialSteps[counter].SetActive(true);
         }
 
-        public void JumpToStep(TutorialStepIndex index)
+        /// <summary>
+        /// Jump to any tutorial step by index
+        /// </summary>
+        /// <param name="index"></param>
+        public void JumpToStep(StepIndex index)
         {
             tutorialSteps[counter].SetActive(false);
-            counter = (int)index;
+            counter = (int)index - 1;
             tutorialSteps[counter].SetActive(true);
         }
 
-        public bool IsInStep(TutorialStepIndex index) => counter == (int)index;
+        /// <summary>
+        /// Returns true if current tutorial step has the given step index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool IsInStep(StepIndex index) => counter == (int)index - 1;
+        #endregion
     }
 }

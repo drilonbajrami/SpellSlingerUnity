@@ -25,7 +25,7 @@ namespace SpellSlinger
 		/// <summary>
 		/// Timer for a spell to be crafted completely.
 		/// </summary>
-		public static Timer _craftingTimer;
+		public static Timer CraftingTimer;
 
 		#region Events
 		public static EventHandler<SpellType> StartCrafting;
@@ -42,8 +42,8 @@ namespace SpellSlinger
 		private void Start()
 		{
 			// Setup crafting timer
-			_craftingTimer = new Timer(_craftingDuration);
-			_craftingTimer.TimerEnd += CraftFailed;
+			CraftingTimer = new Timer(_craftingDuration);
+			CraftingTimer.TimerEnd += CraftFailed;
 
 			// Subscribe to gesture events
 			CraftGesture.PoseForm += Craft;
@@ -52,13 +52,13 @@ namespace SpellSlinger
 
 		private void Update()
 		{
-			_craftingTimer.UpdateTimer(Time.deltaTime);
+			CraftingTimer.UpdateTimer(Time.deltaTime);
 		}
 
 		private void OnValidate()
 		{
-			if (_craftingTimer != null)
-				_craftingTimer.ChangeInterval(_craftingDuration);
+			if (CraftingTimer != null)
+				CraftingTimer.ChangeInterval(_craftingDuration);
 		}
 		#endregion
 
@@ -100,7 +100,7 @@ namespace SpellSlinger
 		/// </summary>
 		private void ResetCrafting()
 		{
-			_craftingTimer.Stop();
+			CraftingTimer.Stop();
 			_currentLetterIndex = 1;
 			_spellType = null;
 		}
@@ -117,8 +117,8 @@ namespace SpellSlinger
 			// If spell is available
 			if (_spellType != null)
 			{
-				OnStartCrafting(_spellType);
-				_craftingTimer.Start();
+				CraftingTimer.Start();
+				OnStartCrafting(_spellType);	
 			}
 		}
 
