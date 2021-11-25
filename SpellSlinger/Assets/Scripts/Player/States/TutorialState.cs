@@ -109,6 +109,13 @@ namespace SpellSlinger
         {
             tutorial.Activate(false);
             _player.Gestures.Disable<ThumbsUpGesture>();
+            SpellCrafter.CraftingTimer.Continue();
+
+            CraftGesture.PoseForm -= OnCraftGesture;
+            CastGesture.PoseForm -= OnCastGesture;
+            HelpGesture.PoseForm -= OnHelpGesture;
+            SwipeGesture.PoseForm -= OnSwipeGesture;
+            ThumbsUpGesture.PoseForm -= OnThumbsUp;
         }
         #endregion
     }

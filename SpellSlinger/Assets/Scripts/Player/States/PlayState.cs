@@ -11,14 +11,18 @@ namespace SpellSlinger
         #region Inherited Methods
         public override void OnEnter()
         {
-            Player.Instance.OverlayCanvas.SetActive(false);
-            Player.Instance.Gestures.DisableAllGestures();
-            Player.Instance.Gestures.Enable<CraftGesture>();
+            _player.Gestures.DisableAllGestures();
+            _player.Gestures.Enable<CraftGesture>();
+            _player.Gestures.Enable<CastGesture>();
+            GameManager.Instance.Overlay.SetActive(false);
+            GameObject tutorialPosition = GameObject.Find("StartPosition");
+            _player.transform.position = tutorialPosition.transform.position;
+            _player.transform.rotation = tutorialPosition.transform.rotation;
         }
 
         public override void OnExit()
         {
-            throw new System.NotImplementedException();
+            _player.Gestures.DisableAllGestures();
         }
         #endregion
     }

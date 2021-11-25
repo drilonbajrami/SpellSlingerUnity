@@ -21,7 +21,10 @@ namespace SpellSlinger
             GameManager.Instance.Overlay.SetActive(true);
 
             ThumbsUpGesture.PoseForm += OnThumbsUp;
-            _player.Gestures.Enable<ThumbsUpGesture>(); 
+            _player.Gestures.Enable<ThumbsUpGesture>();
+            GameObject tutorialPosition = GameObject.Find("TutorialPosition");
+            _player.transform.position = tutorialPosition.transform.position;
+            _player.transform.rotation = tutorialPosition.transform.rotation;
         }
 
         public override void OnExit()
