@@ -197,8 +197,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_text
-      value: Use this> sign to reset or restart <color=#FFF2A9>crafting</color> spells
-        again or use <color=#FFF2A9>thumbs up</color> to start playing
+      value: Use this sign to craft other spells or use <color=#FFF2A9>thumbs up</color>
+        to finish the tutorial
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSize
@@ -207,6 +207,10 @@ PrefabInstance:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeMax
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
+      propertyPath: m_lineSpacing
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeBase
@@ -385,8 +389,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_text
-      value: Browse through the available spells by <color=#FFF2A9>rotating</color>
-        your wrist
+      value: Browse through the spells by <color=#FFF2A9>rotating</color> your wrist
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSize
@@ -395,6 +398,10 @@ PrefabInstance:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeMax
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
+      propertyPath: m_lineSpacing
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeBase
@@ -717,8 +724,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_text
-      value: Use this sign to throw the crafted <color=#FFF2A9>spell</color> while
-        bringing your arm close to your chest and extending it forward
+      value: Throw the magic ball to defeat the enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSize
@@ -727,6 +733,10 @@ PrefabInstance:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeMax
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
+      propertyPath: m_lineSpacing
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeBase
@@ -904,8 +914,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_text
-      value: Use this sign with your <color=#FFF2A9>right hand</color> sign to start
-        playing to see what <color=#FFF2A9>spells</color> you can craft
+      value: Use this sign with your <color=#FFF2A9>right hand</color> to see what
+        <color=#FFF2A9>spells</color> you can craft
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSize
@@ -914,6 +924,10 @@ PrefabInstance:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeMax
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
+      propertyPath: m_lineSpacing
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeBase
@@ -1110,7 +1124,7 @@ RectTransform:
   m_GameObject: {fileID: 426825800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.56964, y: 1, z: 1}
   m_Children:
   - {fileID: 1450100858}
   m_Father: {fileID: 295076212}
@@ -1214,8 +1228,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_text
-      value: Start <color=#FFF2A9>crafting</color> a <color=#FFF2A9>spell</color>
-        by posing the first letter sign of the preferred <color=#FFF2A9>element</color>
+      value: Start crafting a spell with your <color=#FFF2A9>left</color> hand
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSize
@@ -1224,6 +1237,10 @@ PrefabInstance:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeMax
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
+      propertyPath: m_lineSpacing
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeBase
@@ -1573,8 +1590,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_text
-      value: Open the <color=#FFF2A9>help</color> panel to see the next letter sign
-        hint if you don't know it or remember it
+      value: Open the <color=#FFF2A9>help</color> panel to see the next letter of
+        the spell
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSize
@@ -1583,6 +1600,10 @@ PrefabInstance:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeMax
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
+      propertyPath: m_lineSpacing
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeBase
@@ -1878,9 +1899,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450100857}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.351731, y: 0.77, z: 0.77}
   m_Children: []
   m_Father: {fileID: 426825801}
   m_RootOrder: 0
@@ -2173,7 +2194,7 @@ Transform:
   m_LocalScale: {x: 10, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1795988602
 PrefabInstance:
@@ -2193,6 +2214,10 @@ PrefabInstance:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeMax
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
+      propertyPath: m_lineSpacing
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSizeBase
@@ -2398,15 +2423,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3188759148045461815, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3188759148045461815, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5373714765119114718, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5373714765119114718, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2454,12 +2479,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5632418856383859631, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6580665528371204150, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8162156511693728102, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b61dd588946fdf41b4f42e9bcaf1743, type: 2}
+    - target: {fileID: 8162156511693728102, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.2264151
+      objectReference: {fileID: 0}
+    - target: {fileID: 8162156511693728102, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.2264151
+      objectReference: {fileID: 0}
+    - target: {fileID: 8162156511693728102, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.2264151
+      objectReference: {fileID: 0}
+    - target: {fileID: 8162156511693728102, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7883482376376168644, guid: 7b61dd588946fdf41b4f42e9bcaf1743, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dddd8d6a2dc59648b5ccc96f7cf0fdc, type: 3}
 --- !u!1001 &6248809689585238220
@@ -2472,6 +2517,10 @@ PrefabInstance:
     - target: {fileID: 1929669692715383328, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1929669692715383328, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1929669692715383331, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: Gestures
@@ -2531,11 +2580,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1929669694245230504, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1929669694245230504, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6248809690273067134, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: m_IsActive
