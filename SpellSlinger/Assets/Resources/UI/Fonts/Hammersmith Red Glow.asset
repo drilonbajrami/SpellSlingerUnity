@@ -57,7 +57,7 @@ Material:
     - _GlowInner: 0.176
     - _GlowOffset: 0.019
     - _GlowOuter: 0.865
-    - _GlowPower: 0.093
+    - _GlowPower: 0.218
     - _GradientScale: 10
     - _LightAngle: 3.1416
     - _MaskSoftnessX: 0
@@ -95,7 +95,7 @@ Material:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
-    - _GlowColor: {r: 0.14117648, g: 0.44520125, b: 0.09305898, a: 1}
+    - _GlowColor: {r: 0.49056602, g: 0, b: 0, a: 1}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
@@ -115,9 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Hammersmith Red Glow
   m_EditorClassIdentifier: 
-  hashCode: 1125497057
+  hashCode: -1687164427
   material: {fileID: -7883482376376168644}
-  materialHashCode: -1272327775
+  materialHashCode: -2060141259
   m_Version: 1.1.0
   m_SourceFontFileGUID: fb65036a57ecf994c908bbe01d0a46de
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: fb65036a57ecf994c908bbe01d0a46de, type: 3}
