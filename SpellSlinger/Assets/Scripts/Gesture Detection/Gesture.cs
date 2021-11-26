@@ -75,7 +75,7 @@ namespace SpellSlinger
 		/// Enable and Disable tracking
 		/// </summary>
 		/// <param name="state"></param>
-		public void TrackingOn(bool state) => _areTrackersOn = state;
+		public void ToggleTracking(bool state) => _areTrackersOn = state;
 		#endregion
 
 		#region Abstract Methods

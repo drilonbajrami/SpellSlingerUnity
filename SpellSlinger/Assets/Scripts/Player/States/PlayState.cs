@@ -18,7 +18,7 @@ namespace SpellSlinger
             _player.Gestures.Enable<CraftGesture>();
             _player.Gestures.Enable<CastGesture>();
 
-            GameManager.Instance.Overlay.SetActive(false);
+            //GameManager.Instance.Overlay.SetActive(false);
 
             // Move to game start position
             GameObject tutorialPosition = GameObject.Find("StartPosition");

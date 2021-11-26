@@ -8,9 +8,6 @@ namespace SpellSlinger
 	{
 		[Header("Available Spells")]
 		[SerializeField] private List<SpellType> _spells;
-
-		[Tooltip("Crafting timer duration in seconds.")]
-		[Range(1.0f, 15.0f)] [SerializeField] private float _craftingDuration = 8.0f;
 		
 		/// <summary>
 		/// Keep track the type of the current spell being crafted.
@@ -42,7 +39,7 @@ namespace SpellSlinger
 		private void Start()
 		{
 			// Setup crafting timer
-			CraftingTimer = new Timer(_craftingDuration);
+			CraftingTimer = new Timer(8.0f);
 			CraftingTimer.TimerEnd += CraftFailed;
 
 			// Subscribe to gesture events
@@ -53,12 +50,6 @@ namespace SpellSlinger
 		private void Update()
 		{
 			CraftingTimer.UpdateTimer(Time.deltaTime);
-		}
-
-		private void OnValidate()
-		{
-			if (CraftingTimer != null)
-				CraftingTimer.ChangeInterval(_craftingDuration);
 		}
 		#endregion
 

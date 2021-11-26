@@ -97,8 +97,8 @@ namespace SpellSlinger
         // THUMBS UP GESTURE
         private void OnThumbsUp(object sender, EventArgs e)
         {
-            if (tutorial.IsInStep(StepIndex.LAST))
-                _player.ChangeState(new PlayState(_player));
+            //if (tutorial.IsInStep(StepIndex.LAST))
+                //_player.ChangeState(new SettingsState(_player));
         }
         #endregion
 
@@ -108,8 +108,8 @@ namespace SpellSlinger
         public override void OnEnter()
         {
             // Cache reference to tutorial
-            tutorial = GameManager.Instance.Tutorial;
-            tutorial.Activate(true);
+            //tutorial = GameManager.Instance.Tutorial;
+            //tutorial.Activate(true);
 
             // Subscribe to all gestures since we need to
             // teach the player how to use each one of them

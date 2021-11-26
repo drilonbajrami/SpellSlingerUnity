@@ -12,7 +12,6 @@ namespace SpellSlinger
         public GameObject spellPrefab;
         public GameObject spellHolder;
 
-        // Start is called before the first frame update
         void Start()
         {
             SpellCrafter.CraftSpell += OnCreateSpell;

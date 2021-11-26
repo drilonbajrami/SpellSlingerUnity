@@ -9,16 +9,17 @@ namespace SpellSlinger
     {
         private void OnThumbsUp(object sender, EventArgs e)
         {
-            _player.ChangeState(new TutorialState(_player));
+            //_player.ChangeState(new TutorialState(_player));
         }
 
         #region Inherited Methods
         public StartScreenState(Player player) : base(player) { }
+
         public override void OnEnter()
         {
             // Enable Start Screen and Overlay
-            GameManager.Instance.StartScreen.SetActive(true);
-            GameManager.Instance.Overlay.SetActive(true);
+            //GameManager.Instance.StartScreen.SetActive(true);
+            //GameManager.Instance.Overlay.SetActive(true);
 
             // Only gesture needed for start screen
             ThumbsUpGesture.PoseForm += OnThumbsUp;
@@ -33,7 +34,7 @@ namespace SpellSlinger
         public override void OnExit()
         {
             // Disable Start Screen
-            GameManager.Instance.StartScreen.SetActive(false);
+            //GameManager.Instance.StartScreen.SetActive(false);
 
             _player.Gestures.Disable<ThumbsUpGesture>();
         }

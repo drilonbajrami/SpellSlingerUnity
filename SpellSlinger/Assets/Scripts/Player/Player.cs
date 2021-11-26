@@ -9,13 +9,12 @@ namespace SpellSlinger
     {
         public static Player Instance { get; private set; }
         public Gestures Gestures;
-        public State _state;
 
         [Space(5)]
         [Header("Gloves ON/OFF")]
         [SerializeField] private bool noGloves;
         public static bool NO_GLOVES;
-        
+
         private void Awake()
         {
             if (Instance == null)
@@ -24,18 +23,7 @@ namespace SpellSlinger
                 DontDestroyOnLoad(gameObject);
             }
             else
-                Destroy(gameObject);  
-        }
-
-        private void Start()
-		{
-            _state = new StartScreenState(this);
-		}
-
-        public void ChangeState(State state)
-        {
-            _state.OnExit();
-            _state = state;
+                Destroy(gameObject);
         }
 
         public void OnValidate()

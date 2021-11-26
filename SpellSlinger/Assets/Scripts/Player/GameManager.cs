@@ -9,14 +9,10 @@ namespace SpellSlinger
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance;
+        public static GameManager Instance { get; private set; }
 
-        public GameObject StartScreen;
-        public Tutorial Tutorial;
-        public GameObject Overlay;
         public Spawner Spawner;
-
-
+        public GameSetting gameSettings;
 
         private void Awake()
         {

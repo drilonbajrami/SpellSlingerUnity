@@ -11,7 +11,6 @@ namespace SpellSlinger
         protected State(Player player)
         {
             _player = player;
-            OnEnter();
         }
 
         public abstract void OnEnter();

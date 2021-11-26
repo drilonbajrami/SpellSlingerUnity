@@ -7,7 +7,6 @@ namespace SpellSlinger
     public class Gestures : MonoBehaviour
 	{
 		[SerializeField] private bool _trackersOn = true;
-
 		private List<Gesture> gestures = new List<Gesture>();
 
 		private void Start()
@@ -20,19 +19,18 @@ namespace SpellSlinger
 
 			// Set tracking toggle on/off
 			foreach (Gesture gesture in gestures)
-				gesture.TrackingOn(_trackersOn);
+				gesture.ToggleTracking(_trackersOn);
 		}
 
 		private void OnValidate()
 		{
 			foreach (Gesture gesture in gestures)
-				gesture.TrackingOn(_trackersOn);
+				gesture.ToggleTracking(_trackersOn);
 		}
 
 		public void DisableAllGestures()
         {
 			foreach (Gesture gesture in gestures) gesture.Disable();
-			
         }
 
 		/// <summary>
