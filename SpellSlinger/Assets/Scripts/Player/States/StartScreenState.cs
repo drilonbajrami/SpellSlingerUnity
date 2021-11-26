@@ -20,8 +20,11 @@ namespace SpellSlinger
             GameManager.Instance.StartScreen.SetActive(true);
             GameManager.Instance.Overlay.SetActive(true);
 
+            // Only gesture needed for start screen
             ThumbsUpGesture.PoseForm += OnThumbsUp;
             _player.Gestures.Enable<ThumbsUpGesture>();
+
+            // Move to start screen & tutorial position
             GameObject tutorialPosition = GameObject.Find("TutorialPosition");
             _player.transform.position = tutorialPosition.transform.position;
             _player.transform.rotation = tutorialPosition.transform.rotation;

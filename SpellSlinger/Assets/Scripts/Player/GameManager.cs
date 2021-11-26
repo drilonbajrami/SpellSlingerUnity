@@ -14,6 +14,9 @@ namespace SpellSlinger
         public GameObject StartScreen;
         public Tutorial Tutorial;
         public GameObject Overlay;
+        public Spawner Spawner;
+
+
 
         private void Awake()
         {

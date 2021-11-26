@@ -32,6 +32,7 @@ namespace SpellSlinger
 		public void DisableAllGestures()
         {
 			foreach (Gesture gesture in gestures) gesture.Disable();
+			
         }
 
 		/// <summary>
