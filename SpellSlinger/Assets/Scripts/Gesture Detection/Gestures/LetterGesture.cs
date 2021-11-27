@@ -15,7 +15,7 @@ namespace SpellSlinger
 		private string _lastPose;
 
         // Pose event
-        public static EventHandler<char> PoseForm;
+        public static event EventHandler<char> PoseForm;
 
         private void Update()
         {

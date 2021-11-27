@@ -23,7 +23,7 @@ namespace SpellSlinger
         // Start is called before the first frame update
         void Start()
         {
-            backdrop.sprite = Tutorial.tutorialBackground;
+            backdrop.sprite = transform.parent.GetComponent<Tutorial>().tutorialBackground;
 
             if(_animationSprite != null)
             { 

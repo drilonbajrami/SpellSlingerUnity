@@ -50,23 +50,23 @@ namespace SpellSlinger
         }
 
         /// <summary>
-        /// Ends the timer.
-        /// </summary>
-        private void End()
-        {
-            Pause();
-            TimerEnd?.Invoke(this, EventArgs.Empty);           
-        }
-
-        /// <summary>
         /// Reset everything about the timer and start.
         /// Invokes the TimerStart event handler.
         /// </summary>
         public void Start()
         {
             elapsedTime = 0.0f;
-            Continue(); 
+            Continue();
             TimerStart?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Ends the timer.
+        /// </summary>
+        private void End()
+        {
+            Pause();
+            TimerEnd?.Invoke(this, EventArgs.Empty);           
         }
 
         /// <summary>

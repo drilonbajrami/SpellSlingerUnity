@@ -9,7 +9,7 @@ namespace SpellSlinger
 		[SerializeField] private bool _trackersOn = true;
 		private List<Gesture> gestures = new List<Gesture>();
 
-		private void Start()
+		private void Awake()
 		{
 			// Cache all the available gestures
 			for (int i = 0; i < transform.childCount; i++)

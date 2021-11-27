@@ -25,7 +25,7 @@ namespace SpellSlinger
 		private bool _canCompletePose = false;
 
         // Pose event
-        public static EventHandler PoseForm;
+        public static event EventHandler PoseForm;
 
         /// <summary>
         /// Returns the distance between the hand and head (HMD).

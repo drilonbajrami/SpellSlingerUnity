@@ -64,13 +64,21 @@ namespace SpellSlinger
 		/// <summary>
 		/// Enables the gesture
 		/// </summary>
-		public void Enable() => _isEnabled = true;
-
+		public void Enable()
+		{
+			_isEnabled = true;
+			Debug.Log($"Enabled {gameObject.name}");
+		}
+        
 		/// <summary>
 		/// Disables the gesture
 		/// </summary>
-		public void Disable() => _isEnabled = false;
-
+		public void Disable()
+		{
+			_isEnabled = false;
+			Debug.Log($"Disabled {gameObject.name}");
+		}
+        
 		/// <summary>
 		/// Enable and Disable tracking
 		/// </summary>

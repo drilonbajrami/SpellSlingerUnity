@@ -6,9 +6,5 @@ namespace SpellSlinger
 {
     public class Settings : MonoBehaviour
     {
-        // Available Game Settings
-        public List<GameSettingScriptableObject> avaliableGameSettings = new List<GameSettingScriptableObject>();
-
-
     }
 }

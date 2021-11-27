@@ -25,7 +25,7 @@ namespace SpellSlinger
 		[Range(0.2f, 0.5f)] [SerializeField] private float distanceThreshold = 0.25f;
 
         // Pose event
-        public static EventHandler PoseForm;
+        public static event EventHandler PoseForm;
 
 		/// <summary>
 		/// Returns a co-joined string of both hand pose names

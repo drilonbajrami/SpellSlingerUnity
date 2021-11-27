@@ -16,7 +16,7 @@ namespace SpellSlinger
 		private bool open = false;
 
         // Pose event
-        public static EventHandler<bool> PoseForm;
+        public static event EventHandler<bool> PoseForm;
 
 		// Overridden Methods
 		#region Inherited Methods

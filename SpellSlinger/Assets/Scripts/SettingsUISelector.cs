@@ -7,15 +7,13 @@ namespace SpellSlinger
     public class SettingsUISelector : MonoBehaviour
     {
         public GameObject selectOverlay;
-        public int difficultyIndex;
 
-        public void SelectSetting()
+        public void Select()
         {
             selectOverlay.SetActive(true);
-            //GameManager.Instance.Settings.SetSettings(difficultyIndex);
         }
 
-        public void DeselectSetting()
+        public void Deselect()
         {
             selectOverlay.SetActive(false);
         }

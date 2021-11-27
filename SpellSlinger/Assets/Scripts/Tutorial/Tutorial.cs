@@ -19,7 +19,7 @@ namespace SpellSlinger
     public class Tutorial : MonoBehaviour
     {
         // Cache the tutorial background sprite
-        public static Sprite tutorialBackground;
+        [HideInInspector] public Sprite tutorialBackground;
 
         public List<GameObject> tutorialSteps;
         int counter = 0;
@@ -27,18 +27,13 @@ namespace SpellSlinger
         #region UNITY Methods
         void Awake()
         {
-            tutorialBackground = Resources.Load<Sprite>("UI/TutorialBackdrop");      
-        }
+            tutorialBackground = Resources.Load<Sprite>("UI/TutorialBackdrop");
 
-        private void Start()
-        {
             for (int i = 0; i < gameObject.transform.childCount; i++)
             {
                 tutorialSteps.Add(gameObject.transform.GetChild(i).gameObject);
                 tutorialSteps[i].SetActive(false);
             }
-
-            Activate(false);
         }
 
         private void OnEnable()
@@ -46,7 +41,7 @@ namespace SpellSlinger
             counter = 0;
 
             if(tutorialSteps.Count != 0)
-                tutorialSteps[counter].SetActive(true);
+                tutorialSteps[counter].SetActive(true);  
         }
 
         private void OnDisable()
@@ -57,8 +52,6 @@ namespace SpellSlinger
         #endregion
 
         #region Public Methods
-        public void Activate(bool e) => gameObject.SetActive(e);
-
         /// <summary>
         /// Goes to the next tutorial step
         /// </summary>

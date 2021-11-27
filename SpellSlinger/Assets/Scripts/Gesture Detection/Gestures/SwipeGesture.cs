@@ -14,7 +14,7 @@ namespace SpellSlinger
 		[SerializeField] private string POSE;
 
         // Pose event
-        public static EventHandler PoseForm;
+        public static event EventHandler PoseForm;
 
 		#region Inherited Methods
 		protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetKey(KeyCode.LeftControl)

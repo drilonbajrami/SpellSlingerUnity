@@ -6,6 +6,8 @@ namespace SpellSlinger
 {
 	public class SpellCrafter : MonoBehaviour
 	{
+		public static SpellCrafter Instance {  get; private set; }
+
 		[Header("Available Spells")]
 		[SerializeField] private List<SpellType> _spells;
 		
@@ -24,19 +26,21 @@ namespace SpellSlinger
 		/// </summary>
 		public static Timer CraftingTimer;
 
+		private bool _isOn = true;
+
 		#region Events
-		public static EventHandler<SpellType> StartCrafting;
-		public static EventHandler<SpellType> CraftSpell;
-		public static EventHandler LetterSent;
+		public static event EventHandler<SpellType> StartCrafting;
+		public static event EventHandler<SpellType> CraftSpell;
+		public static event EventHandler LetterSent;
 
 		// Event Rasier Methods
 		private void OnStartCrafting(SpellType spellType) => StartCrafting?.Invoke(this, spellType);
 		private void OnCraftSpell(SpellType spellType) => CraftSpell?.Invoke(this, spellType);
 		private void OnLetterSent() => LetterSent?.Invoke(this, EventArgs.Empty);
-		#endregion
+        #endregion
 
-		#region UNITY Methods
-		private void Start()
+        #region UNITY Methods
+        private void Start()
 		{
 			// Setup crafting timer
 			CraftingTimer = new Timer(8.0f);
@@ -49,15 +53,36 @@ namespace SpellSlinger
 
 		private void Update()
 		{
-			CraftingTimer.UpdateTimer(Time.deltaTime);
+			if(_isOn) CraftingTimer.UpdateTimer(Time.deltaTime);
 		}
-		#endregion
+        #endregion
 
-		#region Event Subscriber Methods
 		/// <summary>
-		/// Called on receiving letter poses.
+		/// Toggle the SpellCrafter ON/OFF. Subscribes/Unsubscribes from all gestures it depends on,
+		/// and continues/stops the internal timer.
 		/// </summary>
-		private void GetLetter(object source, char letter)
+		/// <param name="state"></param>
+        public void Toggle(bool state)
+        {	
+			_isOn = state;
+
+			if(_isOn)
+            {
+				CraftGesture.PoseForm += Craft;
+				LetterGesture.PoseForm += GetLetter;
+			}
+			else
+            {
+				CraftGesture.PoseForm -= Craft;
+				LetterGesture.PoseForm -= GetLetter;
+			}
+        }
+
+        #region Event Subscriber Methods
+        /// <summary>
+        /// Called on receiving letter poses.
+        /// </summary>
+        private void GetLetter(object source, char letter)
 		{
 			if (_spellType != null) NextLetter(letter);
 			else IsSpellAvailable(letter);
@@ -89,7 +114,7 @@ namespace SpellSlinger
 		/// <summary>
 		/// Resets everything related to crafting a spell.
 		/// </summary>
-		private void ResetCrafting()
+		public void ResetCrafting()
 		{
 			CraftingTimer.Stop();
 			_currentLetterIndex = 1;
