@@ -1,11 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace SpellSlinger
 {
-    public class StartScreen : MonoBehaviour
+    public class EndGameScreen : MonoBehaviour
     {
         private void OnEnable()
         {
@@ -28,7 +28,7 @@ namespace SpellSlinger
         private void OnThumbsUp(object sender, EventArgs e)
         {
             gameObject.SetActive(false);
-            GameManager.Instance.TutorialScreen.SetActive(true);
+            GameManager.Instance.StartScreen.SetActive(true);
         }
     }
 }

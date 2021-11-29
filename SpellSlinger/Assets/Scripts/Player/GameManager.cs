@@ -14,9 +14,12 @@ namespace SpellSlinger
         public GameObject Spawner;
         public GameSetting gameSettings = new GameSetting();
 
+        public SpellCrafter SpellCrafter;
         public GameObject StartScreen;
         public GameObject TutorialScreen;
         public GameObject SettingsSreen;
+        public GameObject VictoryScreen;
+        public GameObject GameOverScreen;
         public GameObject Overlay;
 
         private void Awake()
@@ -28,6 +31,12 @@ namespace SpellSlinger
             }
             else
                 Destroy(gameObject);
+        }
+
+        public void ApplyGameSettings(GameSettingScriptableObject gameSettingsSO)
+        {
+            gameSettings.SetSetting(gameSettingsSO);
+            SpellCrafter.CraftingTimer.ChangeInterval(gameSettings.craftingDuration);
         }
 
         /// <summary>

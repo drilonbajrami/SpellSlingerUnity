@@ -36,7 +36,7 @@ namespace SpellSlinger
                 if (i == index)
                 { 
                     settingSelectors[i].Select();
-                    GameManager.Instance.gameSettings.SetSetting(avaliableGameSettings[i]);
+                    GameManager.Instance.ApplyGameSettings(avaliableGameSettings[i]);
                 }    
                 else settingSelectors[i].Deselect();
             }
@@ -68,7 +68,7 @@ namespace SpellSlinger
             Player.Instance.transform.position = startingPosition.transform.position;
             Player.Instance.transform.rotation = startingPosition.transform.rotation;
 
-            SpellCrafter.Instance.Toggle(true);
+            GameManager.Instance.SpellCrafter.Toggle(true);
         }
     }
 }

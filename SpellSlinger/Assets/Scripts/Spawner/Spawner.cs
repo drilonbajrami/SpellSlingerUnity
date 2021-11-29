@@ -61,10 +61,10 @@ namespace SpellSlinger
         public GameObject AddSpawnPoint()
         {
             Vector3 randPos = new Vector3(Random.Range(transform.position.x - 5f, transform.position.x + 5f),  // x
-                                          1,                                                                   // y
-                                          Random.Range(transform.position.z - 5f, transform.position.z + 5f)); // z
+                                          transform.position.y,                                                                   // y
+                                          Random.Range(transform.position.z - 5f, transform.position.z + 5f)); ; // z
 
-            GameObject point = Instantiate(spawnPointPrefab, randPos, Quaternion.identity, spawnPointParent);
+            GameObject point = Instantiate(spawnPointPrefab, transform.position, Quaternion.identity, spawnPointParent);
             return point;
         }
 
