@@ -34,13 +34,29 @@ namespace SpellSlinger
 		public static event EventHandler LetterSent;
 
 		// Event Rasier Methods
-		private void OnStartCrafting(SpellType spellType) => StartCrafting?.Invoke(this, spellType);
+		//private void OnStartCrafting(SpellType spellType) => StartCrafting?.Invoke(this, spellType);
+		private void OnStartCrafting(SpellType spellType)
+		{
+			Debug.Log("OnStartCrafting CALLED...");
+			StartCrafting?.Invoke(this, spellType);
+		}
 		private void OnCraftSpell(SpellType spellType) => CraftSpell?.Invoke(this, spellType);
 		private void OnLetterSent() => LetterSent?.Invoke(this, EventArgs.Empty);
-        #endregion
+		#endregion
 
-        #region UNITY Methods
-        private void Start()
+		#region UNITY Methods
+		private void Awake()
+		{
+			if (Instance == null)
+			{
+				Instance = this;
+				DontDestroyOnLoad(gameObject);
+			}
+			else
+				Destroy(gameObject);
+		}
+
+		private void Start()
 		{
 			// Setup crafting timer
 			CraftingTimer = new Timer(8.0f);
@@ -68,11 +84,13 @@ namespace SpellSlinger
 
 			if(_isOn)
             {
+				ResetCrafting();
 				CraftGesture.PoseForm += Craft;
 				LetterGesture.PoseForm += GetLetter;
 			}
 			else
             {
+				ResetCrafting();
 				CraftGesture.PoseForm -= Craft;
 				LetterGesture.PoseForm -= GetLetter;
 			}

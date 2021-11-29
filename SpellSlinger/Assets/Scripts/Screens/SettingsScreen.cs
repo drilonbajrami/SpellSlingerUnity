@@ -34,9 +34,11 @@ namespace SpellSlinger
             for (int i = 0; i < settingSelectors.Count; i++)
             {
                 if (i == index)
+                { 
                     settingSelectors[i].Select();
-                else
-                    settingSelectors[i].Deselect();
+                    GameManager.Instance.gameSettings.SetSetting(avaliableGameSettings[i]);
+                }    
+                else settingSelectors[i].Deselect();
             }
 
             if (!thumbsUpContinuePanel.activeSelf)
@@ -45,22 +47,9 @@ namespace SpellSlinger
 
         private void OnLetterGesture(object sender, char e)
         {
-            Debug.Log(e);
-            if (e == 'E')
-            {
-                SelectSetting(0);
-                Debug.Log("Settings Easy Selected");
-            }
-            else if (e == 'I')
-            {
-                SelectSetting(1);
-                Debug.Log("Settings Intermediate Selected");
-            }
-            else if (e == 'W')
-            {
-                SelectSetting(2);
-                Debug.Log("Settings Wizard Selected");
-            }
+            if (e == 'E') SelectSetting(0);
+            else if (e == 'I') SelectSetting(1);
+            else if (e == 'W') SelectSetting(2);
 
             Player.Instance.Gestures.Enable<ThumbsUpGesture>();
         }
@@ -78,6 +67,8 @@ namespace SpellSlinger
             GameObject startingPosition = GameObject.Find("StartPosition");
             Player.Instance.transform.position = startingPosition.transform.position;
             Player.Instance.transform.rotation = startingPosition.transform.rotation;
+
+            SpellCrafter.Instance.Toggle(true);
         }
     }
 }

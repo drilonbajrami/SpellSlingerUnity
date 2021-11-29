@@ -124,7 +124,7 @@ namespace SpellSlinger
             {
                 gameObject.SetActive(false);
                 GameManager.Instance.SettingsSreen.SetActive(true);
-                SpellCrafter.Instance.ResetCrafting();
+                SpellCrafter.Instance.Toggle(false);
             }
         }
         #endregion

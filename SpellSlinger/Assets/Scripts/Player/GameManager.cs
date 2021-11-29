@@ -12,7 +12,7 @@ namespace SpellSlinger
         public static GameManager Instance { get; private set; }
 
         public GameObject Spawner;
-        public GameSetting gameSettings;
+        public GameSetting gameSettings = new GameSetting();
 
         public GameObject StartScreen;
         public GameObject TutorialScreen;

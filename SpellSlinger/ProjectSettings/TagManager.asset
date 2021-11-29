@@ -9,6 +9,7 @@ TagManager:
   - StartScreen
   - Overlay
   - SettingsScreen
+  - SpellCrafter
   layers:
   - Default
   - TransparentFX

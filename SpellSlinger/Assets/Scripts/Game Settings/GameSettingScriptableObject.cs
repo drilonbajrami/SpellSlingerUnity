@@ -18,6 +18,7 @@ namespace SpellSlinger
         public void SetSetting(GameSettingScriptableObject gameSetting)
         {
             craftingDuration = gameSetting.craftingDuration;
+            SpellCrafter.CraftingTimer.ChangeInterval(craftingDuration);
         }
     }
 }
