@@ -1,38 +1,36 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpellSlinger
 {
 	public class HelpGesture : Gesture
 	{
-        [Header("Hand")]
+		[Header("Hand")]
 		[SerializeField] private HandEngine_Client hand;
 
 		[Header("Pose name")]
 		[SerializeField] private string POSE;
 
-		private bool open = false;
+		// Keep track if panel is open or not
+		private bool isOpen = false;
 
-        // Pose event
-        public static event EventHandler<bool> PoseForm;
+		// Pose event
+		public static event EventHandler<bool> PoseForm;
 
-		// Overridden Methods
 		#region Inherited Methods
 		//protected override bool PoseIsActive => (!open && hand.poseActive && hand.poseName == POSE) || (open && hand.poseName != POSE);
-		protected override bool PoseIsActive => Player.NO_GLOVES ? (!open && Input.GetKey(KeyCode.Space)) || (open && !Input.GetKey(KeyCode.Space))
-												: (!open && hand.poseActive && hand.poseName == POSE) || (open && hand.poseName != POSE);
+		protected override bool PoseIsActive => Player.NO_GLOVES ?
+												(!isOpen && Input.GetKey(KeyCode.LeftAlt)) || (isOpen && !Input.GetKey(KeyCode.LeftAlt))      // Keyboard
+												: (!isOpen && hand.poseActive && hand.poseName == POSE) || (isOpen && hand.poseName != POSE); // Gloves
 
-		protected override void OnPose() => PoseForm?.Invoke(this, open);
+		protected override void OnPose() => PoseForm?.Invoke(this, isOpen);
 
 		protected override void PoseStart(object sender, EventArgs e)
 		{
-			// If open is true then negate it and raise event
-			// This will close the help menu
-			if (open)
+			// This will close the help panel if currently open
+			if (isOpen)
 			{
-				open = false;
+				isOpen = false;
 				_timer.Stop();
 				OnPose();
 			}
@@ -40,16 +38,12 @@ namespace SpellSlinger
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{
-			// If pose detection has started and continued
-			// Check if the actual pose the correct one and the open is false (menu not open yet)
-			if (!open && hand.poseActive && hand.poseName == POSE)
+			// If help panel currently closed
+			if (!isOpen && 
+				(Input.GetKey(KeyCode.LeftAlt) ||				// Keyboard
+				(hand.poseActive && hand.poseName == POSE)))	// Gloves
 			{
-				open = true;
-				OnPose();
-			}
-			else if (!open && Input.GetKey(KeyCode.Space))
-			{
-				open = true;
+				isOpen = true;
 				OnPose();
 			}
 		}

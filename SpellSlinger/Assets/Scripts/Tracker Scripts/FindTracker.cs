@@ -17,43 +17,21 @@ namespace SpellSlinger
         private void Start()
         {
             SteamVR_TrackedObject trackedObject = GetComponent<SteamVR_TrackedObject>();
-
-            try
-            {
-                TryGetTracker(trackedObject);
-            }
-            catch
-            {
-                Debug.Log("Failed to find tracker... Trying agian!");
-            }
-
-            //while(trackedObject.index == SteamVR_TrackedObject.EIndex.None)
-            //{
-            //    try 
-            //    { 
-            //        TryGetTracker(trackedObject); 
-            //    }
-            //    catch 
-            //    {
-            //        Debug.Log("Failed to find tracker... Trying agian!");
-            //    }
-            //}
-
+            try { TryGetTracker(trackedObject); }
+            catch { Debug.Log("Failed to find tracker... Trying agian!"); }
         }
 
         /// <summary>
         /// Search for all available trackers and assign the matching one to this current object
         /// </summary>
-            void TryGetTracker(SteamVR_TrackedObject pTrackedObject)
+        void TryGetTracker(SteamVR_TrackedObject pTrackedObject)
         {
-            for (int i = 0; i < SteamVR.connected.Length; ++i)
-            {
+            for (int i = 0; i < SteamVR.connected.Length; ++i) {
                 ETrackedPropertyError error = new ETrackedPropertyError();
                 StringBuilder serialNumber = new StringBuilder();
                 OpenVR.System.GetStringTrackedDeviceProperty((uint)i, ETrackedDeviceProperty.Prop_SerialNumber_String, serialNumber, OpenVR.k_unMaxPropertyStringSize, ref error);
            
-                if (serialNumber.ToString() == trackerToUse.GetStringValue())
-                {
+                if (serialNumber.ToString() == trackerToUse.GetStringValue()) {
                     pTrackedObject.SetDeviceIndex(i);
                     break;
                 }

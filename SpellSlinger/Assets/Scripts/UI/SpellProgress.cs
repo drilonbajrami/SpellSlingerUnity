@@ -30,7 +30,7 @@ namespace SpellSlinger
 			gameObject.SetActive(false);
 		}
 
-        private void Update() => UpdateSpellTimer(SpellCrafter.CraftingTimer.GetProgressPercentage());
+        private void Update() => UpdateSpellTimer(SpellCrafter.CraftingTimer.GetCompletionInPercent());
 
 		private void OnDisable()
 		{

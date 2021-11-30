@@ -6,8 +6,8 @@ namespace SpellSlinger
 	public abstract class Gesture : MonoBehaviour
 	{
         /// <summary>
-        /// Keep track if gesture is active or not
-        /// Can be used to turn off gesture recognition when not needed
+        /// Keep track if gesture is enabled or disabled.
+        /// Can be used to turn off gesture recognition when not needed.
         /// </summary>
         [SerializeField] private bool _isEnabled = false;
 		protected bool IsEnabled => _isEnabled;
@@ -40,76 +40,52 @@ namespace SpellSlinger
 
 			// Check if timer is running or not and if hands currently have active poses
 			// If timer is not running and hands are in active poses then start timer
-			if (!_timer.Running && PoseIsActive)
-				_timer.Start();
+			if (!_timer.Running && PoseIsActive) _timer.Start();
 
 			_timer.UpdateTimer(Time.fixedDeltaTime);
 		}
 
 		private void OnValidate()
 		{
-			if(_timer != null)
-				_timer.ChangeInterval(_poseTimeSpan);
-
+			if(_timer != null) _timer.ChangeInterval(_poseTimeSpan);
 			OnInspectorChanges();
 		}
 		#endregion
 
 		#region Public Methods
-		/// <summary>
-		/// Change the pose time span
-		/// </summary>
 		public void ChangePoseTimeSpan(float seconds) => _poseTimeSpan = seconds;
 
+		public void Enable() => _isEnabled = true;
+
+		public void Disable() => _isEnabled = false;
+
 		/// <summary>
-		/// Enables the gesture
+		/// Toggle tracking ON/OFF
 		/// </summary>
-		public void Enable()
-		{
-			_isEnabled = true;
-			Debug.Log($"Enabled {gameObject.name}");
-		}
-        
-		/// <summary>
-		/// Disables the gesture
-		/// </summary>
-		public void Disable()
-		{
-			_isEnabled = false;
-			Debug.Log($"Disabled {gameObject.name}");
-		}
-        
-		/// <summary>
-		/// Enable and Disable tracking
-		/// </summary>
-		/// <param name="state"></param>
 		public void ToggleTracking(bool state) => _areTrackersOn = state;
 		#endregion
 
 		#region Abstract Methods
 		/// <summary>
-		/// Returns the state of the hand poses
+		/// Returns the state of the hand poses.
 		/// </summary>
 		abstract protected bool PoseIsActive { get; }
 
 		/// <summary>
-		/// On Timer Start event subscriber method
+		/// On Timer Start event subscriber method.
 		/// </summary>
 		protected virtual void PoseStart(object sender, EventArgs e) { }
 
 		/// <summary>
-		/// On Timer End event subscriber method
+		/// On Timer End event subscriber method.
 		/// </summary>
 		protected abstract void PoseEnd(object sender, EventArgs e);
 
 		/// <summary>
-		/// Event raiser method when pose is detected
+		/// Event raiser method when pose is detected.
 		/// </summary>
 		protected abstract void OnPose();
 
-		/// <summary>
-		/// Called by OnValidate when changing values in the inspector
-		/// </summary>
 		protected virtual void OnInspectorChanges() { }
 		#endregion
 	}

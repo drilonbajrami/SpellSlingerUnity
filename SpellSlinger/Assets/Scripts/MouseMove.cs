@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace SpellSlinger
 {
+    /// <summary>
+    /// Camera mouse controller 
+    /// </summary>
     public class MouseMove : MonoBehaviour
     {
         public bool moveOnlyXAxis = true;
@@ -11,11 +14,7 @@ namespace SpellSlinger
         public float mouseSensitivity = 800f;
         float xRotation = 0f;
 
-        // Update is called once per frame
-        void Update()
-        {
-            Rotation();
-        }
+        void Update() => Rotation();
 
         private void Rotation()
         {

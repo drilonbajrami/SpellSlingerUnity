@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpellSlinger
@@ -10,6 +8,8 @@ namespace SpellSlinger
         [Header("Hands")]
 		[SerializeField] private HandEngine_Client leftHand;
 		[SerializeField] private HandEngine_Client rightHand;
+		private Transform lHand;
+		private Transform rHand;
 
 		[Header("Pose names")]
 		[Tooltip("Left hand pose name")]
@@ -27,25 +27,26 @@ namespace SpellSlinger
         // Pose event
         public static event EventHandler PoseForm;
 
-		/// <summary>
-		/// Returns a co-joined string of both hand pose names
-		/// </summary>
-		/// <returns></returns>
-		private string GetHandPoses() => leftHand.poseName + rightHand.poseName;
+        #region Private Properties & Methods
+        /// <summary>
+        /// Returns a co-joined string of both hands pose names
+        /// </summary>
+        private string HandPoses => leftHand.poseName + rightHand.poseName;
+		private float DistanceBetweenHands => Vector3.Distance(lHand.position, rHand.position);
+		private bool HandsAreCloseToEachOther => DistanceBetweenHands < distanceThreshold;
+        #endregion
 
-		// Override Methods
-		#region Inherited Methods
-		protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetMouseButton(1) : leftHand.poseActive && rightHand.poseActive && POSE == GetHandPoses();
+        #region Inherited Methods
+        protected override bool PoseIsActive => Player.NO_GLOVES ? // Keyboard or Gloves
+												Input.GetKey(KeyCode.Semicolon) : 
+												leftHand.poseActive && rightHand.poseActive && POSE == HandPoses;
 
 		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{
 			if (PoseIsActive) {
-				if (AreTrackersOn) {
-					float distance = Vector3.Distance(leftHand.transform.position, rightHand.transform.position);
-					if(distance < distanceThreshold) OnPose();
-				}
+				if (AreTrackersOn && HandsAreCloseToEachOther) OnPose();
 				else OnPose();
 			}
 		}

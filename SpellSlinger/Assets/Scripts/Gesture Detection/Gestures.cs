@@ -13,9 +13,7 @@ namespace SpellSlinger
 		{
 			// Cache all the available gestures
 			for (int i = 0; i < transform.childCount; i++)
-			{
 				gestures.Add(transform.GetChild(i).gameObject.GetComponent<Gesture>());
-			}
 
 			// Set tracking toggle on/off
 			foreach (Gesture gesture in gestures)

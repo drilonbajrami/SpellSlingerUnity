@@ -8,21 +8,15 @@ namespace SpellSlinger
     [System.Serializable]
     public class Spell : MonoBehaviour
     { 
-        // Type of spell
         private SpellType _type;
         public SpellType Type => _type;
 
         // Cache the collider of this spell
         private SphereCollider _collider;
 
-        // Speed of spell when fired
         [SerializeField] private float speed = 5.0f;
-
-        // Keep track if fired or not
-        private bool fired = false;
-
-        // Spell life span 
         [SerializeField] private float _spellLifeSpanInSeconds = 10.0f;
+        private bool fired = false;
 
         // Cache the Camera forward vector on X and Z axes
         // Use to aim the spell towards the center view of the screen (Camera)
@@ -56,7 +50,7 @@ namespace SpellSlinger
         }
 
         /// <summary>
-        /// Dettached the spell from parent and fires it.
+        /// Dettaches the spell from parent and fires it.
         /// </summary>
         public void CastSpell()
         {

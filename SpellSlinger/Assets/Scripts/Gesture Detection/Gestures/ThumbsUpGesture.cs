@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpellSlinger
@@ -13,9 +11,9 @@ namespace SpellSlinger
         [Header("Pose Name")]
         [SerializeField] private string POSE;
 
+        // Pose event
         public static EventHandler PoseForm;
 
-        // Overridden Methods
         #region Inherited Methods
         protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetKey(KeyCode.KeypadEnter)
                                                                  : hand.poseActive && hand.poseName == POSE;
@@ -24,8 +22,7 @@ namespace SpellSlinger
 
         protected override void PoseEnd(object sender, EventArgs e)
         {
-            if (PoseIsActive)
-                OnPose();
+            if (PoseIsActive) OnPose();
         }
 
         protected override void OnInspectorChanges() => POSE = POSE.ToUpper();

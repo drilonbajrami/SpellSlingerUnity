@@ -7,29 +7,18 @@ namespace SpellSlinger
 {
     public class Timer
     {
-        /// <summary>
-        /// Cache the state of the timer whether it's running or not.
-        /// </summary>
         private bool running;
         public bool Running => running;
 
         private float timerInterval;
         private float elapsedTime;
 
-        /// <summary>
-        /// Event Handler for reseting of the timer.
-        /// </summary>
         public event EventHandler TimerStart;
-
-        /// <summary>
-        /// Event Handler for ending of the timer.
-        /// </summary>
         public event EventHandler TimerEnd;
         
         /// <summary>
         /// Timer class for managing timed events.
         /// </summary>
-        /// <param name="seconds">Timer interval in seconds</param>
         public Timer(float seconds)
         {
             running = false;
@@ -40,18 +29,17 @@ namespace SpellSlinger
         /// <summary>
         /// Increment the timer by given amount in seconds.
         /// </summary>
-        /// <param name="seconds"></param>
         public void UpdateTimer(float seconds)
         {
             if (!running) return;
+
             elapsedTime += seconds;
-            if (elapsedTime >= timerInterval)
-                End();
+            if (elapsedTime >= timerInterval) End();
         }
 
         /// <summary>
         /// Reset everything about the timer and start.
-        /// Invokes the TimerStart event handler.
+        /// Invokes the TimerStart event.
         /// </summary>
         public void Start()
         {
@@ -61,7 +49,7 @@ namespace SpellSlinger
         }
 
         /// <summary>
-        /// Ends the timer.
+        /// Ends the timer and invokes the TimerEnd event.
         /// </summary>
         private void End()
         {
@@ -78,24 +66,10 @@ namespace SpellSlinger
             Pause();
         }
 
-        /// <summary>
-        /// Continues the timer.
-        /// </summary>
         public void Continue() => running = true;
-
-        /// <summary>
-        /// Stops the timer.
-        /// </summary>
         public void Pause() => running = false;
 
-        /// <summary>
-        /// Change timer interval.
-        /// </summary>
         public void ChangeInterval(float seconds) => timerInterval = seconds;
-
-        /// <summary>
-        /// Returns the progress of the timer in terms of percentage.
-        /// </summary>
-        public float GetProgressPercentage() => elapsedTime * 100.0f / timerInterval;
+        public float GetCompletionInPercent() => elapsedTime * 100.0f / timerInterval;
     }
 }

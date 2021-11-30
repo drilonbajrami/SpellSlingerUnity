@@ -27,8 +27,7 @@ namespace SpellSlinger
         {
             tutorialBackground = Resources.Load<Sprite>("UI/TutorialBackdrop");
 
-            for (int i = 0; i < gameObject.transform.childCount; i++)
-            {
+            for (int i = 0; i < gameObject.transform.childCount; i++) {
                 tutorialSteps.Add(gameObject.transform.GetChild(i).gameObject);
                 tutorialSteps[i].SetActive(false);
             }

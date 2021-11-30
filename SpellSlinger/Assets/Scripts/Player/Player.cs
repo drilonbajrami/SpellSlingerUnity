@@ -15,6 +15,10 @@ namespace SpellSlinger
         [SerializeField] private bool noGloves;
         public static bool NO_GLOVES;
 
+        [HideInInspector] public ScoreManager ScoreManager;
+
+        bool playModeOnStart = true;
+
         private void Awake()
         {
             if (Instance == null)
@@ -24,6 +28,18 @@ namespace SpellSlinger
             }
             else
                 Destroy(gameObject);
+
+            ScoreManager = GetComponent<ScoreManager>();
+        }
+
+        private void Update()
+        {
+            if (playModeOnStart)
+            {
+                Gestures.Enable<CraftGesture>();
+                Gestures.Enable<CastGesture>();
+                playModeOnStart = false;
+            }
         }
 
         public void OnValidate()

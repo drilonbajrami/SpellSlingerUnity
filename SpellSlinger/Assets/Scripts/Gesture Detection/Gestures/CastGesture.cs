@@ -10,6 +10,7 @@ namespace SpellSlinger
         [Header("Hand & Head Transform")]
 		[SerializeField] private HandEngine_Client hand;
 		[SerializeField] private Transform head;
+		private Transform handT;
 
 		[Header("Pose name")]
 		[SerializeField] private string POSE;
@@ -27,53 +28,47 @@ namespace SpellSlinger
         // Pose event
         public static event EventHandler PoseForm;
 
-        /// <summary>
-        /// Returns the distance between the hand and head (HMD).
-        /// </summary>
-        /// <returns></returns>
-        private float GetDistanceFromHandToHead()
-		{
-			return Vector2.Distance(new Vector2(head.position.x, head.position.z),
-									new Vector2(hand.transform.position.x, hand.transform.position.z));
-		}
+        #region Private Properties & Methods
+        private float DistanceFromHandToHead => Vector2.Distance(
+											new Vector2(head.position.x, head.position.z),	// Head
+											new Vector2(handT.position.x, handT.position.z)	// Hand
+											);
+		
+		private bool IsHandCloseToHead => DistanceFromHandToHead < distanceThreshold;
 
-		// Overridden Methods
+        private void Start() => handT = hand.transform; // Cache hand transform
+
+		private void ResetPoseCheck()
+		{
+			_timer.Stop();
+			_canCompletePose = false;
+		}
+		#endregion
+
 		#region Inherited Methods
-		protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetMouseButton(0) : hand.poseActive && hand.poseName == POSE;
+		protected override bool PoseIsActive => Player.NO_GLOVES ? // Keyboard or Gloves
+												Input.GetKey(KeyCode.Space) :			
+												hand.poseActive && hand.poseName == POSE;	
 
 		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
 
 		protected override void PoseStart(object sender, EventArgs e)
 		{
-			if (Player.NO_GLOVES)
-			{
+			if (Player.NO_GLOVES) {
 				_canCompletePose = false;
 				PoseForm?.Invoke(this, EventArgs.Empty);
 			}	
-			else if (!AreTrackersOn)
-				_canCompletePose = true;
-			else if (GetDistanceFromHandToHead() < distanceThreshold)
-				_canCompletePose = true;
-			else
-			{
-				_timer.Stop();
-				_canCompletePose = false;
-			}
+			else if (!AreTrackersOn || IsHandCloseToHead) _canCompletePose = true;
+			else ResetPoseCheck();
 		}
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{
-			if (_canCompletePose && PoseIsActive)
-			{
+			if (_canCompletePose && PoseIsActive) {
 				if (!AreTrackersOn) OnPose();
 				else {
-					if (GetDistanceFromHandToHead() > distanceThreshold)
-						OnPose();
-					else
-					{
-						_timer.Stop();
-						_canCompletePose = false;
-					}
+					if (!IsHandCloseToHead) OnPose();
+					else ResetPoseCheck();
 				}
 			}
 		}

@@ -7,7 +7,6 @@ namespace SpellSlinger
 {
     public class Enemy : MonoBehaviour
     {
-        // Type of enemy
         private EnemyType _type;
         public EnemyType Type => _type;
 
@@ -21,8 +20,12 @@ namespace SpellSlinger
         {
             _health = 100.0f;
             _agent = GetComponent<NavMeshAgent>();
-            _agent.SetDestination(GameObject.FindGameObjectWithTag("Player").gameObject.transform.position);
-            _agent.speed = _maxSpeed;
+
+            if( _agent != null )
+            {
+                _agent.SetDestination(GameObject.FindGameObjectWithTag("Player").gameObject.transform.position);
+                _agent.speed = _maxSpeed;
+            }
         }
 
         public void SetType(EnemyType type)
@@ -34,13 +37,15 @@ namespace SpellSlinger
 		public void TakeDamage(Spell spell)
         {
             Element spellElement = spell.Type.Element;
+            float damageDealt = 0;
 
-			if (spellElement == Type.Strength) _health -= 25.0f;
-			else if (spellElement == Type.Element) _health -= 50.0f;
-			else if (spellElement == Type.Weakness) _health -= 100.0f;
+			if (spellElement == Type.Strength) damageDealt = 25.0f;
+			else if (spellElement == Type.Element) damageDealt = 50.0f;
+			else if (spellElement == Type.Weakness) damageDealt = 100.0f;
 
-			if (_health <= 0.0f)
-				Destroy(gameObject);
+            _health -= damageDealt;
+            Player.Instance.ScoreManager.UpdateScore((int)damageDealt);
+			if (_health <= 0.0f) Destroy(gameObject);
 		}
 
 		private void OnCollisionEnter(Collision collision)
@@ -54,10 +59,13 @@ namespace SpellSlinger
             }
         }
 
+        /// <summary>
+        /// When hit by a spell, slow down for 2 seconds.
+        /// </summary>
 		private IEnumerator SlowDown()
         {
             _agent.speed = _minSpeed;
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(2);
             _agent.speed = _maxSpeed;
         }
     }

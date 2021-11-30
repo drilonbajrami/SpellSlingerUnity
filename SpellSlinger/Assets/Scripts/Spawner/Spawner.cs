@@ -40,9 +40,6 @@ namespace SpellSlinger
         #endregion
 
         #region Spawn Enemy Methods
-        /// <summary>
-        /// Spawns an enemy and parents it to the Enemy GO transform.
-        /// </summary>
         void SpawnEnemy()
         {
             GameObject enemy = Instantiate(enemyPrefab, 
@@ -55,23 +52,16 @@ namespace SpellSlinger
 
         // These methods are called in the SpawnerEditor script on inspector buttons clicked.
         #region Spawn Point Methods
-        /// <summary>
-        /// Spawns a spawn point and returns it.
-        /// </summary>
         public GameObject AddSpawnPoint()
         {
-            Vector3 randPos = new Vector3(Random.Range(transform.position.x - 5f, transform.position.x + 5f),  // x
-                                          transform.position.y,                                                                   // y
+            Vector3 randPos = new Vector3(Random.Range(transform.position.x - 5f, transform.position.x + 5f),    // x
+                                          transform.position.y,                                                  // y                // y
                                           Random.Range(transform.position.z - 5f, transform.position.z + 5f)); ; // z
 
             GameObject point = Instantiate(spawnPointPrefab, transform.position, Quaternion.identity, spawnPointParent);
             return point;
         }
 
-        /// <summary>
-        /// Remove scene selected spawn point.
-        /// </summary>
-        /// <param name="selected"></param>
         public void RemoveSelectedPoint(GameObject selected)
         {
             if(selected.GetComponent<SpawnPoint>() != null) DestroyImmediate(selected);   
@@ -82,9 +72,6 @@ namespace SpellSlinger
             if (selected.GetComponent<SpawnPoint>() != null) DestroyImmediate(selected);
         }
 
-        /// <summary>
-        /// Clear all spawn points.
-        /// </summary>
         public void ClearAllPoints()
         {
             foreach (Transform point in spawnPointParent) DestroyImmediate(point.gameObject);

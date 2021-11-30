@@ -13,27 +13,20 @@ namespace SpellSlinger
 
 		private void Awake()
 		{
-			if (Alphabet.Count == 0 || Elements.Count == 0)
-			{
+			if (Alphabet.Count == 0 || Elements.Count == 0) {
 				// Get the alphabet 
 				alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
 				// Store all element background sprites
-				foreach (string name in Enum.GetNames(typeof(Element)))
-				{
+				foreach (string name in Enum.GetNames(typeof(Element))) {
 					Sprite background = Resources.Load<Sprite>("UI/GestureHints/" + $"{name}BG");
-
-					if (background != null)
-						Elements.Add(name, background);
+					if (background != null) Elements.Add(name, background);
 				}
 
 				// Store all sign letter sprites
-				for (int i = 0; i < alpha.Length; i++)
-				{
+				for (int i = 0; i < alpha.Length; i++) {
 					Sprite letter = Resources.Load<Sprite>("UI/GestureHints/Letters/" + $"{alpha[i]}");
-
-					if (letter != null)
-						Alphabet.Add(alpha[i], letter);
+					if (letter != null) Alphabet.Add(alpha[i], letter);
 				}
 			}
 		}

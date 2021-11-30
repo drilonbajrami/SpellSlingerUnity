@@ -32,12 +32,7 @@ namespace SpellSlinger
 		public static event EventHandler LetterSent;
 
 		// Event Rasier Methods
-		//private void OnStartCrafting(SpellType spellType) => StartCrafting?.Invoke(this, spellType);
-		private void OnStartCrafting(SpellType spellType)
-		{
-			Debug.Log("OnStartCrafting CALLED...");
-			StartCrafting?.Invoke(this, spellType);
-		}
+		private void OnStartCrafting(SpellType spellType) => StartCrafting?.Invoke(this, spellType);
 		private void OnCraftSpell(SpellType spellType) => CraftSpell?.Invoke(this, spellType);
 		private void OnLetterSent() => LetterSent?.Invoke(this, EventArgs.Empty);
 		#endregion
@@ -69,14 +64,12 @@ namespace SpellSlinger
         {	
 			_isOn = state;
 
-			if(_isOn)
-            {
+			if(_isOn) {
 				ResetCrafting();
 				CraftGesture.PoseForm += Craft;
 				LetterGesture.PoseForm += GetLetter;
 			}
-			else
-            {
+			else {
 				ResetCrafting();
 				CraftGesture.PoseForm -= Craft;
 				LetterGesture.PoseForm -= GetLetter;

@@ -19,18 +19,15 @@ namespace SpellSlinger
 
         private void Update()
         {
-            if(Player.NO_GLOVES && Input.anyKeyDown && IsEnabled)
-            {
+			// Keyboard mode
+            if(Player.NO_GLOVES && Input.anyKeyDown && IsEnabled) {
 				string currentKey = Input.inputString;
 				char key;
-				if (currentKey.Length > 0)
-				{
+				if (currentKey.Length > 0) {
 					currentKey = currentKey.Substring(0, 1).ToUpper();
 					key = char.Parse(currentKey);
-					foreach (char c in alpha)
-					{
-						if (c == key)
-							PoseForm?.Invoke(this, key);
+					foreach (char c in alpha) {
+						if (c == key) PoseForm?.Invoke(this, key);
 					}
 				}
             }
