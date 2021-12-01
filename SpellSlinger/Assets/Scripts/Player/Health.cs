@@ -6,8 +6,8 @@ namespace SpellSlinger
     public class Health : MonoBehaviour
     {
         public static event EventHandler Death;
-        public static event EventHandler Damage;
-        public float Lives { get; private set; }
+        public static event EventHandler<int> Damage;
+        public int Lives { get; private set; }
 
         private void Start()
         {
@@ -18,13 +18,12 @@ namespace SpellSlinger
         {
             if (Input.GetMouseButtonDown(0))
                 TakeDamage();
-
         }
 
         public void TakeDamage()
         {
             Lives--;
-            Damage?.Invoke(this, EventArgs.Empty);
+            Damage?.Invoke(this, Lives);
 
             if(Lives == 0)
                 Death?.Invoke(this, EventArgs.Empty);

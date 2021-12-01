@@ -57,7 +57,7 @@ namespace SpellSlinger
         private void OnThumbsUp(object sender, EventArgs e)
         {
             gameObject.SetActive(false);
-            GameManager.Instance.Spawner.gameObject.SetActive(true);
+            //GameManager.Instance.Spawner.gameObject.SetActive(true);
             GameManager.Instance.Overlay.SetActive(false);
 
             Player.Instance.Gestures.Enable<CraftGesture>();

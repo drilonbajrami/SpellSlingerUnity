@@ -19,11 +19,28 @@ namespace SpellSlinger
         private float min;
         private float max;
 
-        private void Start()
+        private void Awake()
         {
             _overlay = GetComponent<Image>();
-            _overlay.color = new Color(1,1,1,0);
+        }
+
+        private void OnEnable()
+        {
+            _alpha = 0.0f;
+            _overlay.color = new Color(1,1,1, _alpha);
             Health.Damage += OnDamage;
+            Health.Death += OnDeath;
+            min = _alpha - differenceMinMax;
+            max = _alpha + differenceMinMax;
+            dynamicChangeRate = changeRate;
+        }
+
+        private void OnDisable()
+        {
+            _alpha = 0.0f;
+            _overlay.color = new Color(1, 1, 1, _alpha);
+            Health.Damage -= OnDamage;
+            Health.Death -= OnDeath;
             min = _alpha - differenceMinMax;
             max = _alpha + differenceMinMax;
             dynamicChangeRate = changeRate;
@@ -40,20 +57,25 @@ namespace SpellSlinger
             }  
         }
 
-        public void OnDamage(object source, EventArgs e)
+        public void OnDamage(object source, int lives)
         {
-            _alpha += maxAlphaValue * 0.8f;
+            if(lives > 0) _alpha = maxAlphaValue / lives;
+
+            _alpha += maxAlphaValue /2;
             _alpha = Mathf.Clamp(_alpha, 0f, maxAlphaValue);
             min = _alpha - differenceMinMax;
             max = _alpha + differenceMinMax;
 
             if (_alpha >= maxAlphaValue)
-                dynamicChangeRate = changeRate - 0.004f;
+                dynamicChangeRate = changeRate - 0.0045f;
 
             min = Mathf.Clamp(min, 0f, 0.85f);
             max = Mathf.Clamp(max, 0f, 0.85f);
         }
 
-        
+        private void OnDeath(object sender, EventArgs e)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -7,15 +7,19 @@ namespace SpellSlinger
 {
     public class EndGameScreen : MonoBehaviour
     {
-        private void Start()
+        [SerializeField] private bool victoryScreen;
+
+        private void Awake()
         {
             Health.Death += OnDeath;
+
+            gameObject.SetActive(false);
         }
 
         private void OnEnable()
         {
             Player.Instance.Gestures.DisableAllGestures();
-            ThumbsUpGesture.PoseForm += OnThumbsUp;
+            ThumbsUpGesture.PoseForm += OnThumbsUp;  
             Player.Instance.Gestures.Enable<ThumbsUpGesture>();
 
             // Move to start screen & tutorial position
@@ -38,7 +42,10 @@ namespace SpellSlinger
 
         private void OnDeath(object sender, EventArgs e)
         {
-            gameObject.SetActive(true);
+            if(!victoryScreen)
+                gameObject.SetActive(true);
+
+            GameManager.Instance.Overlay.SetActive(true);
         }
     }
 }
