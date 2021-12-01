@@ -7,6 +7,11 @@ namespace SpellSlinger
 {
     public class EndGameScreen : MonoBehaviour
     {
+        private void Start()
+        {
+            Health.Death += OnDeath;
+        }
+
         private void OnEnable()
         {
             Player.Instance.Gestures.DisableAllGestures();
@@ -29,6 +34,11 @@ namespace SpellSlinger
         {
             gameObject.SetActive(false);
             GameManager.Instance.StartScreen.SetActive(true);
+        }
+
+        private void OnDeath(object sender, EventArgs e)
+        {
+            gameObject.SetActive(true);
         }
     }
 }

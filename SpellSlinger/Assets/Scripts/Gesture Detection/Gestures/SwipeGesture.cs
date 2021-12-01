@@ -15,7 +15,11 @@ namespace SpellSlinger
         // Pose event
         public static event EventHandler PoseForm;
 
-        private void Start() => handT = hand.transform;
+		public new void Start()
+		{
+			base.Start();
+			handT = hand.transform;
+		}
 
 		public bool HandPalmFacingUp => handT.rotation.x < 0.0f;
 

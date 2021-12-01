@@ -25,7 +25,7 @@ namespace SpellSlinger
 		protected Timer _timer;
 
         #region UNITY Methods
-        private void Start()
+        protected void Start()
 		{
 			// Setup the timer and subscribe to timer events
 			_timer = new Timer(_poseTimeSpan);
@@ -40,7 +40,8 @@ namespace SpellSlinger
 
 			// Check if timer is running or not and if hands currently have active poses
 			// If timer is not running and hands are in active poses then start timer
-			if (!_timer.Running && PoseIsActive) _timer.Start();
+			if (!_timer.Running && PoseIsActive) 
+				_timer.Start();
 
 			_timer.UpdateTimer(Time.fixedDeltaTime);
 		}

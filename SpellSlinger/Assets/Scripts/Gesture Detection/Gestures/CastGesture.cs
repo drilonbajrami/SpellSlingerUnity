@@ -36,7 +36,11 @@ namespace SpellSlinger
 		
 		private bool IsHandCloseToHead => DistanceFromHandToHead < distanceThreshold;
 
-        private void Start() => handT = hand.transform; // Cache hand transform
+		public new void Start()
+		{
+			base.Start();
+			handT = hand.transform; // Cache hand transform
+		}
 
 		private void ResetPoseCheck()
 		{
@@ -54,10 +58,11 @@ namespace SpellSlinger
 
 		protected override void PoseStart(object sender, EventArgs e)
 		{
-			if (Player.NO_GLOVES) {
+			if (Player.NO_GLOVES)
+			{
 				_canCompletePose = false;
 				PoseForm?.Invoke(this, EventArgs.Empty);
-			}	
+			}
 			else if (!AreTrackersOn || IsHandCloseToHead) _canCompletePose = true;
 			else ResetPoseCheck();
 		}

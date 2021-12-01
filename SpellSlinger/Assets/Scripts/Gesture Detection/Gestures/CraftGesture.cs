@@ -34,6 +34,13 @@ namespace SpellSlinger
         private string HandPoses => leftHand.poseName + rightHand.poseName;
 		private float DistanceBetweenHands => Vector3.Distance(lHand.position, rHand.position);
 		private bool HandsAreCloseToEachOther => DistanceBetweenHands < distanceThreshold;
+
+		public new void Start()
+        {
+			base.Start();
+			lHand = leftHand.transform;
+			rHand = rightHand.transform;
+        }
         #endregion
 
         #region Inherited Methods

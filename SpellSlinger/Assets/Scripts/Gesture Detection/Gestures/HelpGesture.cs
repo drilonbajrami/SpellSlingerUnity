@@ -18,7 +18,6 @@ namespace SpellSlinger
 		public static event EventHandler<bool> PoseForm;
 
 		#region Inherited Methods
-		//protected override bool PoseIsActive => (!open && hand.poseActive && hand.poseName == POSE) || (open && hand.poseName != POSE);
 		protected override bool PoseIsActive => Player.NO_GLOVES ?
 												(!isOpen && Input.GetKey(KeyCode.LeftAlt)) || (isOpen && !Input.GetKey(KeyCode.LeftAlt))      // Keyboard
 												: (!isOpen && hand.poseActive && hand.poseName == POSE) || (isOpen && hand.poseName != POSE); // Gloves

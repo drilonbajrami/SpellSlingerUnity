@@ -34,7 +34,8 @@ namespace SpellSlinger
             if (!running) return;
 
             elapsedTime += seconds;
-            if (elapsedTime >= timerInterval) End();
+            if (elapsedTime >= timerInterval) 
+                End();
         }
 
         /// <summary>
