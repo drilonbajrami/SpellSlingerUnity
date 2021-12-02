@@ -3946,6 +3946,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6521150901268134762, guid: cb68b52610b28be42835d01d8656a0c8, type: 3}
   m_PrefabInstance: {fileID: 357157260}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &363611651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1981304180418980940, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+  m_PrefabInstance: {fileID: 6113494694235417323}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &364001748
 GameObject:
   m_ObjectHideFlags: 0
@@ -4130,6 +4135,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5213478542684114043, guid: 83ea5922e2d48994295751e34f7ec090, type: 3}
   m_PrefabInstance: {fileID: 373231544}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &377145754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1981304181156230363, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+  m_PrefabInstance: {fileID: 6113494694235417323}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &405545089
 GameObject:
@@ -23419,7 +23429,9 @@ MonoBehaviour:
   VictoryScreen: {fileID: 886603763}
   GameOverScreen: {fileID: 1794564609}
   Overlay: {fileID: 821756792}
+  DamageOverlay: {fileID: 363611651}
   ScorePanel: {fileID: 452687395}
+  SpellProgress: {fileID: 377145754}
   playModeOnStart: 1
 --- !u!4 &1939526548
 Transform:
