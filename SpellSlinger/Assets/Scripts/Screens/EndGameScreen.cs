@@ -22,6 +22,8 @@ namespace SpellSlinger
             ThumbsUpGesture.PoseForm += OnThumbsUp;  
             Player.Instance.Gestures.Enable<ThumbsUpGesture>();
 
+            GameManager.Instance.DamageOverlay.SetActive(true);
+
             // Move to start screen & tutorial position
             GameObject tutorialPosition = GameObject.Find("TutorialPosition");
             Player.Instance.transform.position = tutorialPosition.transform.position;
@@ -37,15 +39,18 @@ namespace SpellSlinger
         private void OnThumbsUp(object sender, EventArgs e)
         {
             gameObject.SetActive(false);
-            GameManager.Instance.StartScreen.SetActive(true);
+            GameManager.Instance.ResetGame();
         }
 
         private void OnDeath(object sender, EventArgs e)
         {
             if(!victoryScreen)
                 gameObject.SetActive(true);
-
+            GameManager.Instance.ScorePanel.SetActive(false);
+            GameManager.Instance.DamageOverlay.SetActive(false);
             GameManager.Instance.Overlay.SetActive(true);
+            GameManager.Instance.SpellCrafter.ResetCrafting();
+            GameManager.Instance.SpellProgress.SetActive(false);
         }
     }
 }

@@ -16,8 +16,9 @@ namespace SpellSlinger
         public static bool NO_GLOVES;
 
         [HideInInspector] public ScoreManager ScoreManager;
+        [HideInInspector] public Health Health;
 
-        bool playModeOnStart = true;
+        public bool playModeOnStart = true;
 
         private void Awake()
         {
@@ -30,16 +31,13 @@ namespace SpellSlinger
                 Destroy(gameObject);
 
             ScoreManager = GetComponent<ScoreManager>();
+            Health = GetComponent<Health>();
         }
 
-        private void Update()
+        public void ResetStats()
         {
-            if (playModeOnStart)
-            {
-                Gestures.Enable<CraftGesture>();
-                Gestures.Enable<CastGesture>();
-                playModeOnStart = false;
-            }
+            ScoreManager.ResetScore();
+            Health.ResetHealth();
         }
 
         public void OnValidate()

@@ -37,6 +37,12 @@ namespace SpellSlinger
                 _spawnTime = 0.0f;
             }
         }
+
+        private void OnDisable()
+        {
+            foreach(GameObject enemy in enemyParent)
+                Destroy(enemy.gameObject);
+        }
         #endregion
 
         #region Spawn Enemy Methods

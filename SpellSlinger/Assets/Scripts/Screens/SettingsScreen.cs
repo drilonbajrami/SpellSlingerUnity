@@ -59,7 +59,9 @@ namespace SpellSlinger
             gameObject.SetActive(false);
             //GameManager.Instance.Spawner.gameObject.SetActive(true);
             GameManager.Instance.Overlay.SetActive(false);
+            GameManager.Instance.ScorePanel.SetActive(true);
 
+            Player.Instance.Gestures.DisableAllGestures();
             Player.Instance.Gestures.Enable<CraftGesture>();
             Player.Instance.Gestures.Enable<CastGesture>();
 

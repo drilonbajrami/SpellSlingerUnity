@@ -6,6 +6,11 @@ namespace SpellSlinger
     {
         public GameObject selectOverlay;
 
+        public void OnDisable()
+        {
+            Deselect();
+        }
+
         public void Select()
         {
             selectOverlay.SetActive(true);

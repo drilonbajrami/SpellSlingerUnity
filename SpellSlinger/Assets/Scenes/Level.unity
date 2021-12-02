@@ -4705,6 +4705,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6521150901268134762, guid: cb68b52610b28be42835d01d8656a0c8, type: 3}
   m_PrefabInstance: {fileID: 421049540}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &452687395 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1981304181034893248, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+  m_PrefabInstance: {fileID: 6113494694235417323}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &458430745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23414,6 +23419,8 @@ MonoBehaviour:
   VictoryScreen: {fileID: 886603763}
   GameOverScreen: {fileID: 1794564609}
   Overlay: {fileID: 821756792}
+  ScorePanel: {fileID: 452687395}
+  playModeOnStart: 1
 --- !u!4 &1939526548
 Transform:
   m_ObjectHideFlags: 0

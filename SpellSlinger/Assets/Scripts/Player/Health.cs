@@ -28,5 +28,10 @@ namespace SpellSlinger
             if(Lives == 0)
                 Death?.Invoke(this, EventArgs.Empty);
         }
+
+        public void ResetHealth()
+        {
+            Lives = 3;
+        }
     }
 }

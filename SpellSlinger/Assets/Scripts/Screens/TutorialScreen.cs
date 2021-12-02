@@ -42,13 +42,12 @@ namespace SpellSlinger
             if (Tutorial.IsInStep(StepIndex.CRAFT))
             {
                 Player.Instance.Gestures.Disable<LetterGesture>();
-                Player.Instance.Gestures.Disable<ThumbsUpGesture>();
                 Tutorial.NextStep(); // To step (2 - HELP)
             }
             else
             {
                 // In whatever step we are, restart and go to the second step
-                // since we already went through the step (1 - CRAFT)
+                // since we already went through the first step once (1 - CRAFT)
                 Player.Instance.Gestures.Disable<LetterGesture>();
                 Player.Instance.Gestures.Disable<CastGesture>();
                 Player.Instance.Gestures.Disable<ThumbsUpGesture>();

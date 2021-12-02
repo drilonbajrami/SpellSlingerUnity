@@ -32,6 +32,8 @@ namespace SpellSlinger
             Health.Death += OnDeath;
             min = _alpha - differenceMinMax;
             max = _alpha + differenceMinMax;
+            min = Mathf.Clamp(min, 0f, 0.85f);
+            max = Mathf.Clamp(max, 0f, 0.85f);
             dynamicChangeRate = changeRate;
         }
 
@@ -43,6 +45,8 @@ namespace SpellSlinger
             Health.Death -= OnDeath;
             min = _alpha - differenceMinMax;
             max = _alpha + differenceMinMax;
+            min = Mathf.Clamp(min, 0f, 0.85f);
+            max = Mathf.Clamp(max, 0f, 0.85f);
             dynamicChangeRate = changeRate;
         }
 
