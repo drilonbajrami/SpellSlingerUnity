@@ -17,7 +17,7 @@ namespace SpellSlinger
 
         // Overridden Methods
         #region Inherited Methods
-        protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetKey(KeyCode.KeypadEnter)
+        protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetKey(KeyCode.K)
                                                                  : hand.poseActive && hand.poseName == POSE;
 
         protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
