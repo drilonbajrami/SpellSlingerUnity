@@ -4008,7 +4008,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 15
+  m_Intensity: 10
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -25970,6 +25970,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1981304180109460952, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1981304180109460952, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1981304180109460952, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1981304180418980940, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -25993,6 +26005,14 @@ PrefabInstance:
     - target: {fileID: 1981304180984579486, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1981304181156230364, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 1981304181156230364, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 1981304182107568128, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: m_LocalPosition.x

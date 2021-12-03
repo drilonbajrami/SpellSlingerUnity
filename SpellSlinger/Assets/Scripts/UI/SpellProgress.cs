@@ -70,8 +70,8 @@ namespace SpellSlinger
         {
             _currentLetterIndex = 0;
 			_spellName.text = spell.GetElementName();
-			_spellName.fontSize = 50;
-			_spellName.characterSpacing = 50;
+			_spellName.fontSize = 40;
+			_spellName.characterSpacing = 40;
 			_spellNameCache = _spellName.text;
 			_spellTimerBar.value = 0.0f;
 
