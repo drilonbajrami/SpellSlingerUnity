@@ -43,8 +43,11 @@ namespace SpellSlinger
 			else if (spellElement == Type.Element) damageDealt = 50.0f;
 			else if (spellElement == Type.Weakness) damageDealt = 100.0f;
 
+            if (damageDealt == 100)
+                damageDealt = 150;
+
             _health -= damageDealt;
-            Player.Instance.ScoreManager.UpdateScore((int)damageDealt);
+            Player.Instance.UpdateScore((int)damageDealt);
 			if (_health <= 0.0f) Destroy(gameObject);
 		}
 
@@ -65,7 +68,7 @@ namespace SpellSlinger
 		private IEnumerator SlowDown()
         {
             _agent.speed = _minSpeed;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             _agent.speed = _maxSpeed;
         }
     }

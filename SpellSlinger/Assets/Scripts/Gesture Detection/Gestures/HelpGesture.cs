@@ -15,14 +15,14 @@ namespace SpellSlinger
 		private bool isOpen = false;
 
 		// Pose event
-		public static event EventHandler<bool> PoseForm;
+		public static event EventHandler<bool> PoseDetected;
 
 		#region Inherited Methods
 		protected override bool PoseIsActive => Player.NO_GLOVES ?
 												(!isOpen && Input.GetKey(KeyCode.LeftAlt)) || (isOpen && !Input.GetKey(KeyCode.LeftAlt))      // Keyboard
 												: (!isOpen && hand.poseActive && hand.poseName == POSE) || (isOpen && hand.poseName != POSE); // Gloves
 
-		protected override void OnPose() => PoseForm?.Invoke(this, isOpen);
+		protected override void OnPose() => PoseDetected?.Invoke(this, isOpen);
 
 		protected override void PoseStart(object sender, EventArgs e)
 		{

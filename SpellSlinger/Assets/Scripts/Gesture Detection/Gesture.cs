@@ -35,7 +35,7 @@ namespace SpellSlinger
 
 		private void FixedUpdate()
 		{
-			// If gesture is disabled then don't update
+			// If gesture is disabled then don't update timer
 			if (!_isEnabled) return;
 
 			// Check if timer is running or not and if hands currently have active poses

@@ -40,7 +40,7 @@ namespace SpellSlinger
 
         private void OnDisable()
         {
-            foreach(GameObject enemy in enemyParent)
+            foreach (Transform enemy in enemyParent)
                 Destroy(enemy.gameObject);
         }
         #endregion

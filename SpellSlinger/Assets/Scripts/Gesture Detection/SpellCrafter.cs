@@ -45,8 +45,8 @@ namespace SpellSlinger
 			CraftingTimer.TimerEnd += CraftFailed;
 
 			// Subscribe to gesture events
-			CraftGesture.PoseForm += Craft;
-			LetterGesture.PoseForm += GetLetter;
+			CraftGesture.PoseDetected += Craft;
+			LetterGesture.PoseDetected += GetLetter;
 		}
 
 		private void Update()
@@ -66,13 +66,13 @@ namespace SpellSlinger
 
 			if(_isOn) {
 				ResetCrafting();
-				CraftGesture.PoseForm += Craft;
-				LetterGesture.PoseForm += GetLetter;
+				CraftGesture.PoseDetected += Craft;
+				LetterGesture.PoseDetected += GetLetter;
 			}
 			else {
 				ResetCrafting();
-				CraftGesture.PoseForm -= Craft;
-				LetterGesture.PoseForm -= GetLetter;
+				CraftGesture.PoseDetected -= Craft;
+				LetterGesture.PoseDetected -= GetLetter;
 			}
         }
 

@@ -15,7 +15,7 @@ namespace SpellSlinger
         void Start()
         {
             SpellCrafter.CraftSpell += OnCreateSpell;
-            CastGesture.PoseForm += OnCastSpell;
+            CastGesture.PoseDetected += OnCastSpell;
         }
 
         private void Update()

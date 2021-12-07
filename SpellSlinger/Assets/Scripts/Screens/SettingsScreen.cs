@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,42 +6,32 @@ namespace SpellSlinger
 {
     public class SettingsScreen : MonoBehaviour
     {
-        public GameObject thumbsUpContinuePanel;
+        public GameObject continueHint;
         public List<SettingsUISelector> settingSelectors;
 
         [Space(10)]
-        public List<GameSettingScriptableObject> avaliableGameSettings = new List<GameSettingScriptableObject>();
+        public List<GameSettingSO> avaliableGameSettings;
 
-        #region UNITY Methods
-        private void OnEnable()
-        {
-            Player.Instance.Gestures.DisableAllGestures();
-            LetterGesture.PoseForm += OnLetterGesture;
-            ThumbsUpGesture.PoseForm += OnThumbsUp;
-            Player.Instance.Gestures.Enable<LetterGesture>();
+        private void OnEnable() {
+             LetterGesture.PoseDetected += OnLetterGesture;
+            ThumbsUpGesture.PoseDetected += OnThumbsUp;          
         }
 
-        private void OnDisable()
-        {
-            LetterGesture.PoseForm -= OnLetterGesture;
-            ThumbsUpGesture.PoseForm -= OnThumbsUp;
+        private void OnDisable() {
+            LetterGesture.PoseDetected -= OnLetterGesture;
+            ThumbsUpGesture.PoseDetected -= OnThumbsUp;
+            continueHint.SetActive(false);
         }
-        #endregion
 
-        public void SelectSetting(int index)
-        {
-            for (int i = 0; i < settingSelectors.Count; i++)
-            {
-                if (i == index)
-                { 
+        public void SelectSetting(int index) {
+            for (int i = 0; i < settingSelectors.Count; i++) {
+                if (i == index) { 
                     settingSelectors[i].Select();
                     GameManager.Instance.ApplyGameSettings(avaliableGameSettings[i]);
-                }    
-                else settingSelectors[i].Deselect();
+                } else settingSelectors[i].Deselect();
             }
 
-            if (!thumbsUpContinuePanel.activeSelf)
-                thumbsUpContinuePanel.SetActive(true);
+            if (!continueHint.activeSelf) continueHint.SetActive(true);
         }
 
         private void OnLetterGesture(object sender, char e)
@@ -57,20 +46,7 @@ namespace SpellSlinger
         private void OnThumbsUp(object sender, EventArgs e)
         {
             gameObject.SetActive(false);
-            //GameManager.Instance.Spawner.gameObject.SetActive(true);
-            GameManager.Instance.Overlay.SetActive(false);
-            GameManager.Instance.ScorePanel.SetActive(true);
-
-            Player.Instance.Gestures.DisableAllGestures();
-            Player.Instance.Gestures.Enable<CraftGesture>();
-            Player.Instance.Gestures.Enable<CastGesture>();
-
-            // Move to start screen & tutorial position
-            GameObject startingPosition = GameObject.Find("StartPosition");
-            Player.Instance.transform.position = startingPosition.transform.position;
-            Player.Instance.transform.rotation = startingPosition.transform.rotation;
-
-            GameManager.Instance.SpellCrafter.Toggle(true);
+            GameManager.Instance.Play();
         }
     }
 }

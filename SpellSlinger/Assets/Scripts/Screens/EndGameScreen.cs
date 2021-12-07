@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -12,45 +10,36 @@ namespace SpellSlinger
         private void Awake()
         {
             Health.Death += OnDeath;
-
+            ScoreManager.KillsReached += OnKillsReached;
             gameObject.SetActive(false);
         }
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
+
+            GameManager.Instance.MoveToSpot("TutorialPosition");
             Player.Instance.Gestures.DisableAllGestures();
-            ThumbsUpGesture.PoseForm += OnThumbsUp;  
             Player.Instance.Gestures.Enable<ThumbsUpGesture>();
-
-            GameManager.Instance.DamageOverlay.SetActive(true);
-
-            // Move to start screen & tutorial position
-            GameObject tutorialPosition = GameObject.Find("TutorialPosition");
-            Player.Instance.transform.position = tutorialPosition.transform.position;
-            Player.Instance.transform.rotation = tutorialPosition.transform.rotation;
+            ThumbsUpGesture.PoseDetected += OnThumbsUp;  
         }
 
-        public void OnDisable()
-        {
-            ThumbsUpGesture.PoseForm -= OnThumbsUp;
-            Player.Instance.Gestures.Disable<ThumbsUpGesture>();
-        }
+        public void OnDisable() => ThumbsUpGesture.PoseDetected -= OnThumbsUp;
 
         private void OnThumbsUp(object sender, EventArgs e)
         {
             gameObject.SetActive(false);
-            GameManager.Instance.ResetGame();
+            GameManager.Instance.GoToStart();
         }
 
         private void OnDeath(object sender, EventArgs e)
         {
-            if(!victoryScreen)
-                gameObject.SetActive(true);
-            GameManager.Instance.ScorePanel.SetActive(false);
-            GameManager.Instance.DamageOverlay.SetActive(false);
-            GameManager.Instance.Overlay.SetActive(true);
-            GameManager.Instance.SpellCrafter.ResetCrafting();
-            GameManager.Instance.SpellProgress.SetActive(false);
+            if(!victoryScreen) gameObject.SetActive(true);
+            GameManager.Instance.OnGameEnd();
+        }
+
+        private void OnKillsReached(object sender, EventArgs e)
+        {
+            if (victoryScreen) gameObject.SetActive(true);
+            GameManager.Instance.OnGameEnd();    
         }
     }
 }

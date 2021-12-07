@@ -15,7 +15,7 @@ namespace SpellSlinger
 		private string _lastPose;
 
         // Pose event
-        public static event EventHandler<char> PoseForm;
+        public static event EventHandler<char> PoseDetected;
 
         private void Update()
         {
@@ -27,7 +27,7 @@ namespace SpellSlinger
 					currentKey = currentKey.Substring(0, 1).ToUpper();
 					key = char.Parse(currentKey);
 					foreach (char c in alpha) {
-						if (c == key) PoseForm?.Invoke(this, key);
+						if (c == key) PoseDetected?.Invoke(this, key);
 					}
 				}
             }
@@ -37,7 +37,7 @@ namespace SpellSlinger
         #region Inherited Methods
         protected override bool PoseIsActive => hand.poseActive;
 
-		protected override void OnPose() => PoseForm?.Invoke(this, char.Parse(_lastPose));
+		protected override void OnPose() => PoseDetected?.Invoke(this, char.Parse(_lastPose));
 
 		protected override void PoseStart(object sender, EventArgs e) => _lastPose = hand.poseName; 
 

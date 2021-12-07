@@ -12,13 +12,13 @@ namespace SpellSlinger
         [SerializeField] private string POSE;
 
         // Pose event
-        public static EventHandler PoseForm;
+        public static EventHandler PoseDetected;
 
         #region Inherited Methods
         protected override bool PoseIsActive => Player.NO_GLOVES ? Input.GetKey(KeyCode.KeypadEnter)
                                                                  : hand.poseActive && hand.poseName == POSE;
 
-        protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
+        protected override void OnPose() => PoseDetected?.Invoke(this, EventArgs.Empty);
 
         protected override void PoseEnd(object sender, EventArgs e)
         {

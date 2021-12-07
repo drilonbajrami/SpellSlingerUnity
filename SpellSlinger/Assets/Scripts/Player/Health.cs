@@ -9,29 +9,21 @@ namespace SpellSlinger
         public static event EventHandler<int> Damage;
         public int Lives { get; private set; }
 
-        private void Start()
-        {
-            Lives = 3;
-        }
+        private void Start() => ResetHealth();
 
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-                TakeDamage();
-        }
+        public void ResetHealth() => Lives = 3;
+
+        //private void Update()
+        //{
+        //    if (Input.GetMouseButtonDown(0)) // TEST
+        //        TakeDamage();
+        //}
 
         public void TakeDamage()
         {
             Lives--;
             Damage?.Invoke(this, Lives);
-
-            if(Lives == 0)
-                Death?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void ResetHealth()
-        {
-            Lives = 3;
+            if(Lives == 0) Death?.Invoke(this, EventArgs.Empty);
         }
     }
 }

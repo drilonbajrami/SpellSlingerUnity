@@ -16,9 +16,7 @@ namespace SpellSlinger
         public static bool NO_GLOVES;
 
         [HideInInspector] public ScoreManager ScoreManager;
-        [HideInInspector] public Health Health;
-
-        public bool playModeOnStart = true;
+        [HideInInspector] private Health Health;
 
         private void Awake()
         {
@@ -40,9 +38,8 @@ namespace SpellSlinger
             Health.ResetHealth();
         }
 
-        public void OnValidate()
-        {
-            NO_GLOVES = noGloves;
-        }
+        public void UpdateScore(int score) => ScoreManager.UpdateScore(score);
+
+        public void OnValidate() => NO_GLOVES = noGloves;
     }
 }

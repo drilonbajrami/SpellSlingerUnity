@@ -13,7 +13,7 @@ namespace SpellSlinger
 		[SerializeField] private string POSE;
 
         // Pose event
-        public static event EventHandler PoseForm;
+        public static event EventHandler PoseDetected;
 
 		public new void Start()
 		{
@@ -30,7 +30,7 @@ namespace SpellSlinger
 												  hand.poseName == POSE && 
 												  HandPalmFacingUp; 
 
-		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
+		protected override void OnPose() => PoseDetected?.Invoke(this, EventArgs.Empty);
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{

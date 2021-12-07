@@ -25,7 +25,7 @@ namespace SpellSlinger
 		[Range(0.2f, 0.5f)] [SerializeField] private float distanceThreshold = 0.25f;
 
         // Pose event
-        public static event EventHandler PoseForm;
+        public static event EventHandler PoseDetected;
 
         #region Private Properties & Methods
         /// <summary>
@@ -48,7 +48,7 @@ namespace SpellSlinger
 												Input.GetKey(KeyCode.Semicolon) : 
 												leftHand.poseActive && rightHand.poseActive && POSE == HandPoses;
 
-		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
+		protected override void OnPose() => PoseDetected?.Invoke(this, EventArgs.Empty);
 
 		protected override void PoseEnd(object sender, EventArgs e)
 		{

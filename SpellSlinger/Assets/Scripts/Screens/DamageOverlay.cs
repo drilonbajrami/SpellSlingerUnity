@@ -19,35 +19,20 @@ namespace SpellSlinger
         private float min;
         private float max;
 
-        private void Awake()
-        {
-            _overlay = GetComponent<Image>();
-        }
+        private void Awake() => _overlay = GetComponent<Image>();
 
         private void OnEnable()
         {
-            _alpha = 0.0f;
-            _overlay.color = new Color(1,1,1, _alpha);
             Health.Damage += OnDamage;
             Health.Death += OnDeath;
-            min = _alpha - differenceMinMax;
-            max = _alpha + differenceMinMax;
-            min = Mathf.Clamp(min, 0f, 0.85f);
-            max = Mathf.Clamp(max, 0f, 0.85f);
-            dynamicChangeRate = changeRate;
+            ResetOverlay();
         }
 
         private void OnDisable()
         {
-            _alpha = 0.0f;
-            _overlay.color = new Color(1, 1, 1, _alpha);
             Health.Damage -= OnDamage;
             Health.Death -= OnDeath;
-            min = _alpha - differenceMinMax;
-            max = _alpha + differenceMinMax;
-            min = Mathf.Clamp(min, 0f, 0.85f);
-            max = Mathf.Clamp(max, 0f, 0.85f);
-            dynamicChangeRate = changeRate;
+            ResetOverlay();
         }
 
         private void Update()
@@ -63,23 +48,26 @@ namespace SpellSlinger
 
         public void OnDamage(object source, int lives)
         {
-            if(lives > 0) _alpha = maxAlphaValue / lives;
-
-            _alpha += maxAlphaValue /2;
+            _alpha = maxAlphaValue / lives;
             _alpha = Mathf.Clamp(_alpha, 0f, maxAlphaValue);
             min = _alpha - differenceMinMax;
             max = _alpha + differenceMinMax;
+            min = Mathf.Clamp01(min);
+            max = Mathf.Clamp01(max);
 
             if (_alpha >= maxAlphaValue)
-                dynamicChangeRate = changeRate - 0.0045f;
-
-            min = Mathf.Clamp(min, 0f, 0.85f);
-            max = Mathf.Clamp(max, 0f, 0.85f);
+                dynamicChangeRate = changeRate - 0.0045f;    
         }
 
-        private void OnDeath(object sender, EventArgs e)
+        private void OnDeath(object sender, EventArgs e) => gameObject.SetActive(false);
+
+        private void ResetOverlay()
         {
-            gameObject.SetActive(false);
+            _alpha = 0.0f;
+            _overlay.color = new Color(1, 1, 1, _alpha);
+            min = Mathf.Clamp01(_alpha - differenceMinMax);
+            max = Mathf.Clamp01(_alpha + differenceMinMax);
+            dynamicChangeRate = changeRate;
         }
     }
 }

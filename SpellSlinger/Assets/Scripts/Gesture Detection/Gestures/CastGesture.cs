@@ -26,7 +26,7 @@ namespace SpellSlinger
 		private bool _canCompletePose = false;
 
         // Pose event
-        public static event EventHandler PoseForm;
+        public static event EventHandler PoseDetected;
 
         #region Private Properties & Methods
         private float DistanceFromHandToHead => Vector2.Distance(
@@ -54,14 +54,14 @@ namespace SpellSlinger
 												Input.GetKey(KeyCode.Space) :			
 												hand.poseActive && hand.poseName == POSE;	
 
-		protected override void OnPose() => PoseForm?.Invoke(this, EventArgs.Empty);
+		protected override void OnPose() => PoseDetected?.Invoke(this, EventArgs.Empty);
 
 		protected override void PoseStart(object sender, EventArgs e)
 		{
 			if (Player.NO_GLOVES)
 			{
 				_canCompletePose = false;
-				PoseForm?.Invoke(this, EventArgs.Empty);
+				PoseDetected?.Invoke(this, EventArgs.Empty);
 			}
 			else if (!AreTrackersOn || IsHandCloseToHead) _canCompletePose = true;
 			else ResetPoseCheck();

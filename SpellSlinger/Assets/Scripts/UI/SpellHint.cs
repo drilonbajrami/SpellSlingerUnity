@@ -48,8 +48,8 @@ namespace SpellSlinger
 			SpellCrafter.StartCrafting += OnStartCrafting;
 			SpellCrafter.CraftSpell += OnCraftSpell;
 			SpellCrafter.LetterSent += OnLetterSent;
-			HelpGesture.PoseForm += TogglePanel;
-			SwipeGesture.PoseForm += OnSwipe;
+			HelpGesture.PoseDetected += TogglePanel;
+			SwipeGesture.PoseDetected += OnSwipe;
 
 			gameObject.SetActive(false);
 		}

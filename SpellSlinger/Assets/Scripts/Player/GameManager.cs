@@ -11,20 +11,28 @@ namespace SpellSlinger
     {
         public static GameManager Instance { get; private set; }
 
+        // Enemy Spawner
         public GameObject Spawner;
+
+        // Game Settings
         public GameSetting gameSettings = new GameSetting();
 
         public SpellCrafter SpellCrafter;
 
         [Space(10)]
         [Header("UI Screens")]
+        // Screens
         public GameObject StartScreen;
         public GameObject TutorialScreen;
-        public GameObject SettingsSreen;
+        public GameObject SettingScreen;
         public GameObject VictoryScreen;
         public GameObject GameOverScreen;
+
+        // Overlays
         public GameObject Overlay;
         public GameObject DamageOverlay;
+
+        // UI Feedback 
         public GameObject ScorePanel;
         public GameObject SpellProgress;
 
@@ -44,74 +52,103 @@ namespace SpellSlinger
 
         private void Start()
         {
-            if(playModeOnStart)
-            {
-                StraightToPlay();
-            }
-            else
-            {
-                ResetGame();
-            }
-        }
-
-        public void ApplyGameSettings(GameSettingScriptableObject gameSettingsSO)
-        {
-            gameSettings.SetSetting(gameSettingsSO);
-            SpellCrafter.CraftingTimer.ChangeInterval(gameSettings.craftingDuration);
-        }
-
-        public void ResetGame()
-        {
+            Player.Instance.Gestures.DisableAllGestures();
             Player.Instance.ResetStats();
-            StartScreen.SetActive(true);
-            Overlay.SetActive(true);
-            DamageOverlay.SetActive(true);
+            Spawner.SetActive(false);
+            StartScreen.SetActive(false);
             TutorialScreen.SetActive(false);
-            SettingsSreen.SetActive(false);
+            SettingScreen.SetActive(false);
             VictoryScreen.SetActive(false);
             GameOverScreen.SetActive(false);
+            Overlay.SetActive(false);
+            DamageOverlay.SetActive(false);
+            ScorePanel.SetActive(false);
+            SpellProgress.SetActive(false);
+
+            if (playModeOnStart) Play();
+            else GoToStart();
+        }
+
+        public void ApplyGameSettings(GameSettingSO gameSettingsSO)
+        {
+            gameSettings.SetSetting(gameSettingsSO);
+            SpellCrafter.CraftingTimer.ChangeInterval(gameSettings.CraftingDuration);
+        }
+
+        public void Play()
+        {
+            MoveToSpot("StartPosition");
+            Player.Instance.Gestures.DisableAllGestures();
+            Player.Instance.ResetStats();
+
+            Spawner.SetActive(true);
+
+            SpellCrafter.ResetCrafting();
+            SpellCrafter.Toggle(true);
+            ScorePanel.SetActive(true);
+            DamageOverlay.SetActive(true);
+
+            // Disable all other screens
+            StartScreen.SetActive(false);        
+            TutorialScreen.SetActive(false);
+            SettingScreen.SetActive(false);
+            VictoryScreen.SetActive(false);
+            GameOverScreen.SetActive(false);
+            Overlay.SetActive(false);
+
+            SpellProgress.SetActive(false);
+            
+            Player.Instance.Gestures.Enable<CraftGesture>();
+            Player.Instance.Gestures.Enable<CastGesture>(); 
+        }
+
+        public void GoToStart()
+        {
+            Player.Instance.ResetStats();
+            MoveToSpot("TutorialPosition");
+            Player.Instance.Gestures.DisableAllGestures();
+            StartScreen.SetActive(true);
+            Overlay.SetActive(true);
+
+            DamageOverlay.SetActive(false);
             ScorePanel.SetActive(false);
             SpellProgress.SetActive(false);
             SpellCrafter.ResetCrafting();
+            Player.Instance.Gestures.Enable<ThumbsUpGesture>();
         }
 
-        public void StraightToPlay()
+        public void GoToTutorial()
         {
-            GameObject startingPosition = GameObject.Find("StartPosition");
-            Player.Instance.transform.position = startingPosition.transform.position;
-            Player.Instance.transform.rotation = startingPosition.transform.rotation;
-            Player.Instance.ResetStats();
-            StartScreen.SetActive(false);
-            Overlay.SetActive(false);
-            DamageOverlay?.SetActive(true);
-            TutorialScreen.SetActive(false);
-            SettingsSreen.SetActive(false);
-            VictoryScreen.SetActive(false);
-            GameOverScreen.SetActive(false);
-            ScorePanel.SetActive(true);
-            SpellProgress.SetActive(false);
-            SpellCrafter.ResetCrafting();
+            MoveToSpot("TutorialPosition");
+            Player.Instance.Gestures.DisableAllGestures();
             Player.Instance.Gestures.Enable<CraftGesture>();
-            Player.Instance.Gestures.Enable<CastGesture>();
+            TutorialScreen.SetActive(true);
         }
 
-        /// <summary>
-        /// List all available tracking devices and print out the serial and model numbers
-        /// </summary>
-		void ListDevices()
+        public void GoToSettings()
         {
-            for (int i = 0; i < SteamVR.connected.Length; ++i)
-            {
-                ETrackedPropertyError error = new ETrackedPropertyError();
-                StringBuilder sb = new StringBuilder();
-                OpenVR.System.GetStringTrackedDeviceProperty((uint)i, ETrackedDeviceProperty.Prop_SerialNumber_String, sb, OpenVR.k_unMaxPropertyStringSize, ref error);
-                var SerialNumber = sb.ToString();
+            Player.Instance.Gestures.DisableAllGestures();
+            Player.Instance.Gestures.Enable<LetterGesture>();
+            SettingScreen.SetActive(true);
+            SpellCrafter.Toggle(false);
+        }
 
-                OpenVR.System.GetStringTrackedDeviceProperty((uint)i, ETrackedDeviceProperty.Prop_ModelNumber_String, sb, OpenVR.k_unMaxPropertyStringSize, ref error);
-                var ModelNumber = sb.ToString();
-                if (SerialNumber.Length > 0 || ModelNumber.Length > 0)
-                    Debug.Log("Device " + i.ToString() + " = " + SerialNumber + " | " + ModelNumber);
-            }
+        public void OnGameEnd()
+        {
+            Overlay.SetActive(true);
+
+            ScorePanel.SetActive(false);
+            DamageOverlay.SetActive(false);
+            SpellProgress.SetActive(false);
+            Spawner.SetActive(false); ;
+            SpellCrafter.ResetCrafting();
+        }
+
+        public void MoveToSpot(string posName)
+        {
+            GameObject spot = GameObject.Find(posName);
+            Player.Instance.transform.position = spot.transform.position;
+            Player.Instance.transform.rotation = spot.transform.rotation;
         }
     }
 }
