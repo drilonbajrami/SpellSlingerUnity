@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3989190
 RectTransform:
   m_ObjectHideFlags: 0
@@ -446,7 +446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081717121314688562, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3942976953471331144, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -832,7 +832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081717121314688562, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3942976953471331144, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1213,7 +1213,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_text
-      value: Throw the magic ball to defeat the enemy
+      value: 'Throw the magic ball to defeat the enemy <br>
+
+        <color=#FFF2A9><size=16>Use
+        the right element to instantly defeat enemies</size></color>'
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSize
@@ -1249,7 +1252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2256597401392631640, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 275
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 2256597401392631640, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1349,7 +1352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081717121314688562, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3942976953471331144, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1369,12 +1372,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _message
-      value: Throw the magic ball to defeat the enemy
+      value: 'Throw the magic ball to defeat the enemy <br>
+
+        <color=#FFF2A9><size=16>Use
+        the right element to instantly defeat enemies</size></color>'
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _animationSprite
       value: 
       objectReference: {fileID: 21300000, guid: f6f56dae5e379014fb98470e5b6a8124, type: 3}
+    - target: {fileID: 6214066812467060807, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c1ac89a338f52b34385892df14e9cbaf, type: 3}
     - target: {fileID: 7903537700751715057, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1754,7 +1764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081717121314688562, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3942976953471331144, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1957,7 +1967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc60c5f6af27eb43b40389c534d90ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbsUpContinuePanel: {fileID: 1012995523}
+  continueHint: {fileID: 0}
   settingSelectors:
   - {fileID: 42395097}
   - {fileID: 1057297866}
@@ -2294,10 +2304,14 @@ MonoBehaviour:
   SpellCrafter: {fileID: 0}
   StartScreen: {fileID: 295076211}
   TutorialScreen: {fileID: 0}
-  SettingsSreen: {fileID: 0}
+  SettingScreen: {fileID: 0}
   VictoryScreen: {fileID: 0}
   GameOverScreen: {fileID: 0}
   Overlay: {fileID: 0}
+  DamageOverlay: {fileID: 0}
+  ScorePanel: {fileID: 0}
+  SpellProgress: {fileID: 0}
+  playModeOnStart: 1
 --- !u!4 &567015442
 Transform:
   m_ObjectHideFlags: 0
@@ -2528,7 +2542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081717121314688562, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3942976953471331144, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3402,7 +3416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081717121314688562, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3942976953471331144, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4871,7 +4885,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3081717121314688562, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3942976953471331144, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchorMax.y
