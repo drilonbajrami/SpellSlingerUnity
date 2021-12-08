@@ -23605,7 +23605,7 @@ MonoBehaviour:
   DamageOverlay: {fileID: 363611651}
   ScorePanel: {fileID: 452687395}
   SpellProgress: {fileID: 377145754}
-  playModeOnStart: 1
+  playModeOnStart: 0
 --- !u!4 &1939526548
 Transform:
   m_ObjectHideFlags: 0
@@ -26292,7 +26292,7 @@ PrefabInstance:
       objectReference: {fileID: 805507716}
     - target: {fileID: 1981304182107568133, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: regenerationDurationInSeconds
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1981304182107568143, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: scoreText
