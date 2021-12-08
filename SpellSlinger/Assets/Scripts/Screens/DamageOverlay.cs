@@ -9,15 +9,16 @@ namespace SpellSlinger
     {
         private Image _overlay;
 
-        private float _alpha = 0f;
+        [Range(0.1f, 1.0f)][SerializeField] private float pulseRate = 0.5f;
 
-        [Range(0.1f, 0.3f)][SerializeField] private float differenceMinMax = 0.15f;
-        [Range(0.001f, 0.0075f)][SerializeField] private float changeRate = 0.0075f;
-        [Range(0.7f, 0.9f)][SerializeField] private float maxAlphaValue = 0.85f;
+        private float minOpacity;
+        private float maxOpacity;
+        private bool isFading = false;
 
-        private float dynamicChangeRate;
-        private float min;
-        private float max;
+        [SerializeField] [Range(0.0f, 1.0f)] public float minAlpha;
+        [SerializeField] [Range(0.0f, 1.0f)] public float maxAlpha;
+
+        private void OnDeath(object sender, EventArgs e) => gameObject.SetActive(false);
 
         private void Awake() => _overlay = GetComponent<Image>();
 
@@ -25,7 +26,6 @@ namespace SpellSlinger
         {
             Health.Damage += OnDamage;
             Health.Death += OnDeath;
-            ResetOverlay();
         }
 
         private void OnDisable()
@@ -37,37 +37,36 @@ namespace SpellSlinger
 
         private void Update()
         {
-            if(_alpha > 0f)
-            {
-                if (_alpha <= min) dynamicChangeRate = changeRate;
-                else if (_alpha >= max) dynamicChangeRate = -changeRate;
-                _alpha += dynamicChangeRate;
-                _overlay.color = new Color(1, 1, 1, _alpha);
-            }  
+            if (isFading) OverlayPulse();
         }
+
+        private void OverlayPulse() {
+            if (_overlay.color.a <= minOpacity) FadeIn();
+            else if (_overlay.color.a >= maxOpacity) FadeOut();
+        }
+
+        private void FadeOut() => _overlay.DOFade(minOpacity, pulseRate);
+        private void FadeIn() => _overlay.DOFade(maxOpacity, pulseRate);
 
         public void OnDamage(object source, int lives)
         {
-            _alpha = maxAlphaValue / lives;
-            _alpha = Mathf.Clamp(_alpha, 0f, maxAlphaValue);
-            min = _alpha - differenceMinMax;
-            max = _alpha + differenceMinMax;
-            min = Mathf.Clamp01(min);
-            max = Mathf.Clamp01(max);
-
-            if (_alpha >= maxAlphaValue)
-                dynamicChangeRate = changeRate - 0.0045f;    
+            if (lives == 3) ResetOverlay();
+            else {
+                isFading = true;
+                if (lives == 2) SetMinMaxOpacity(minAlpha, (minAlpha + maxAlpha) / 2);
+                else SetMinMaxOpacity((minAlpha + maxAlpha) / 2, maxAlpha);
+            } 
         }
 
-        private void OnDeath(object sender, EventArgs e) => gameObject.SetActive(false);
+        private void SetMinMaxOpacity(float min, float max) {
+            minOpacity = min;
+            maxOpacity = max;
+        }
 
-        private void ResetOverlay()
-        {
-            _alpha = 0.0f;
-            _overlay.color = new Color(1, 1, 1, _alpha);
-            min = Mathf.Clamp01(_alpha - differenceMinMax);
-            max = Mathf.Clamp01(_alpha + differenceMinMax);
-            dynamicChangeRate = changeRate;
+        private void ResetOverlay() {
+            isFading = false;
+            SetMinMaxOpacity(0f,0f);
+            FadeOut();
         }
     }
 }

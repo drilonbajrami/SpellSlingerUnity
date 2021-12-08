@@ -3160,7 +3160,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2fb599500877e7342a58b2d5bb3ecb7b, type: 2}
   enemyPrefab: {fileID: 3620714197012339161, guid: f43aa593ebe1c954ea47b2ad26f8f4da, type: 3}
   enemyParent: {fileID: 751843065}
-  spawnRate: 1
+  spawnRate: 10
 --- !u!4 &298886193
 Transform:
   m_ObjectHideFlags: 0
@@ -8943,6 +8943,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5213478542684114043, guid: 83ea5922e2d48994295751e34f7ec090, type: 3}
   m_PrefabInstance: {fileID: 793181540}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &805507716 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1981304180270460149, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+  m_PrefabInstance: {fileID: 6113494694235417323}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &807011267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26203,6 +26214,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1981304180418980942, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: maxAlpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1981304180418980942, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: minAlpha
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1981304180418980942, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: pulseRate
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1981304180418980943, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -26263,6 +26286,18 @@ PrefabInstance:
       propertyPath: playModeOnStart
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1981304182107568133, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: healthText
+      value: 
+      objectReference: {fileID: 805507716}
+    - target: {fileID: 1981304182107568133, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: regenerationDurationInSeconds
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1981304182107568143, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
+      propertyPath: scoreText
+      value: 
+      objectReference: {fileID: 805507716}
     - target: {fileID: 4132384324442186115, guid: d3c90454b3af7e1448d4d2255930adc0, type: 3}
       propertyPath: m_Name
       value: Player
