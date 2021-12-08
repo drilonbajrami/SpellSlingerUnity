@@ -837,7 +837,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_text
-      value: Throw the magic ball to defeat the enemy
+      value: 'Throw the magic ball to defeat the enemy
+
+        <br><size=18><color=#FFF2A9>Use
+        the enemy''s weakness to instantly defeat it</color></size>'
       objectReference: {fileID: 0}
     - target: {fileID: 1393336708557948198, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_fontSize
@@ -873,7 +876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2256597401392631640, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 275
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 2256597401392631640, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -993,12 +996,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _message
-      value: Throw the magic ball to defeat the enemy
+      value: 'Throw the magic ball to defeat the enemy
+
+        <br><size=18><color=#FFF2A9>Use
+        the enemy''s weakness to instantly defeat it</color></size>'
       objectReference: {fileID: 0}
     - target: {fileID: 4331442364439353157, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: _animationSprite
       value: 
       objectReference: {fileID: 21300000, guid: f6f56dae5e379014fb98470e5b6a8124, type: 3}
+    - target: {fileID: 6214066812467060807, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c1ac89a338f52b34385892df14e9cbaf, type: 3}
     - target: {fileID: 7903537700751715057, guid: a5e90abdd20cb054789dec4b2850a4a5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
