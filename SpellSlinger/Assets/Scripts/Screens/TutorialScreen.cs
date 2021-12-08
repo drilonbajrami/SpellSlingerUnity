@@ -50,11 +50,13 @@ namespace SpellSlinger
                 // the SpellCrafter startCrafting event since we already did start
                 SpellCrafter.StartCrafting -= OnStartCrafting;
             }
+            AudioManager.Instance.Play("Confirm");
         }
 
         // Step 2 - HELP GESTURE
         private void OnHelpGesture(object sender, bool e) {      
             if (Tutorial.IsInStep(StepIndex.HELP)) Tutorial.NextStep(); // We go to the next step (3 - SWIPE)
+            AudioManager.Instance.Play("Confirm");
         }
 
         // Step 3 - SWIPE GESTURE
@@ -66,6 +68,7 @@ namespace SpellSlinger
                 Tutorial.NextStep();
                 SpellCrafter.StartCrafting += OnStartCrafting;
                 Player.Instance.Gestures.Enable<LetterGesture>();
+                AudioManager.Instance.Play("Confirm");
             }
         }
 
@@ -79,6 +82,7 @@ namespace SpellSlinger
                 SpellCrafter.StartCrafting -= OnStartCrafting;
                 SpellCrafter.CraftSpell += OnCraftSpell;
                 SpellCrafter.CraftingTimer.Pause();
+                AudioManager.Instance.Play("Confirm");
             }
         }
 
@@ -89,6 +93,7 @@ namespace SpellSlinger
             Player.Instance.Gestures.Enable<CastGesture>();
             SpellCrafter.CraftSpell -= OnCraftSpell;
             Tutorial.JumpToStep(StepIndex.CAST);
+            AudioManager.Instance.Play("Confirm");
         }
 
         // Step 5 - CAST GESTURE
@@ -100,6 +105,7 @@ namespace SpellSlinger
                 Player.Instance.Gestures.Disable<CastGesture>();
                 Player.Instance.Gestures.Enable<ThumbsUpGesture>();
                 SpellCrafter.CraftingTimer.Continue();
+                AudioManager.Instance.Play("Confirm");
             }
         }
 
@@ -107,6 +113,7 @@ namespace SpellSlinger
         private void OnThumbsUp(object sender, EventArgs e) {
             if (Tutorial.IsInStep(StepIndex.LAST)) {
                 gameObject.SetActive(false);
+                AudioManager.Instance.Play("Confirm");
                 GameManager.Instance.GoToSettings();
             }
         }

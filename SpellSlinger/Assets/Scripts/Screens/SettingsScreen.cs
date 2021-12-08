@@ -27,6 +27,7 @@ namespace SpellSlinger
             for (int i = 0; i < settingSelectors.Count; i++) {
                 if (i == index) { 
                     settingSelectors[i].Select();
+                    AudioManager.Instance.Play("Confirm");
                     GameManager.Instance.ApplyGameSettings(avaliableGameSettings[i]);
                 } else settingSelectors[i].Deselect();
             }
@@ -46,6 +47,7 @@ namespace SpellSlinger
         private void OnThumbsUp(object sender, EventArgs e)
         {
             gameObject.SetActive(false);
+            AudioManager.Instance.Play("Confirm");
             GameManager.Instance.Play();
         }
     }

@@ -77,6 +77,8 @@ namespace SpellSlinger
 
         public void Play()
         {
+            AudioManager.Instance.Stop("Menu");
+            AudioManager.Instance.Play("Battle");
             MoveToSpot("StartPosition");
             Player.Instance.Gestures.DisableAllGestures();
             Player.Instance.ResetStats();
@@ -104,6 +106,8 @@ namespace SpellSlinger
 
         public void GoToStart()
         {
+            AudioManager.Instance.Play("Menu");
+            AudioManager.Instance.Stop("Battle");
             Player.Instance.ResetStats();
             MoveToSpot("TutorialPosition");
             Player.Instance.Gestures.DisableAllGestures();

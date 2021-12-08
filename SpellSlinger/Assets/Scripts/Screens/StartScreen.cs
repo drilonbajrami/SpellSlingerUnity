@@ -11,6 +11,7 @@ namespace SpellSlinger
         private void OnThumbsUp(object sender, EventArgs e)
         {
             gameObject.SetActive(false);
+            AudioManager.Instance.Play("Confirm");
             GameManager.Instance.GoToTutorial();
         }
     }
