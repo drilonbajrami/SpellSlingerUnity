@@ -9,9 +9,9 @@ namespace SpellSlinger
         [Header("References")]
         [SerializeField] private Image backdrop;
         [SerializeField] private TMP_Text _textMessage;
-        // Temporary
-        [SerializeField] private Image _animationImg;
-        [SerializeField] private Sprite _animationSprite;
+        //// Temporary
+        //[SerializeField] private Image _animationImg;
+        //[SerializeField] private Sprite _animationSprite;
 
         [Space(10)]
         [Header("Tutorial step message")]
@@ -23,12 +23,12 @@ namespace SpellSlinger
         {
             backdrop.sprite = transform.parent.GetComponent<Tutorial>().tutorialBackground;
 
-            if(_animationSprite != null)
-            { 
-                _animationImg.sprite = _animationSprite;
-                _animationImg.gameObject.SetActive(true); 
-            }
-            else _animationImg.gameObject.SetActive(false);
+            //if(_animationSprite != null)
+            //{ 
+            //    _animationImg.sprite = _animationSprite;
+            //    _animationImg.gameObject.SetActive(true); 
+            //}
+            //else _animationImg.gameObject.SetActive(false);
         }
 
         private void OnValidate()
