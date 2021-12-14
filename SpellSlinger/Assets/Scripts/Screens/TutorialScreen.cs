@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace SpellSlinger
@@ -15,7 +16,7 @@ namespace SpellSlinger
                 CastGesture.PoseDetected += OnCastGesture;
                 HelpGesture.PoseDetected += OnHelpGesture;
                SwipeGesture.PoseDetected += OnSwipeGesture;
-            ThumbsUpGesture.PoseDetected += OnThumbsUp;   
+            ThumbsUpGesture.PoseDetected += OnThumbsUp;
         }
 
         private void OnDisable()
@@ -54,7 +55,7 @@ namespace SpellSlinger
         }
 
         // Step 2 - HELP GESTURE
-        private void OnHelpGesture(object sender, bool e) {      
+        private void OnHelpGesture(object sender, bool e) {
             if (Tutorial.IsInStep(StepIndex.HELP)) Tutorial.NextStep(); // We go to the next step (3 - SWIPE)
             AudioManager.Instance.Play("Confirm");
         }

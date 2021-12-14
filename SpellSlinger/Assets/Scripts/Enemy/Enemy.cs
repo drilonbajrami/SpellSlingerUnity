@@ -7,7 +7,7 @@ namespace SpellSlinger
 {
     public class Enemy : MonoBehaviour
     {
-        private EnemyType _type;
+        [SerializeField] private EnemyType _type;
         public EnemyType Type => _type;
 
         private float _health;
@@ -16,27 +16,26 @@ namespace SpellSlinger
         [SerializeField] private float _maxSpeed;
         [SerializeField] private float _minSpeed;
 
+        private Animator _animator;
+
         private void Start()
         {
             _health = 100.0f;
             _agent = GetComponent<NavMeshAgent>();
+            _animator = GetComponent<Animator>();
+            _animator.Play("Walk");
 
-            if( _agent != null )
+            if ( _agent != null )
             {
                 _agent.SetDestination(GameObject.FindGameObjectWithTag("Player").gameObject.transform.position);
                 _agent.speed = _maxSpeed;
             }
         }
 
-        public void SetType(EnemyType type)
-        {
-            _type = type;
-            gameObject.GetComponent<MeshRenderer>().material.color = Type.Color;
-        }
-
 		public void TakeDamage(Spell spell)
         {
             Element spellElement = spell.Type.Element;
+            spell.PlayHitSound();
             float damageDealt = 0;
 
 			if (spellElement == Type.Strength) damageDealt = 25.0f;
@@ -59,6 +58,7 @@ namespace SpellSlinger
                 Instantiate(spell.Type.Effect, transform.position, Quaternion.identity);
                 TakeDamage(spell);
                 StartCoroutine(SlowDown());
+                _animator.Play("Walk");
             }
         }
 
@@ -67,6 +67,7 @@ namespace SpellSlinger
         /// </summary>
 		private IEnumerator SlowDown()
         {
+            _animator.Play("Hit");
             _agent.speed = _minSpeed;
             yield return new WaitForSeconds(1);
             _agent.speed = _maxSpeed;

@@ -48,8 +48,7 @@ namespace SpellSlinger
         private void FadeOut() => _overlay.DOFade(minOpacity, pulseRate);
         private void FadeIn() => _overlay.DOFade(maxOpacity, pulseRate);
 
-        public void OnDamage(object source, int lives)
-        {
+        public void OnDamage(object source, int lives) {
             if (lives == 3) ResetOverlay();
             else {
                 isFading = true;

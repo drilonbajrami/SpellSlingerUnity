@@ -15,7 +15,6 @@ namespace SpellSlinger
         }
 
         private void OnEnable() {
-
             GameManager.Instance.MoveToSpot("TutorialPosition");
             Player.Instance.Gestures.DisableAllGestures();
             Player.Instance.Gestures.Enable<ThumbsUpGesture>();

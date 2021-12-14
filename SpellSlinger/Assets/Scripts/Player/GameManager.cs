@@ -139,6 +139,7 @@ namespace SpellSlinger
 
         public void OnGameEnd()
         {
+            AudioManager.Instance.Stop("Battle");
             Overlay.SetActive(true);
 
             ScorePanel.SetActive(false);

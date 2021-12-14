@@ -17,6 +17,10 @@ namespace SpellSlinger
         [SerializeField] private GameObject _effect;
         public GameObject Effect => _effect;
 
+        [SerializeField] private AudioClip _audioClip;
+        public AudioClip AudioClip => _audioClip;
+
+
         public string GetElementName() => Element.ToString();
         public char GetElementLetterByIndex(int index) => char.Parse(Element.ToString().Substring(index, 1));
         public int GetElementTypeNameLength() => Element.ToString().Length;

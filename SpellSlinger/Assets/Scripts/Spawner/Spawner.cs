@@ -11,9 +11,8 @@ namespace SpellSlinger
         private List<GameObject> _spawnPoints = new List<GameObject>();
 
         [Space(10)]
-        [Header("Enemy Spawner")]     
-        [SerializeField] private List<EnemyType> _enemyTypes = new List<EnemyType>();
-        [SerializeField] private GameObject enemyPrefab;
+        [Header("Enemy Spawner")]
+        [SerializeField] private List<GameObject> enemyPrefabs;
         [SerializeField] private Transform enemyParent;
 
         [Space(10)]
@@ -24,7 +23,7 @@ namespace SpellSlinger
         #region UNITY Methods
         private void Start()
         {
-            foreach(Transform spawnPoint in spawnPointParent) _spawnPoints.Add(spawnPoint.gameObject);
+            foreach (Transform spawnPoint in spawnPointParent) _spawnPoints.Add(spawnPoint.gameObject);
         }
 
         void Update()
@@ -46,13 +45,11 @@ namespace SpellSlinger
         #endregion
 
         #region Spawn Enemy Methods
-        void SpawnEnemy()
-        {
-            GameObject enemy = Instantiate(enemyPrefab, 
-                                           _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position, 
-                                           Quaternion.Euler(0, 180, 0),
-                                           enemyParent);
-            enemy.GetComponent<Enemy>().SetType(_enemyTypes[Random.Range(0, _enemyTypes.Count)]);
+        void SpawnEnemy() {
+            Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)],
+                       _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position,
+                       Quaternion.Euler(0, 180, 0),
+                       enemyParent);
         }
         #endregion
 
@@ -70,7 +67,7 @@ namespace SpellSlinger
 
         public void RemoveSelectedPoint(GameObject selected)
         {
-            if(selected.GetComponent<SpawnPoint>() != null) DestroyImmediate(selected);   
+            if (selected.GetComponent<SpawnPoint>() != null) DestroyImmediate(selected);
         }
 
         public void AddSelectedPoint(GameObject selected)

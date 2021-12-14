@@ -15,3 +15,4 @@ MonoBehaviour:
   _element: 2
   _material: {fileID: 2100000, guid: b89fd4f7f34b0894bb2e65c849ac1d47, type: 2}
   _effect: {fileID: 8569630429605555206, guid: 6daa08e3985bb4847aaa686440b4d0e1, type: 3}
+  _audioClip: {fileID: 8300000, guid: 7b4bb7191e8517246bc92ab9c0c3d612, type: 3}

@@ -14,6 +14,8 @@ namespace SpellSlinger
         // Cache the collider of this spell
         private SphereCollider _collider;
 
+        [SerializeField] private AudioSource _hitSound;
+
         [SerializeField] private float speed = 5.0f;
         [SerializeField] private float _spellLifeSpanInSeconds = 10.0f;
         private bool fired = false;
@@ -46,8 +48,11 @@ namespace SpellSlinger
         public void SetType(SpellType type)
         {
             _type = type;
+            _hitSound.clip = type.AudioClip;
             gameObject.GetComponent<MeshRenderer>().material = type.Material;
         }
+
+        public void PlayHitSound() => _hitSound.Play();
 
         /// <summary>
         /// Dettaches the spell from parent and fires it.
