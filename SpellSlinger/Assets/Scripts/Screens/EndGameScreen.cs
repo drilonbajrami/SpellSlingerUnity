@@ -1,11 +1,17 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 namespace SpellSlinger
 {
     public class EndGameScreen : MonoBehaviour
     {
         [SerializeField] private bool victoryScreen;
+
+        private IEnumerator Wait(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+        }
 
         private void Awake()
         {
@@ -15,8 +21,9 @@ namespace SpellSlinger
         }
 
         private void OnEnable() {
-            GameManager.Instance.MoveToSpot("TutorialPosition");
             Player.Instance.Gestures.DisableAllGestures();
+            GameManager.Instance.MoveToSpot("TutorialPosition");
+            StartCoroutine(Wait(2));
             Player.Instance.Gestures.Enable<ThumbsUpGesture>();
             ThumbsUpGesture.PoseDetected += OnThumbsUp;  
         }
@@ -25,6 +32,7 @@ namespace SpellSlinger
 
         private void OnThumbsUp(object sender, EventArgs e)
         {
+            Player.Instance.Gestures.DisableAllGestures();
             gameObject.SetActive(false);
             GameManager.Instance.GoToStart();
         }

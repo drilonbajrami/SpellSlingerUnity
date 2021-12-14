@@ -23,7 +23,7 @@ namespace SpellSlinger
             _health = 100.0f;
             _agent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
-            _animator.Play("Walk");
+            _animator.SetTrigger("TrWalk");
 
             if ( _agent != null )
             {
@@ -47,19 +47,40 @@ namespace SpellSlinger
 
             _health -= damageDealt;
             Player.Instance.UpdateScore((int)damageDealt);
-			if (_health <= 0.0f) Destroy(gameObject);
+            if (_health <= 0.0f)
+            {
+                _agent.speed = 0.0f;
+                _animator.SetTrigger("TrDeath");
+                Destroy(gameObject, 5);
+            }
+            else
+            {
+                StartCoroutine(SlowDown());
+                _animator.SetTrigger("TrWalk");
+            }
 		}
 
-		private void OnCollisionEnter(Collision collision)
-		{      
+        private void OnCollisionEnter(Collision collision)
+        {
             if (collision.gameObject.CompareTag("Spell"))
             {
                 Spell spell = collision.gameObject.GetComponent<Spell>();
                 Instantiate(spell.Type.Effect, transform.position, Quaternion.identity);
                 TakeDamage(spell);
-                StartCoroutine(SlowDown());
-                _animator.Play("Walk");
             }
+
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                _agent.isStopped = true;
+                collision.gameObject.GetComponent<Health>().TakeDamage();
+                _animator.SetTrigger("TrAttack");
+                Destroy(gameObject, 5);
+            }
+        }
+
+        private IEnumerator Wait(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
         }
 
         /// <summary>
@@ -67,7 +88,7 @@ namespace SpellSlinger
         /// </summary>
 		private IEnumerator SlowDown()
         {
-            _animator.Play("Hit");
+            _animator.SetTrigger("TrHit");
             _agent.speed = _minSpeed;
             yield return new WaitForSeconds(1);
             _agent.speed = _maxSpeed;

@@ -6,7 +6,19 @@ namespace SpellSlinger
 {
     public class StartScreen : MonoBehaviour
     {
-        private void OnEnable() => ThumbsUpGesture.PoseDetected += OnThumbsUp;
+        private IEnumerator Wait(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+        }
+
+        private void OnEnable()
+        {
+            Player.Instance.Gestures.DisableAllGestures();
+            StartCoroutine(Wait(2));
+            
+            Player.Instance.Gestures.Enable<ThumbsUpGesture>();
+            ThumbsUpGesture.PoseDetected += OnThumbsUp;
+        }
         private void OnDisable() => ThumbsUpGesture.PoseDetected -= OnThumbsUp;
 
         private void OnThumbsUp(object sender, EventArgs e)

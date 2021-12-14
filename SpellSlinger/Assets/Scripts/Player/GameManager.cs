@@ -62,7 +62,7 @@ namespace SpellSlinger
             GameOverScreen.SetActive(false);
             Overlay.SetActive(false);
             DamageOverlay.SetActive(false);
-            ScorePanel.SetActive(false);
+            //ScorePanel.SetActive(false);
             SpellProgress.SetActive(false);
 
             if (playModeOnStart) Play();
@@ -87,7 +87,7 @@ namespace SpellSlinger
 
             SpellCrafter.ResetCrafting();
             SpellCrafter.Toggle(true);
-            ScorePanel.SetActive(true);
+            //ScorePanel.SetActive(true);
             DamageOverlay.SetActive(true);
 
             // Disable all other screens
@@ -110,15 +110,14 @@ namespace SpellSlinger
             AudioManager.Instance.Stop("Battle");
             Player.Instance.ResetStats();
             MoveToSpot("TutorialPosition");
-            Player.Instance.Gestures.DisableAllGestures();
+          
             StartScreen.SetActive(true);
             Overlay.SetActive(true);
 
             DamageOverlay.SetActive(false);
-            ScorePanel.SetActive(false);
+            //ScorePanel.SetActive(false);
             SpellProgress.SetActive(false);
             SpellCrafter.ResetCrafting();
-            Player.Instance.Gestures.Enable<ThumbsUpGesture>();
         }
 
         public void GoToTutorial()
@@ -142,7 +141,7 @@ namespace SpellSlinger
             AudioManager.Instance.Stop("Battle");
             Overlay.SetActive(true);
 
-            ScorePanel.SetActive(false);
+            //ScorePanel.SetActive(false);
             DamageOverlay.SetActive(false);
             SpellProgress.SetActive(false);
             Spawner.SetActive(false); ;

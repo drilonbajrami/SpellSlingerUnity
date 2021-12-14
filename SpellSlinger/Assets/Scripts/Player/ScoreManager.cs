@@ -14,12 +14,13 @@ namespace SpellSlinger
         public static event EventHandler KillsReached;
 
         private int kills;
+        [SerializeField] private int killsToWin = 10;
 
         private void Update()
         {
             scoreText.text = Score.ToString();
 
-            if (kills == 10)
+            if (kills == killsToWin)
             {
                 kills = 0;
                 KillsReached?.Invoke(this, EventArgs.Empty);

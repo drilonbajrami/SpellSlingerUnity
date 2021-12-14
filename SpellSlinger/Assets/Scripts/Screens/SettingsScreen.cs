@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 namespace SpellSlinger
@@ -12,7 +13,14 @@ namespace SpellSlinger
         [Space(10)]
         public List<GameSettingSO> avaliableGameSettings;
 
+        private IEnumerator Wait(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+        }
+
         private void OnEnable() {
+
+            StartCoroutine(Wait(2));
              LetterGesture.PoseDetected += OnLetterGesture;
             ThumbsUpGesture.PoseDetected += OnThumbsUp;          
         }

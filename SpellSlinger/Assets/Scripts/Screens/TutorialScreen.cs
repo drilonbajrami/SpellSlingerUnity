@@ -8,8 +8,14 @@ namespace SpellSlinger
     {
         [SerializeField] private Tutorial Tutorial;
 
+        private IEnumerator Wait(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+        }
+
         private void OnEnable()
         {
+            StartCoroutine(Wait(2));
             // Subscribe to all gestures since in the tutorial screen
             // we need to use all of them at least once
             CraftGesture.PoseDetected += OnCraftGesture;
