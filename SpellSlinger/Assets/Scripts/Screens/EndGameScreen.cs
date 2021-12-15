@@ -8,9 +8,10 @@ namespace SpellSlinger
     {
         [SerializeField] private bool victoryScreen;
 
-        private IEnumerator Wait(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
+        private IEnumerator Wait(float seconds) {   
+            yield return new WaitForSeconds(seconds);     
+            Player.Instance.Gestures.Enable<ThumbsUpGesture>();
+            ThumbsUpGesture.PoseDetected += OnThumbsUp;
         }
 
         private void Awake()
@@ -20,14 +21,7 @@ namespace SpellSlinger
             gameObject.SetActive(false);
         }
 
-        private void OnEnable() {
-            Player.Instance.Gestures.DisableAllGestures();
-            GameManager.Instance.MoveToSpot("TutorialPosition");
-            StartCoroutine(Wait(2));
-            Player.Instance.Gestures.Enable<ThumbsUpGesture>();
-            ThumbsUpGesture.PoseDetected += OnThumbsUp;  
-        }
-
+        private void OnEnable() => StartCoroutine(Wait(2));
         public void OnDisable() => ThumbsUpGesture.PoseDetected -= OnThumbsUp;
 
         private void OnThumbsUp(object sender, EventArgs e)

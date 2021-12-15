@@ -77,10 +77,10 @@ namespace SpellSlinger
 
         public void Play()
         {
+            Player.Instance.Gestures.DisableAllGestures();
             AudioManager.Instance.Stop("Menu");
             AudioManager.Instance.Play("Battle");
-            MoveToSpot("StartPosition");
-            Player.Instance.Gestures.DisableAllGestures();
+            MoveToSpot("StartPosition");   
             Player.Instance.ResetStats();
 
             Spawner.SetActive(true);
@@ -106,6 +106,7 @@ namespace SpellSlinger
 
         public void GoToStart()
         {
+            Player.Instance.Gestures.DisableAllGestures();
             AudioManager.Instance.Play("Menu");
             AudioManager.Instance.Stop("Battle");
             Player.Instance.ResetStats();
@@ -122,23 +123,23 @@ namespace SpellSlinger
 
         public void GoToTutorial()
         {
-            MoveToSpot("TutorialPosition");
             Player.Instance.Gestures.DisableAllGestures();
-            Player.Instance.Gestures.Enable<CraftGesture>();
+            MoveToSpot("TutorialPosition");
             TutorialScreen.SetActive(true);
         }
 
         public void GoToSettings()
         {
             Player.Instance.Gestures.DisableAllGestures();
-            Player.Instance.Gestures.Enable<LetterGesture>();
             SettingScreen.SetActive(true);
             SpellCrafter.Toggle(false);
         }
 
         public void OnGameEnd()
         {
+            Player.Instance.Gestures.DisableAllGestures();
             AudioManager.Instance.Stop("Battle");
+            MoveToSpot("TutorialPosition");
             Overlay.SetActive(true);
 
             //ScorePanel.SetActive(false);

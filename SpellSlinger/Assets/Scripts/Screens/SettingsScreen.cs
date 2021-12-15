@@ -13,17 +13,14 @@ namespace SpellSlinger
         [Space(10)]
         public List<GameSettingSO> avaliableGameSettings;
 
-        private IEnumerator Wait(float seconds)
-        {
+        private IEnumerator Wait(float seconds) {
             yield return new WaitForSeconds(seconds);
+            LetterGesture.PoseDetected += OnLetterGesture;
+            ThumbsUpGesture.PoseDetected += OnThumbsUp;
+            Player.Instance.Gestures.Enable<LetterGesture>();
         }
 
-        private void OnEnable() {
-
-            StartCoroutine(Wait(2));
-             LetterGesture.PoseDetected += OnLetterGesture;
-            ThumbsUpGesture.PoseDetected += OnThumbsUp;          
-        }
+        private void OnEnable() => StartCoroutine(Wait(2));                     
 
         private void OnDisable() {
             LetterGesture.PoseDetected -= OnLetterGesture;

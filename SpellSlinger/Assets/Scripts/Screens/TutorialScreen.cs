@@ -11,20 +11,17 @@ namespace SpellSlinger
         private IEnumerator Wait(float seconds)
         {
             yield return new WaitForSeconds(seconds);
-        }
-
-        private void OnEnable()
-        {
-            StartCoroutine(Wait(2));
             // Subscribe to all gestures since in the tutorial screen
             // we need to use all of them at least once
             CraftGesture.PoseDetected += OnCraftGesture;
-                CastGesture.PoseDetected += OnCastGesture;
-                HelpGesture.PoseDetected += OnHelpGesture;
-               SwipeGesture.PoseDetected += OnSwipeGesture;
+            CastGesture.PoseDetected += OnCastGesture;
+            HelpGesture.PoseDetected += OnHelpGesture;
+            SwipeGesture.PoseDetected += OnSwipeGesture;
             ThumbsUpGesture.PoseDetected += OnThumbsUp;
+            Player.Instance.Gestures.Enable<CraftGesture>();
         }
 
+        private void OnEnable() => StartCoroutine(Wait(2));    
         private void OnDisable()
         {
             // Unsubcribe from all possible gestures on exit
