@@ -14,10 +14,8 @@ namespace SpellSlinger
         // Enemy Spawner
         public GameObject Spawner;
 
-        // Game Settings
-        public GameSetting gameSettings = new GameSetting();
-
         public SpellCrafter SpellCrafter;
+        public GemStones GemStones;
 
         [Space(10)]
         [Header("UI Screens")]
@@ -64,15 +62,16 @@ namespace SpellSlinger
             DamageOverlay.SetActive(false);
             //ScorePanel.SetActive(false);
             SpellProgress.SetActive(false);
+            GemStones.ResetHP();
 
             if (playModeOnStart) Play();
             else GoToStart();
         }
 
-        public void ApplyGameSettings(GameSettingSO gameSettingsSO)
+        public void ApplyGameSettings(GameSettings gameSettings)
         {
-            gameSettings.SetSetting(gameSettingsSO);
             SpellCrafter.CraftingTimer.ChangeInterval(gameSettings.CraftingDuration);
+            Spawner.GetComponent<Spawner>().ApplyGameSettings(gameSettings);
         }
 
         public void Play()
@@ -99,7 +98,8 @@ namespace SpellSlinger
             Overlay.SetActive(false);
 
             SpellProgress.SetActive(false);
-            
+            GemStones.ResetHP();
+
             Player.Instance.Gestures.Enable<CraftGesture>();
             Player.Instance.Gestures.Enable<CastGesture>(); 
         }

@@ -18,21 +18,31 @@ namespace SpellSlinger
 
         private Animator _animator;
 
+        private bool attack = false;
+
+        private GemStones target;
+
         private void Start()
         {
             _health = 100.0f;
             _agent = GetComponent<NavMeshAgent>();
             _animator = GetComponent<Animator>();
             _animator.SetTrigger("TrWalk");
+            attack = false;
 
             if ( _agent != null )
             {
-                _agent.SetDestination(GameObject.FindGameObjectWithTag("Player").gameObject.transform.position);
+                _agent.SetDestination(GameObject.FindGameObjectWithTag("GemStones").gameObject.transform.position);
                 _agent.speed = _maxSpeed;
             }
         }
 
-		public void TakeDamage(Spell spell)
+        private void Update()
+        {
+            if(attack) StartCoroutine(Attack(2, 3));     
+        }
+
+        public void TakeDamage(Spell spell)
         {
             Element spellElement = spell.Type.Element;
             spell.PlayHitSound();
@@ -69,12 +79,19 @@ namespace SpellSlinger
                 TakeDamage(spell);
             }
 
-            if (collision.gameObject.CompareTag("Player"))
+            //if (collision.gameObject.CompareTag("Player"))
+            //{
+            //    _agent.isStopped = true;
+            //    collision.gameObject.GetComponent<Health>().TakeDamage();
+            //    _animator.SetTrigger("TrAttack");
+            //    Destroy(gameObject, 5);
+            //}
+
+            if (collision.gameObject.CompareTag("GemStones"))
             {
                 _agent.isStopped = true;
-                collision.gameObject.GetComponent<Health>().TakeDamage();
-                _animator.SetTrigger("TrAttack");
-                Destroy(gameObject, 5);
+                attack = true;
+                target = collision.gameObject.GetComponent<GemStones>();
             }
         }
 
@@ -84,7 +101,7 @@ namespace SpellSlinger
         }
 
         /// <summary>
-        /// When hit by a spell, slow down for 2 seconds.
+        /// When hit by a spell, slow down for 1 second.
         /// </summary>
 		private IEnumerator SlowDown()
         {
@@ -92,6 +109,15 @@ namespace SpellSlinger
             _agent.speed = _minSpeed;
             yield return new WaitForSeconds(1);
             _agent.speed = _maxSpeed;
+        }
+
+        private IEnumerator Attack(int damage, float lengthOfAttack)
+        {
+            attack = false;
+            target.TakeDamage(damage);
+            _animator.SetTrigger("TrAttack");
+            yield return new WaitForSeconds(lengthOfAttack);
+            attack = true;
         }
     }
 }

@@ -17,8 +17,10 @@ namespace SpellSlinger
 
         [Space(10)]
         [Header("Spawn Rate")]
-        public float spawnRate = 5.0f;
+        public float _spawnRate = 5.0f;
         private float _spawnTime = 0.0f;
+
+        private int _enemiesToSpawn = 10;
 
         #region UNITY Methods
         private void Start()
@@ -30,9 +32,10 @@ namespace SpellSlinger
         {
             _spawnTime += Time.deltaTime;
 
-            if (_spawnTime > spawnRate)
+            if (_spawnTime > _spawnRate && _enemiesToSpawn > 0)
             {
                 SpawnEnemy();
+                _enemiesToSpawn--;
                 _spawnTime = 0.0f;
             }
         }
@@ -45,6 +48,12 @@ namespace SpellSlinger
         #endregion
 
         #region Spawn Enemy Methods
+        public void ApplyGameSettings(GameSettings gameSettings)
+        {
+            _spawnRate = gameSettings.EnemySpawnRate;
+            _enemiesToSpawn = gameSettings.EnemiesToSpawn;
+        }
+
         void SpawnEnemy() {
             Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)],
                        _spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position,

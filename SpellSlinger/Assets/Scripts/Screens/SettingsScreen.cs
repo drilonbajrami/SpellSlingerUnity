@@ -11,7 +11,7 @@ namespace SpellSlinger
         public List<SettingsUISelector> settingSelectors;
 
         [Space(10)]
-        public List<GameSettingSO> avaliableGameSettings;
+        public List<GameSettings> avaliableGameSettings;
 
         private IEnumerator Wait(float seconds) {
             yield return new WaitForSeconds(seconds);

@@ -16,7 +16,7 @@ namespace SpellSlinger
 
         private void Awake()
         {
-            Health.Death += OnDeath;
+            GemStones.GemStonesDestroyed += OnGemStonesDestroyed;
             ScoreManager.KillsReached += OnKillsReached;
             gameObject.SetActive(false);
         }
@@ -31,7 +31,7 @@ namespace SpellSlinger
             GameManager.Instance.GoToStart();
         }
 
-        private void OnDeath(object sender, EventArgs e)
+        private void OnGemStonesDestroyed(object sender, EventArgs e)
         {
             if(!victoryScreen) gameObject.SetActive(true);
             GameManager.Instance.OnGameEnd();

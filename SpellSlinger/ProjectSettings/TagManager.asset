@@ -10,6 +10,7 @@ TagManager:
   - Overlay
   - SettingsScreen
   - SpellCrafter
+  - GemStones
   layers:
   - Default
   - TransparentFX

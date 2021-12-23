@@ -10,6 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3bd27c2c7497514983575560af2690e, type: 3}
-  m_Name: EasySettings
+  m_Name: Wizard
   m_EditorClassIdentifier: 
-  craftingDuration: 20
+  CraftingDuration: 8
+  EnemySpawnRate: 10
+  EnemiesToSpawn: 20

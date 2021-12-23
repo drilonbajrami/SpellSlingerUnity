@@ -7,6 +7,7 @@ namespace SpellSlinger
     public class TutorialScreen : MonoBehaviour
     {
         [SerializeField] private Tutorial Tutorial;
+        private bool skipTutorial = false;
 
         private IEnumerator Wait(float seconds)
         {
@@ -19,6 +20,10 @@ namespace SpellSlinger
             SwipeGesture.PoseDetected += OnSwipeGesture;
             ThumbsUpGesture.PoseDetected += OnThumbsUp;
             Player.Instance.Gestures.Enable<CraftGesture>();
+
+            if(skipTutorial) Player.Instance.Gestures.Enable<ThumbsUpGesture>();
+
+            skipTutorial = true;
         }
 
         private void OnEnable() => StartCoroutine(Wait(2));    
@@ -115,11 +120,9 @@ namespace SpellSlinger
 
         // Step 6 - THUMBS UP GESTURE
         private void OnThumbsUp(object sender, EventArgs e) {
-            if (Tutorial.IsInStep(StepIndex.LAST)) {
                 gameObject.SetActive(false);
                 AudioManager.Instance.Play("Confirm");
                 GameManager.Instance.GoToSettings();
-            }
         }
         #endregion
     }
