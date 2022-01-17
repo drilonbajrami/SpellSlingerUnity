@@ -31,8 +31,6 @@ namespace SpellSlinger
 		{
             _collider = GetComponent<SphereCollider>();
             transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-            //transform.DOScale(new Vector3(0.01f, 0.01f, 0.01f), 1);
-            //transform.DOSc(new Vector3(.1f, .1f, .1f), 1);
 		}
 
 		private void Update()
