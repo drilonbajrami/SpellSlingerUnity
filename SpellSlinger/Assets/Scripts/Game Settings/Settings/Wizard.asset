@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Wizard
   m_EditorClassIdentifier: 
   CraftingDuration: 8
-  EnemySpawnRate: 10
+  EnemySpawnRate: 4
   EnemiesToSpawn: 20

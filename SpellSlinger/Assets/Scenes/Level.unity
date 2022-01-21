@@ -3725,7 +3725,7 @@ MonoBehaviour:
   - {fileID: 6412625190954169033, guid: 7c30325fd7a49e04e88d247e858f4eae, type: 3}
   - {fileID: 2078539063384610395, guid: b6b19b6ee16331340adf27a6fd50fb72, type: 3}
   enemyParent: {fileID: 751843065}
-  _spawnRate: 5
+  _spawnRate: 3
 --- !u!4 &298886193
 Transform:
   m_ObjectHideFlags: 0
@@ -4418,7 +4418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &338879705
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26890,7 +26890,7 @@ MonoBehaviour:
   DamageOverlay: {fileID: 5739977016174544551}
   ScorePanel: {fileID: 5739977015649867051}
   SpellProgress: {fileID: 5739977016912059952}
-  playModeOnStart: 1
+  playModeOnStart: 0
 --- !u!4 &1939526548
 Transform:
   m_ObjectHideFlags: 0
